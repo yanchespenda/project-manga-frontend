@@ -1,0 +1,33 @@
+[debug] [2019-03-03T13:23:02.147Z] ----------------------------------------------------------------------
+[debug] [2019-03-03T13:23:02.149Z] Command:       C:\App_Compiler\nodejs\node.exe C:\Users\Mea\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-03-03T13:23:02.149Z] CLI Version:   6.4.0
+[debug] [2019-03-03T13:23:02.149Z] Platform:      win32
+[debug] [2019-03-03T13:23:02.149Z] Node Version:  v11.5.0
+[debug] [2019-03-03T13:23:02.150Z] Time:          Sun Mar 03 2019 20:23:02 GMT+0700 (Western Indonesia Time)
+[debug] [2019-03-03T13:23:02.150Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-03-03T13:23:02.158Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-03-03T13:23:02.159Z] > authorizing via signed-in user
+[debug] [2019-03-03T13:23:02.159Z] [iam] checking project serpongchat for permissions ["firebase.projects.get"]
+[debug] [2019-03-03T13:23:02.160Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat:testIamPermissions  
+
+[debug] [2019-03-03T13:23:04.495Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-03T13:23:04.501Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat  
+ 
+[debug] [2019-03-03T13:23:05.874Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\laragon\www_angular\project-manga\frontend'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-03-03T13:23:06.371Z] Fetching environment
+[debug] [2019-03-03T13:23:06.373Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424:getServerAppConfig  
+ 
+[debug] [2019-03-03T13:23:06.374Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424/clients/_:getWebAppConfig  
+ 
+[debug] [2019-03-03T13:23:06.986Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist/browser
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-03-03T13:23:07.100Z] <<< HTTP RESPONSE 200
+[debug] [2019-03-03T13:23:07.100Z] Starting @google-cloud/functions-emulator
+[debug] [2019-03-03T13:23:08.652Z] Parsing function triggers
+[info] +  functions: ssr: http://localhost:5001/serpongchat/us-central1/ssr

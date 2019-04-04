@@ -1,0 +1,277 @@
+/* You can add global styles to this file, and also import other style files */
+@import './styles/default-theme.scss';
+
+body{
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(250,250,250);
+}
+
+html, body {
+    height: 100%;
+    position: relative;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+    min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, main, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #29b6f6;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.full-size{
+    width: 100%;
+}
+
+.md-display-4 {
+    font-size: 112px;
+    font-weight: 300;
+    letter-spacing: -0.010em;
+    line-height: 112px; }
+
+.md-display-3 {
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    line-height: 56px; }
+
+.md-display-2 {
+    font-size: 45px;
+    font-weight: 400;
+    line-height: 64px; }
+
+.md-display-1 {
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 40px; }
+
+.md-headline {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px; }
+
+.md-title {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.005em; }
+
+.md-subhead {
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.010em;
+    line-height: 24px; }
+
+  /************
+   * Body Copy
+   ************/
+.md-body-1 {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.010em;
+    line-height: 20px; }
+
+.md-body-2 {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.010em;
+    line-height: 24px; }
+
+.md-caption {
+    font-size: 12px;
+    letter-spacing: 0.020em; }
+
+.md-button {
+    letter-spacing: 0.010em; }
+
+.layout-padding{
+    padding: 8px;
+}
+
+section.universal-seksi {
+    padding: 18px 0;
+    display: block;
+}
+
+@media (min-width: 600px){
+    section.universal-seksi {
+        padding: 24px 0;
+    }
+}
+
+@media (min-width: 1024px){
+    section.universal-seksi {
+        padding: 48px 0;
+    }
+}
+
+.universal-container{
+    max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.progress-bar-container {
+    height: 2px;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 11;
+}
+
+$accentblue: #1E88E5;
+$white: #FFFFFF;
+
+manga-app-header-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+
+    a {
+        font-size: 16px;
+        font-weight: 400;
+        color: $white;
+        font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+        text-transform: uppercase;
+        padding: 21px 0;
+        text-decoration: none;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        list-style-position: inside;
+        padding: 0px;
+        margin: 0px;
+
+        li {
+            padding-bottom: 2px;
+            list-style-type: none;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            &:focus {
+                background-color: $accentblue;
+                outline: none;
+            }
+        }
+    }
+
+    a.nav-link {
+        margin: 0;
+        padding: 24px 16px;
+        cursor: pointer;
+
+        &:focus {
+            background: rgba($white, 0.15);
+            border-radius: 4px;
+            outline: none;
+            padding: 8px 16px;
+        }
+    }
+}
+
+.mat-card-title-1{
+    color: rgba(0,0,0,.87);
+    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: -8px;
+}
+
+.f-title-1{
+    margin-bottom: 0;
+}
+
+.f-title-2{
+    margin-right: auto;
+    margin-top: 10px;
+    // margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.universal-loading-container{
+    position: relative;
+}
+
+.universal-loading-container .universal-loading{
+    z-index: 4;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.universal-loading-container .universal-loading.is-top{
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.universal-loading-container .universal-loading.is-bottom{
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.trending_tile{
+    cursor: pointer;
+    background-size: cover;
+}
+
+.genre-list {
+    color: rgba(0,0,0,.87);
+    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    line-height: 2!important;
+    display: inline-block;
+    width: 50%;
+}
+
+.componen-error-container {
+    width: 100%;
+    position: relative;
+}
+
+.componen-error-container.is-c-topchapter {
+    height: 300px;
+}
+
+.componen-error-container .componen-error{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.componen-error-container .componen-error .componen-error-text {
+    color: $warn;
+}

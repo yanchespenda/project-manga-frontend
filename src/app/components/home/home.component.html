@@ -1,0 +1,26 @@
+<!-- <div style="width: 100vw;height: 100%;" > 
+    <img style="width: 100%;height: auto" src="https://project-manga.oo/storage/background/2019/02/79c36e5e9929d7082ce7d0b3296aabbe.jpg">
+</div>
+-->
+<section class="universal-seksi">
+    <div class="universal-container">
+        <div fxLayout="column" fxLayout.gt-sm="row">
+            <div fxFlex="100" fxFlex.gt-sm="70">
+                <div class="layout-padding">
+                    <manga-trending></manga-trending>
+                </div>
+                <div class="layout-padding">
+                    <manga-list></manga-list>
+                </div>
+            </div>
+            <div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
+                <manga-genre></manga-genre>
+            </div>
+        </div>
+        <div fxShow fxHide.gt-sm>
+            <div fxFlex="100" class="layout-padding">
+                <manga-genre></manga-genre>
+            </div>
+        </div>
+    </div>
+</section>

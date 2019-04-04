@@ -1,0 +1,71 @@
+// COLOR PALETTE
+$offwhite: #FAFAFA;
+
+// VARIABLES
+$hamburgerShownMargin: 0 8px 0 0;
+$hamburgerHiddenMargin: 0 16px 0 -64px;
+
+.app-tollbar .mat-toolbar-row{
+    padding-left: 0px;
+}
+
+
+.hamburger.mat-button {
+    height: 100%;
+    margin: $hamburgerShownMargin;
+    padding: 0;
+
+    @media (min-width: 992px) {
+        // Hamburger hidden by default on large screens.
+        // (Will be shown per doc.)
+        // margin: $hamburgerHiddenMargin;
+    }
+
+    @media (max-width: 480px) {
+        min-width: 15%;
+    }
+
+    &.is-close {
+        margin: $hamburgerHiddenMargin;
+    }
+
+    &:not(.starting) {
+        transition-duration: 0.4s;
+        transition-property: color, margin;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    &:hover {
+        color: $offwhite;
+    }
+
+    & .mat-icon {
+        color: white;
+        position: inherit;
+    }
+}
+
+// HOME NAV-LINK
+.nav-link.home {
+    cursor: pointer;
+    margin: 0 16px 0 0;
+    padding: 21px 0;
+
+    @media screen and (max-width: 480px) {
+        margin-right: 8px;
+    }
+
+    img {
+        position: relative;
+        margin-top: -21px;
+        top: 12px;
+        height: 40px;
+
+        @media (max-width: 992px) {
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}
+

@@ -1,0 +1,37 @@
+<mat-card class="universal-loading-container">
+    <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+    <mat-card-content>
+        <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
+        <div fxLayout="row">
+          <div class="f-title-2 mat-title"><span>Top Chapters</span></div>
+          <mat-form-field>
+            <mat-select [(value)]="sortSelected" (selectionChange)="topRefresh($event)" placeholder="Top in">
+              <mat-option value="1">6 Hours</mat-option>
+              <mat-option value="2">24 Hours</mat-option>
+              <mat-option value="3">7 Days</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-grid-list *ngIf="!isError" class="trending_tiles" cols="4" rowHeight="300px" gutterSize="8px">
+          <mat-grid-tile
+              class="trending_tile"
+              *ngFor="let tile of tiles"
+              [routerLink]="tile.title_link"
+              [colspan]="tile.cols"
+              [rowspan]="tile.rows"
+              [style.background-image]="getBackground(tile.img_cvr.link)">
+            <mat-grid-tile-footer>
+                {{tile.title}}
+            </mat-grid-tile-footer>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <div *ngIf="isError" class="componen-error-container is-c-topchapter">
+          <div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+            <div class="componen-error-text mat-title">
+              <span>Failed to load data</span>
+            </div>
+            <button mat-button color="primary" (click)="topRefresh($event)">Retry load</button>
+          </div>
+        </div>
+    </mat-card-content>
+</mat-card>
