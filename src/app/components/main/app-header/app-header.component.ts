@@ -1,6 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import { filter, map, mergeMap  } from 'rxjs/operators';
+
+import {
+  Router,
+  NavigationEnd,
+  ActivatedRoute,
+  Event,
+  NavigationCancel,
+  NavigationError,
+  NavigationStart,
+} from '@angular/router';
 
 @Component({
   selector: 'manga-app-header',
@@ -9,9 +20,15 @@ import {MatIconRegistry} from '@angular/material';
 })
 export class AppHeaderComponent implements OnInit {
   isSideBySide = false;
-  isStarting = false;
+  isStarting = true;
+  isInit = true;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
     iconRegistry.addSvgIcon(
       'menu-24px',
       sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-menu-24px.svg'));
@@ -26,6 +43,31 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => this.activatedRoute),
+        map((route) => {
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        }),
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
+      ).subscribe((event) => {
+        this.isInit = false;
+        if (event.isMenuHidden !== undefined) {
+          if (event.isMenuHidden) {
+            this.isStarting = true;
+          } else {
+            this.isStarting = false;
+          }
+        } else {
+          this.isStarting = false;
+        }
+        console.log(event);
+      });
   }
 
 }

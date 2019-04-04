@@ -37,10 +37,13 @@ export class GenreComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private genreService: GenreService
-  ) { }
+  ) {
+    console.log('genre cons');
+  }
 
   ngOnInit() {
     this.genreLoad();
+    console.log('genre init');
   }
 
   topRefresh(event: any) {

@@ -8,25 +8,35 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     // canActivate: [AuthGuardService],
-    data: { title: 'Home', id: 1 }
+    data: { title: 'Home', id: 1, isMenuHidden: true }
   },
   {
     path: 'manga',
-    component: HomeComponent,
+    loadChildren: './modules/manga.module#MangaModule',
+    // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Manga', id: 2 }
   },
   {
     path: 'genre',
-    component: HomeComponent,
+    loadChildren: './modules/genre.module#GenreModule',
+    // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Gemre', id: 3 }
   },
   {
     path: 'blog',
-    component: HomeComponent,
+    loadChildren: './modules/blog.module#BlogModule',
+    // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Blog', id: 4 }
+  },
+  {
+    path: 'chapter',
+    loadChildren: './modules/chapter.module#ChapterModule',
+    // component: HomeComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Chapter', id: 5 }
   },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];

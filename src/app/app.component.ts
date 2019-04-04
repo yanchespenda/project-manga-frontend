@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 
+import { Component, OnInit } from '@angular/core';
 import {
   Router,
   NavigationEnd,
@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     this.router.events
       .pipe(
@@ -64,6 +63,20 @@ export class AppComponent implements OnInit {
         }),
         filter((route) => route.outlet === 'primary'),
         mergeMap((route) => route.data)
-      ).subscribe((event) => this.titleService.setTitle(event.title));
+      ).subscribe((event) => {
+        // if (event.isMenuHidden !== undefined) {
+        //   if (event.isMenuHidden) {
+        //     this.appHeaderService.changeIsMenuHidde(true);
+        //   } else {
+        //     this.appHeaderService.changeIsMenuHidde(false);
+        //   }
+        // } else {
+        //   this.appHeaderService.changeIsMenuHidde(false);
+        // }
+        console.log(event);
+        this.titleService.setTitle(event.title);
+      });
   }
+
+
 }

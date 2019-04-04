@@ -1,26 +1,27 @@
-import { IndexComponent } from './../components/manga/index/index.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Routes, RouterModule } from '@angular/router';
-import { DetailComponent } from '../components/manga/detail/detail.component';
+
+import { IndexComponent } from './../components/genre/index/index.component';
+import { DetailComponent } from '../components/genre/detail/detail.component';
 
 const routes: Routes = [
   {
     path: '',
     component: IndexComponent,
     // canActivate: [AuthGuardService],
-    data: { title: 'Manga', id: 1 }
+    data: { title: 'Genre', id: 1, isMenuHidden: true }
   },
   {
     path: ':id',
     component: DetailComponent,
-    data: { title: 'loading', id: 2 }
+    data: { title: 'loading', id: 2, isMenuHidden: true }
   },
   {
     path: ':id/:name',
     component: DetailComponent,
-    data: { title: 'loading', id: 3 }
+    data: { title: 'loading', id: 3, isMenuHidden: true }
   }
 ];
 
@@ -36,4 +37,4 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class MangaModule { }
+export class GenreModule { }

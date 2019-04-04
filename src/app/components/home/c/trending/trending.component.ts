@@ -59,8 +59,11 @@ export class TrendingComponent implements OnInit {
 
     }
 
-  getBackground(image: string) {
-    return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+  getBackground(bool: any, image: string) {
+    if (bool) {
+      return this.sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+    }
+    return '';
   }
 
   topRefresh(event: any) {
@@ -68,6 +71,7 @@ export class TrendingComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('trending init');
     this.callReq();
   }
 

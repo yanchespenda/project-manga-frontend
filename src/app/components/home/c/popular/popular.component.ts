@@ -10,6 +10,7 @@ export class PopularComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('popular init');
   }
 
 }
