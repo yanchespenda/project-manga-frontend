@@ -11,6 +11,28 @@
         </a>
         <manga-app-header-menu></manga-app-header-menu>
         <span fxFlex></span>
-        <span>{{ isStarting }}</span>
+        <!-- <span>{{ isStarting }}</span> -->
+        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu">
+            <div class="gb_Ta gb_z gb_7b" aria-label="Informasi Akun" aria-hidden="false" img-loaded="1">
+                    <div class="gb_1a">
+                        <a class="gb_2a gb_Hf" aria-label="Ubah gambar profil." href="https://myaccount.google.com/?utm_source=OGB&amp;tab=wk">
+                            <div class="gb_6a" style="position:relative">
+                                <div class="gb_7a gbip" title="Profil"></div><span class="gb_La">Ubah</span></div>
+                        </a>
+                        <div class="gb_3a">
+                            <div class="gb_bb gb_cb">Alfian Rikzandi</div>
+                            <div class="gb_db">denydirgantara94@gmail.com</div>
+                            <div class="gb_Cf gb_Za"><a href="https://myaccount.google.com/privacypolicy" target="_blank">Privasi</a></div><a class="gb_0 gb_Df gbp1 gb_le gb_kb" href="https://myaccount.google.com/?utm_source=OGB&amp;tab=wk&amp;utm_medium=act" target="_blank">Akun Google</a></div>
+                    </div>
+                    <div class="gb_Jf gb_Ma gb_wa">
+                        <div class="gb_Na"></div>
+                    </div>
+                    <div class="gb_Bf gb_jb">
+                        <!-- <div><a class="gb_0 gb_Af gb_le gb_kb" href="https://accounts.google.com/AddSession?hl=id&amp;continue=https://www.google.com/search%3Fq%3Dcreate%2Bbutton%2Bdropdown%2Bin%2Bangular%2B6%2Bcss%26safe%3Dstrict%26ei%3DJI25XMrzIqSWvQTJqIvABQ%26start%3D10%26sa%3DN%26ved%3D0ahUKEwjKla3P5NvhAhUkS48KHUnUAlgQ8NMDCJoB%26biw%3D1920%26bih%3D937">Tambahkan akun</a></div> -->
+                        <div><a class="gb_0 gb_Ef gb_Mf gb_le gb_kb" id="gb_71" href="https://accounts.google.com/Logout?hl=id&amp;continue=https://www.google.com/search%3Fq%3Dcreate%2Bbutton%2Bdropdown%2Bin%2Bangular%2B6%2Bcss%26safe%3Dstrict%26ei%3DJI25XMrzIqSWvQTJqIvABQ%26start%3D10%26sa%3DN%26ved%3D0ahUKEwjKla3P5NvhAhUkS48KHUnUAlgQ8NMDCJoB%26biw%3D1920%26bih%3D937&amp;timeStmp=1555664201&amp;secTok=.AG5fkS8_ni3BwcNf6j1qPBMNMJ6r-pbU9g" target="_top">Keluar</a></div>
+                    </div>
+                </div>
+        </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>

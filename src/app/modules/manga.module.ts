@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { DetailComponent } from '../components/manga/detail/detail.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+
 const routes: Routes = [
   {
     path: '',
@@ -33,7 +37,11 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+
+    FlexLayoutModule,
+    MatCardModule,
+    MatMenuModule
   ]
 })
 export class MangaModule { }

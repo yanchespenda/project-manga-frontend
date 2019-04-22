@@ -1,5 +1,6 @@
 {
   "configVersion": 1,
+  "timestamp": 1555827550188,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -7,16 +8,17 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/5.010085ec574e56e87db0.js",
-        "/6.a91dd72607a97dc1ad3e.js",
-        "/7.4a76abcaeb773f85abcc.js",
-        "/es2015-polyfills.358ed1827c991dd2afb0.js",
+        "/5.2d6928a847478750f173.js",
+        "/6.a9c967096e35f5c0848e.js",
+        "/7.5d34201284068112bda3.js",
+        "/8.1ff9139cdb7891d08892.js",
+        "/es2015-polyfills.401e69eab8175baf57ca.js",
         "/favicon.ico",
         "/index.html",
-        "/main.920ed377a3729c68ac20.js",
-        "/polyfills.d34ca313101ca7d97e85.js",
-        "/runtime.c019ad72b1608f6104e3.js",
-        "/styles.6cb96e4527c5110dc8da.css"
+        "/main.5e1e0445b48e91f866be.js",
+        "/polyfills.ca23f5cb316e3e05cb97.js",
+        "/runtime.f8fed203796fa5d88e7a.js",
+        "/styles.aca390212779fb3b3d71.css"
       ],
       "patterns": []
     },
@@ -310,9 +312,10 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/5.010085ec574e56e87db0.js": "2ceb2c5ed7fd321e5903027b1df6f64340c566ad",
-    "/6.a91dd72607a97dc1ad3e.js": "2f266dd409c8c027dfef15817a642129f81777c6",
-    "/7.4a76abcaeb773f85abcc.js": "7e93b3c0b94b7a5fe0e5d5c4ccc5ac9370ad8c93",
+    "/5.2d6928a847478750f173.js": "2ceb2c5ed7fd321e5903027b1df6f64340c566ad",
+    "/6.a9c967096e35f5c0848e.js": "bfa0a0f6eda822c87109e13eef282e5abf7ff90a",
+    "/7.5d34201284068112bda3.js": "150f5856d7924ce7883bd71e5134217442ca55e7",
+    "/8.1ff9139cdb7891d08892.js": "b95b2e78762ad428ac92cdf41444a831a0fb5343",
     "/assets/icons-md/baseline-access_alarm-24px.svg": "ea776fee4f08938eace14ce54c2b36730b08bb69",
     "/assets/icons-md/baseline-access_alarms-24px.svg": "a72761eaaef376d54163e03779a71d9c709394fe",
     "/assets/icons-md/baseline-access_time-24px.svg": "a9679e98f7f4d7a0339a5296d2c76083217e1c06",
@@ -591,14 +594,14 @@
     "/assets/images/angular-white-transparent.svg": "3d3538c3683d6937a39c92d17a27d2637fba70f5",
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
-    "/es2015-polyfills.358ed1827c991dd2afb0.js": "b7a81c61d32b0b12737f0c13f45973ba391cd7f9",
+    "/es2015-polyfills.401e69eab8175baf57ca.js": "22002660fc86be4350cd9abc8ab64c01a708f01c",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "fc44a37ac8e9d42a55bb3707a02e0043405dac80",
-    "/main.920ed377a3729c68ac20.js": "ee9b9bbb428ff29d7a408096895a8993bc17dac7",
+    "/index.html": "6ce89637246bf1494b9a3f8979f8d50497748304",
+    "/main.5e1e0445b48e91f866be.js": "6ff7b62e3505b3f64a84654f0480c59a40298a5a",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
-    "/polyfills.d34ca313101ca7d97e85.js": "ac2ddad90f8bfed3dedb4522644a0ccdb85a673a",
-    "/runtime.c019ad72b1608f6104e3.js": "54cd5cdc8c82ce2c47d644d16a6a4ae52400ef23",
-    "/styles.6cb96e4527c5110dc8da.css": "4f68048c6800f6c38bd8da89c6e028ff94544bf4"
+    "/polyfills.ca23f5cb316e3e05cb97.js": "05cfb73b10683a3b6cc1de8f990fd210b5be4559",
+    "/runtime.f8fed203796fa5d88e7a.js": "2c4fb6c43b90a14efee1c6219d6edc23907759fa",
+    "/styles.aca390212779fb3b3d71.css": "2250904df68c58519f1772fa1a4f2536f13c05c9"
   },
   "navigationUrls": [
     {

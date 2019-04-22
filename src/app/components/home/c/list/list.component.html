@@ -14,13 +14,13 @@
               <div class="cl-container-i3" *ngFor="let it of item.list" fxFlex="50%">
                 <div class="cl-data-cover">
                   <div class="cl-data-area-a">
-                    <a routerLink="/" target="">
+                    <a [routerLink]="it.manga_link">
                       <div class="cl-data-image-thumb cl-data-image">
                         <img [src]="getCover(it.img_cover.full)" alt="" class="hGq41 _1s6Xu">
                       </div>
                     </a>
                     <div class="_2wzxV">
-                      <a routerLink="/manga/100423659" data-test="latest-update-name" target="" class="_2dU-m _21knv">{{it.manga_name}}</a>
+                      <a [routerLink]="it.manga_link" data-test="latest-update-name" class="_2dU-m _21knv">{{it.manga_name}}</a>
                       <div class="_8MJIu">6 new chapters</div>
                     </div>
                   </div>

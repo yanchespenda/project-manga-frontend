@@ -5,7 +5,8 @@ body{
     margin: 0;
     padding: 0;
     color: rgba(0,0,0,0.87);
-    background-color: rgb(250,250,250);
+    // background-color: rgb(250,250,250);
+    background-color: #fafafa;
 }
 
 html, body {
@@ -81,7 +82,7 @@ a {
     letter-spacing: 0.010em;
     line-height: 24px; }
 
-  /************
+    /************
    * Body Copy
    ************/
 .md-body-1 {
@@ -107,9 +108,17 @@ a {
     padding: 8px;
 }
 
+.cdk-overlay-pane .mat-menu-panel {
+    max-width: 350px
+}
+
 section.universal-seksi {
     padding: 18px 0;
     display: block;
+}
+
+section.universal-seksi.seksi-cover{
+    padding-top: 0;
 }
 
 @media (min-width: 600px){
@@ -123,6 +132,8 @@ section.universal-seksi {
         padding: 48px 0;
     }
 }
+
+
 
 .universal-container{
     max-width: 1440px;
