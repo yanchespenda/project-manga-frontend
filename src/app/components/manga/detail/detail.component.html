@@ -1,40 +1,78 @@
 <section class="universal-seksi seksi-cover">
-  <div style="width: 100%;height: 450px;"><div style="background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7)), url(&quot;https://project-manga.oo/storage/944990.png&quot;);background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;"></div></div>
-  
-  <div class="universal-container">
-    <div fxLayout="column" fxLayout.gt-sm="row">
-      <div fxFlex="100" fxFlex.gt-sm="70" class="layout-padding">
-        <mat-card class="universal-loading-container">
-          <!-- <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar> -->
-          <mat-card-content class="manga-detail-cover">
+	<div style="width: 100%;height: 450px;"><div style="background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7)), url(&quot;https://project-manga.oo/storage/944990.png&quot;);background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;"></div></div>
 
-            <!-- <div class="_27em5"> -->
-              <div class="_3Aef5">
-                <div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
-                  <div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
-                  <img src="https://project-manga.oo/storage/cover/data/2019/02/513b1ff663fd005cbb1b0f14fc7230f3.jpg" alt="Tonikaku Kawaii (Fly me to the moon)" class="hGq41 _2NsiO">
-                </div>
-              </div>
-            <!-- </div> -->
+	<div class="universal-container">
+    	<div fxLayout="column" fxLayout.gt-sm="row">
+			<div fxFlex="100" fxFlex.gt-sm="70">
+        		<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<!-- <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar> -->
+						<mat-card-content class="manga-detail-cover" fxLayout="row">
 
-            <div class="_2oeki">
-                <h1 class="_1_8ki mat-title" itemprop="name headline">Tonikaku Kawaii (Fly me to the moon)</h1>
-            </div>
-              
-            <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
-            <!-- <div class="f-title-2 mat-title"><span>GENRES</span></div> -->
-            
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
-        <mat-card>
-          <mat-card-content>
-            TEST
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  </div>
+							<div class="_3Aef5">
+							<div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
+								<div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
+								<img src="https://project-manga.oo/storage/cover/data/2019/02/513b1ff663fd005cbb1b0f14fc7230f3.jpg" alt="Tonikaku Kawaii (Fly me to the moon)" class="hGq41 _2NsiO">
+							</div>
+							</div>
+
+						<div fxLayout="column">
+							<h1 class="mat-h1" itemprop="name headline">Tonikaku Kawaii (Fly me to the moon)</h1>
+						</div>
+						
+						</mat-card-content>
+					</mat-card>
+				</div>
+
+				<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+						<mat-card-content fxLayout="row">
+							<mat-tab-group fxFlex="100">
+								<mat-tab label="SUMMARY">
+								<ng-template matTabContent>
+									Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
+								</ng-template>
+								</mat-tab>
+								<mat-tab label="DESCRIPTION">
+								<ng-template matTabContent>
+									Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
+								</ng-template>
+								</mat-tab>
+								<mat-tab label="STATS">
+								<ng-template matTabContent>
+									Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+								</ng-template>
+								</mat-tab>
+								<mat-tab label="AUTHORS">
+									<ng-template matTabContent>
+									Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
+									</ng-template>
+								</mat-tab>
+							</mat-tab-group>
+						</mat-card-content>
+					</mat-card>
+				</div>
+		
+				<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+						<mat-card-content fxLayout="row">
+						
+						</mat-card-content>
+					</mat-card>
+				</div>
+
+			</div>
+
+			<div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
+				<mat-card>
+					<mat-card-content>
+						TEST
+					</mat-card-content>
+				</mat-card>
+			</div>
+    	</div>
+	</div>
 
 </section>

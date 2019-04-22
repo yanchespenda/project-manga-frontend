@@ -8,6 +8,8 @@ import { DetailComponent } from '../components/manga/detail/detail.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const routes: Routes = [
   {
@@ -41,7 +43,9 @@ const routes: Routes = [
 
     FlexLayoutModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTabsModule,
+    MatProgressBarModule
   ]
 })
 export class MangaModule { }
