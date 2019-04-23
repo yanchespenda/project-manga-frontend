@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
+
 import {
   trigger,
   state,
@@ -37,7 +40,20 @@ export class DetailComponent implements OnInit {
     return this.tabLoadTimes[index];
   }
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+
+    iconRegistry.addSvgIcon('more_vert', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-more_vert-24px.svg'));
+    iconRegistry.addSvgIcon('flag', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-flag-24px.svg'));
+    iconRegistry.addSvgIcon('notifications', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-notifications-24px.svg'));
+    iconRegistry.addSvgIcon('favorite', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-favorite-24px.svg'));
+    iconRegistry.addSvgIcon('favorite_border',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-favorite_border-24px.svg'));
+    iconRegistry.addSvgIcon('share', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-share-24px.svg'));
+  }
 
   ngOnInit() {
     console.log(this.activatedRoute.snapshot.paramMap.get('id'));

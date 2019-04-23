@@ -10,6 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 const routes: Routes = [
   {
@@ -45,7 +48,10 @@ const routes: Routes = [
     MatCardModule,
     MatMenuModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule
   ]
 })
 export class MangaModule { }

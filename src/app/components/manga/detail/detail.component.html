@@ -16,8 +16,38 @@
 							</div>
 							</div>
 
-						<div fxLayout="column">
-							<h1 class="mat-h1" itemprop="name headline">Tonikaku Kawaii (Fly me to the moon)</h1>
+						<div fxLayout="column" fxFlex="100">
+							<div fxLayout="row">
+								<h1 class="mat-display-1">Tonikaku Kawaii</h1>
+								<span fxFlex></span>
+								<button mat-icon-button>
+									<mat-icon svgIcon="favorite_border"></mat-icon>
+								</button>
+								<button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA">
+									<mat-icon svgIcon="more_vert"></mat-icon>
+								</button>
+								<mat-menu #BTNMangaDetailsA="matMenu">
+									<button mat-menu-item>
+										<mat-icon svgIcon="share"></mat-icon>
+										<span>Share</span>
+									</button>
+									<button mat-menu-item>
+										<mat-icon svgIcon="notifications"></mat-icon>
+										<span>Subscribe Updates</span>
+									</button>
+									<mat-divider></mat-divider>
+									<button mat-menu-item>
+										<mat-icon svgIcon="flag"></mat-icon>
+										<span>Report Issue</span>
+									</button>
+									<!-- <button mat-menu-item disabled>
+										<mat-icon>voicemail</mat-icon>
+										<span>Check voicemail</span>
+									</button> -->
+									
+								</mat-menu>
+							</div>
+							
 						</div>
 						
 						</mat-card-content>
