@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  base_api_url: 'https://project-manga.oo/'
+  base_api_url: 'https://project-manga.oo/',
+  REQUEST_CREDENTIALS: true
 };
 
 /*

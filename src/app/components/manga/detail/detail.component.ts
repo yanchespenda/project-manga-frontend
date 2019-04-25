@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import { Title } from '@angular/platform-browser';
+import {DetailService} from './detail.service';
+import { throwError, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import {
   trigger,
@@ -32,6 +35,23 @@ export class DetailComponent implements OnInit {
   tabLoadTimes: Date[] = [];
   isLoad = true;
 
+  dataMangaA: any = {
+    id: 0,
+    title: 'loading...',
+    chapter: 0,
+    status: '',
+    type: '',
+    img_cvr: {
+      enabled: false,
+      thumb: '',
+      full: ''
+    },
+    img_bg: {
+      enabled: false,
+      full: ''
+    }
+  };
+
   getTimeLoaded(index: number) {
     if (!this.tabLoadTimes[index]) {
       this.tabLoadTimes[index] = new Date();
@@ -43,7 +63,9 @@ export class DetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private detailService: DetailService,
+    private titleTab: Title
   ) {
 
     iconRegistry.addSvgIcon('more_vert', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-more_vert-24px.svg'));
@@ -55,8 +77,47 @@ export class DetailComponent implements OnInit {
     iconRegistry.addSvgIcon('share', sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-share-24px.svg'));
   }
 
+  setTabTitle(title: string) {
+    this.titleTab.setTitle(title);
+  }
+
+  getImgResource(image: string) {
+    if (image) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+    }
+    return '';
+  }
+
   ngOnInit() {
-    console.log(this.activatedRoute.snapshot.paramMap.get('id'));
+    const CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.detailService.requestMangaA(CURRENT_ID).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        console.log(jsonData);
+        if (jsonData.error !== undefined) {
+          // this.isError = true;
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            this.dataMangaA = jsonData.data;
+            this.setTabTitle(this.dataMangaA.title);
+            console.log(this.dataMangaA);
+          } else {
+            // this.isError = true;
+          }
+        }
+      },
+      (err) => {
+        // this.isError = true;
+        console.error(err);
+      },
+      () => {
+        console.log('observable complete');
+        this.isLoad = false;
+      }
+    );
+
+    console.log(CURRENT_ID);
   }
 
 }

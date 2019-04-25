@@ -12,13 +12,13 @@
 							<div class="_3Aef5">
 							<div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
 								<div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
-								<img src="https://project-manga.oo/storage/cover/data/2019/02/513b1ff663fd005cbb1b0f14fc7230f3.jpg" alt="Tonikaku Kawaii (Fly me to the moon)" class="hGq41 _2NsiO">
+								<img [src]="getImgResource(dataMangaA.img_cvr.full)" alt="Tonikaku Kawaii (Fly me to the moon)" class="hGq41 _2NsiO">
 							</div>
 							</div>
 
 						<div fxLayout="column" fxFlex="100">
 							<div fxLayout="row">
-								<h1 class="mat-display-1">Tonikaku Kawaii</h1>
+								<h1 class="mat-display-1">{{dataMangaA.title}}</h1>
 								<span fxFlex></span>
 								<button mat-icon-button>
 									<mat-icon svgIcon="favorite_border"></mat-icon>
@@ -47,7 +47,7 @@
 									
 								</mat-menu>
 							</div>
-							
+							{{dataMangaA}}
 						</div>
 						
 						</mat-card-content>
