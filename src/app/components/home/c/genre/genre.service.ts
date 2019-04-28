@@ -1,3 +1,4 @@
+import { environment } from './../../../../../environments/environment';
 import { GenreModel } from './genre.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +16,7 @@ export class GenreService {
 
   public requestData() {
     const httpOptions = {
-      withCredentials: true
+      withCredentials: environment.REQUEST_CREDENTIALS
     };
     return this.http.get<GenreModel>(this.baseUrl, httpOptions);
   }

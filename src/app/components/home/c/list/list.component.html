@@ -16,7 +16,7 @@
                   <div class="cl-data-area-a">
                     <a [routerLink]="it.manga_link">
                       <div class="cl-data-image-thumb cl-data-image">
-                        <img [src]="getCover(it.img_cover.full)" alt="" class="hGq41 _1s6Xu">
+                        <img [lazyLoad]="it.img_cover.full" [defaultImage]="it.img_cover.thumb" alt="" class="hGq41 _1s6Xu">
                       </div>
                     </a>
                     <div class="_2wzxV">

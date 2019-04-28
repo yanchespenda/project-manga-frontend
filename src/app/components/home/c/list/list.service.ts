@@ -1,6 +1,9 @@
+import { environment } from './../../../../../environments/environment';
 import { ListModel } from './list.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+environment
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,7 @@ export class ListService {
 
   requestData() {
     const httpOptions = {
-      withCredentials: true
+      withCredentials: environment.REQUEST_CREDENTIALS
     };
 
     return this.http.get<any>(this.baseUrl, httpOptions);

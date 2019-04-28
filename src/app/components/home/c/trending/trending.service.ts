@@ -1,3 +1,4 @@
+import { environment } from './../../../../../environments/environment';
 import { TrendingModel } from './trending.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -32,7 +33,7 @@ export class TrendingService {
 
   requestData(theLink: string) {
     const httpOptions = {
-      withCredentials: true
+      withCredentials: environment.REQUEST_CREDENTIALS
     };
     return this.http.get<TrendingModel>(theLink, httpOptions);
   }

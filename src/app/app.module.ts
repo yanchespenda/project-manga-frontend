@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 // Material design components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -57,6 +58,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    LazyLoadImageModule,
 
     // Material Components
     MatToolbarModule,

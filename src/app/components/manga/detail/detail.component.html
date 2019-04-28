@@ -10,10 +10,10 @@
 						<mat-card-content class="manga-detail-cover" fxLayout="row">
 
 							<div class="_3Aef5">
-							<div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
-								<div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
-								<img [src]="getImgResource(dataMangaA.img_cvr.full)" alt="Tonikaku Kawaii (Fly me to the moon)" class="hGq41 _2NsiO">
-							</div>
+								<div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
+									<div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
+									<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="hGq41 _2NsiO">
+								</div>
 							</div>
 
 						<div fxLayout="column" fxFlex="100">
@@ -47,7 +47,7 @@
 									
 								</mat-menu>
 							</div>
-							{{dataMangaA}}
+							{{dataMangaA | json}}
 						</div>
 						
 						</mat-card-content>

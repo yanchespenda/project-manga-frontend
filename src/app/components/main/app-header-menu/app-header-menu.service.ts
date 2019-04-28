@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,7 +24,7 @@ export class AppHeaderMenuService {
    */
   requestHeadMenu() {
     const httpOptions = {
-      withCredentials: true
+      withCredentials: environment.REQUEST_CREDENTIALS
     };
 
     return this.http.get<HeadMenu>(this.headMenuUrl, httpOptions);
