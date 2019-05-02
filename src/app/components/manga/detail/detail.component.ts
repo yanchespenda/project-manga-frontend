@@ -34,6 +34,7 @@ import {
 export class DetailComponent implements OnInit {
   tabLoadTimes: Date[] = [];
   isLoad = true;
+  CURRENT_ID: any;
 
   dataMangaA: any = {
     id: 0,
@@ -88,9 +89,21 @@ export class DetailComponent implements OnInit {
     return '';
   }
 
+  initInfo() {
+
+  }
+
+  initSummary() {
+
+  }
+
+  initStats() {
+
+  }
+
   ngOnInit() {
-    const CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
-    this.detailService.requestMangaA(CURRENT_ID).pipe(
+    this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.detailService.requestMangaA(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
@@ -117,7 +130,6 @@ export class DetailComponent implements OnInit {
       }
     );
 
-    console.log(CURRENT_ID);
   }
 
 }

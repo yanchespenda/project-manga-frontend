@@ -59,12 +59,12 @@
 						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
 						<mat-card-content fxLayout="row">
 							<mat-tab-group fxFlex="100">
-								<mat-tab label="SUMMARY">
+								<mat-tab label="INFORMATION">
 								<ng-template matTabContent>
 									Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
 								</ng-template>
 								</mat-tab>
-								<mat-tab label="DESCRIPTION">
+								<mat-tab label="SUMMARY">
 								<ng-template matTabContent>
 									Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
 								</ng-template>
@@ -73,11 +73,6 @@
 								<ng-template matTabContent>
 									Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
 								</ng-template>
-								</mat-tab>
-								<mat-tab label="AUTHORS">
-									<ng-template matTabContent>
-									Content 3 - Loaded: {{getTimeLoaded(3) | date:'medium'}}
-									</ng-template>
 								</mat-tab>
 							</mat-tab-group>
 						</mat-card-content>
