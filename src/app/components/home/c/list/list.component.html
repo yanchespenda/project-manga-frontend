@@ -1,0 +1,96 @@
+<mat-card class="universal-loading-container">
+  <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+  <mat-card-content>
+      <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
+      <div class="f-title-2 mat-title"><span>Latest updates</span></div>
+
+      <div class="cl-container">
+        <div class="cl-container-i1">
+          <div class="cl-container-i2" *ngFor="let item of theList">
+            <div class="cl-data-title">
+              <span class="mat-subheading-2">{{item.day}}</span>
+            </div>
+            <div fxLayout="row wrap" >
+              <div class="cl-container-i3" *ngFor="let it of item.list" fxFlex="50%">
+                <div class="cl-data-cover">
+                  <div class="cl-data-area-a">
+                    <a [routerLink]="it.manga_link">
+                      <div class="cl-data-image-thumb cl-data-image">
+                        <img [lazyLoad]="it.img_cover.full" [defaultImage]="it.img_cover.thumb" alt="" class="hGq41 _1s6Xu">
+                      </div>
+                    </a>
+                    <div class="_2wzxV">
+                      <a [routerLink]="it.manga_link" data-test="latest-update-name" class="_2dU-m _21knv">{{it.manga_name}}</a>
+                      <div class="_8MJIu">6 new chapters</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="cl-container-i3" fxFlex="50%">
+                <div class="cl-data-cover">
+                  <div class="cl-data-area-a">
+                    <a routerLink="/" target="">
+                      <div class="cl-data-image-thumb cl-data-image">
+                        <img src="https://project-manga.oo/storage/cover/data/2019/02/f3e5596c4ed63e04dbdaf0d55d2b0cd5.jpg" alt="" class="hGq41 _1s6Xu">
+                      </div>
+                    </a>
+                    <div class="_2wzxV">
+                      <a routerLink="/manga/100423659" data-test="latest-update-name" target="" class="_2dU-m _21knv">Go-toubun no Hanayome</a>
+                      <div class="_8MJIu">6 new chapters</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cl-container-i3" fxFlex="50%">
+                <div class="cl-data-cover">
+                  <div class="cl-data-area-a">
+                    <a routerLink="/" target="">
+                      <div class="cl-data-image-thumb cl-data-image">
+                        <img src="https://project-manga.oo/storage/cover/data/2019/02/c894dd58b4d354bbda135218f996a870.jpg" alt="" class="hGq41 _1s6Xu">
+                      </div>
+                    </a>
+                    <div class="_2wzxV">
+                      <a routerLink="/manga/100423659" data-test="latest-update-name" target="" class="_2dU-m _21knv">Go-toubun no Hanayome</a>
+                      <div class="_8MJIu">6 new chapters</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cl-container-i3" fxFlex="50%">
+                <div class="cl-data-cover">
+                  <div class="cl-data-area-a">
+                    <a routerLink="/" target="">
+                      <div class="cl-data-image-thumb cl-data-image">
+                        <img src="https://project-manga.oo/storage/cover/data/2019/02/35653b03fff053d49a3dcea709b396f4.jpg" alt="" class="hGq41 _1s6Xu">
+                      </div>
+                    </a>
+                    <div class="_2wzxV">
+                      <a routerLink="/manga/100423659" data-test="latest-update-name" target="" class="_2dU-m _21knv">Go-toubun no Hanayome</a>
+                      <div class="_8MJIu">6 new chapters</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cl-container-i3" fxFlex="50%">
+                <div class="cl-data-cover">
+                  <div class="cl-data-area-a">
+                    <a routerLink="/" target="">
+                      <div class="cl-data-image-thumb cl-data-image">
+                        <img src="https://project-manga.oo/storage/cover/data/2019/02/513b1ff663fd005cbb1b0f14fc7230f3.jpg" alt="" class="hGq41 _1s6Xu">
+                      </div>
+                    </a>
+                    <div class="_2wzxV">
+                      <a routerLink="/manga/100423659" data-test="latest-update-name" target="" class="_2dU-m _21knv">Go-toubun no Hanayome</a>
+                      <div class="_8MJIu">6 new chapters</div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <p>Test</p>
+  </mat-card-content>
+</mat-card>

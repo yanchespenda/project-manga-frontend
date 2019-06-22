@@ -1,0 +1,18 @@
+<mat-card class="universal-loading-container">
+  <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+  <mat-card-content>
+    <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
+    <div class="f-title-2 mat-title"><span>GENRES</span></div>
+    <div *ngIf="!isError">
+        <a *ngFor="let genre of genres" [routerLink]="genre.link" class="genre-list">{{ genre.name }}</a>
+    </div>
+    <div *ngIf="isError" class="componen-error-container is-c-topchapter">
+      <div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+      <div class="componen-error-text mat-title">
+          <span>Failed to load data</span>
+        </div>
+        <button mat-button color="primary" (click)="topRefresh($event)">Retry load</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

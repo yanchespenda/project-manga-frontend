@@ -1,0 +1,30 @@
+@import '../../node_modules/@angular/material/theming';
+@include mat-core();
+
+$custom-theme-primary: mat-palette($mat-blue);
+$custom-theme-accent: mat-palette($mat-pink, A200, A100, A400);
+$custom-theme-warn: mat-palette($mat-red);
+
+$custom-theme: mat-light-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+
+@include angular-material-theme($custom-theme);
+
+$primary: mat-color($custom-theme-primary);
+$accent: mat-color($custom-theme-accent);
+$warn: mat-color($custom-theme-warn);
+
+// $blue: #1976D2;
+// $accentblue: #1E88E5;
+// $brightred: #DD0031;
+// $darkred: #C3002F;
+// $white: #FFFFFF;
+// $offwhite: #FAFAFA;
+// $backgroundgray: #F1F1F1;
+// $lightgray: #DBDBDB;
+// $mist: #ECEFF1;
+// $mediumgray: #6e6e6e;
+// $darkgray: #333;
+// $black: #0A1014;
+// $orange: #FF9800;
+// $darkorange: #940;
+// $anti-pattern: $brightred;

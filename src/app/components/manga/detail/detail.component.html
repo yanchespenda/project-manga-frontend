@@ -1,0 +1,150 @@
+<section class="universal-seksi seksi-cover">
+	<div style="width: 100%;height: 450px;">
+		<div style="background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
+	</div>
+
+	<div class="universal-container">
+    	<div fxLayout="column" fxLayout.gt-sm="row">
+			<div fxFlex="100" fxFlex.gt-sm="70">
+        		<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<!-- [style.background-image]="bg_data" [style.background-image]="getBackground(dataMangaA.img_bg.link)" [style.background-image]="'linear-gradient(transparent, rgba(0, 0, 0, 0.7)), url(' + get_bg() + ')'" <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar> -->
+						<mat-card-content class="manga-detail-cover" fxLayout="row">
+
+							<div class="_3Aef5">
+								<div class="xDVZZ _2KER_" style="padding-bottom:Infinity;border-radius:0;overflow:hidden;" itemprop="url">
+									<div class="_3H61R" style="border-radius:0;overflow:hidden"></div>
+									<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="hGq41 _2NsiO">
+								</div>
+							</div>
+
+						<div fxLayout="column" fxFlex="100">
+							<div fxLayout="row" class="title-container">
+								<h1 class="mat-display-1">{{dataMangaA.title}} {{ tabActiveIndex }}</h1>
+								<span fxFlex></span>
+								<button mat-icon-button>
+									<mat-icon svgIcon="favorite_border"></mat-icon>
+								</button>
+								<button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA">
+									<mat-icon svgIcon="more_vert"></mat-icon>
+								</button>
+								<mat-menu #BTNMangaDetailsA="matMenu">
+									<button mat-menu-item>
+										<mat-icon svgIcon="share"></mat-icon>
+										<span>Share</span>
+									</button>
+									<button mat-menu-item>
+										<mat-icon svgIcon="notifications"></mat-icon>
+										<span>Subscribe Updates</span>
+									</button>
+									<mat-divider></mat-divider>
+									<button mat-menu-item>
+										<mat-icon svgIcon="flag"></mat-icon>
+										<span>Report Issue</span>
+									</button>
+								</mat-menu>
+							</div>
+							<div>
+								<span *ngFor="let item of dataMangaA.author; let isLast=last"><a routerLink="{{ item.link }}" title="{{ item.name }}" class="mat-subheading-2"><span itemprop="name">{{ item.name }}</span></a><span class="mat-subheading-2" *ngIf="!isLast">, </span></span>
+							</div>
+							<div>
+								<span class="mat-subheading-2">{{dataMangaA.status}} | {{dataMangaA.chapter}} chapters</span>
+							</div>
+						</div>
+						
+						</mat-card-content>
+					</mat-card>
+				</div>
+
+				<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoadCards.a" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+						<mat-card-content fxLayout="row">
+							<mat-tab-group #tabGroupManga fxFlex="100" (focusChange)="tabChanged($event)">
+								<mat-tab label="INFORMATION" class="full-size">
+									<ng-template matTabContent>
+										<div class="universal-pad-top-bot">
+											<div fxLayout="column">
+												<mat-chip-list aria-label="Categories">
+													<mat-chip *ngFor="let item of dataTabA.genre; let isLast=last" routerLink="{{ item.link }}" title="{{ item.name }}">{{ item.name }}</mat-chip>
+													<!-- <mat-chip>Two fish</mat-chip>
+													<mat-chip color="primary" selected>Primary fish</mat-chip>
+													<mat-chip color="accent" selected>Accent fish</mat-chip> -->
+												</mat-chip-list>
+												<span class="mat-title universal-pad-top-24">SUMMARY</span>
+												<p class="mat-body-1">
+													{{ dataTabA.summary }}
+												</p>
+												<span class="mat-title universal-pad-top-24">OTHER FACTS</span>
+												<table class="manga-tabel">
+													<tbody>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Published</span></td>
+															<td><span class="mat-body-1">{{ dataTabA.releasedate }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Serialization</span></td>
+															<td><span class="mat-body-1">{{ dataTabA.type }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Last Updated</span></td>
+															<td><span class="mat-body-1">{{ dataTabA.latest }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Other names</span></td>
+															<td><span class="mat-body-1">{{ dataTabA.othername }}</span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
+									</ng-template>
+								</mat-tab>
+								<mat-tab label="STATS">
+									<ng-template matTabContent>
+										Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
+									</ng-template>
+								</mat-tab>
+							</mat-tab-group>
+						</mat-card-content>
+					</mat-card>
+				</div>
+		
+				<div class="layout-padding">
+					<mat-card class="universal-loading-container">
+						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoadCards.b" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
+						<mat-card-content fxLayout="column">
+							<div class="mat-title"><span>Chapters</span></div>
+							<mat-list>
+								<h3 mat-subheader>Folders</h3>
+								<mat-list-item *ngFor="let folder of folders">
+									<mat-icon mat-list-icon>folder</mat-icon>
+									<h4 mat-line>{{folder.name}}</h4>
+									<p mat-line> {{folder.updated | date}} </p>
+								</mat-list-item>
+								<mat-divider></mat-divider>
+								<h3 mat-subheader>Notes</h3>
+								<mat-list-item *ngFor="let note of notes">
+									<mat-icon mat-list-icon>note</mat-icon>
+									<h4 mat-line>{{note.name}}</h4>
+									<p mat-line> {{note.updated | date}} </p>
+								</mat-list-item>
+							</mat-list>
+						</mat-card-content>
+					</mat-card>
+				</div>
+
+			</div>
+
+			<div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
+				<mat-card>
+					<mat-card-content>
+						TEST
+					</mat-card-content>
+				</mat-card>
+			</div>
+    	</div>
+	</div>
+
+</section>
