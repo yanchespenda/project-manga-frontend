@@ -9,7 +9,7 @@ environment
   providedIn: 'root'
 })
 export class ListService {
-  baseUrl = 'https://project-manga.oo/v1/home/list.json';
+  baseUrl = environment.base_api_url + environment.base_api_version + '/home/list.json';
 
 
   constructor( private http: HttpClient ) { }

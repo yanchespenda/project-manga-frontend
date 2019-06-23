@@ -38,6 +38,13 @@ const routes: Routes = [
     // canActivate: [AuthGuardService],
     data: { title: 'Chapter', id: 5 }
   },
+  {
+    path: 'author',
+    loadChildren: './modules/author.module#AuthorModule',
+    // component: HomeComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Author', id: 6 }
+  },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];
 

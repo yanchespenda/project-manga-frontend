@@ -1,8 +1,18 @@
-<section class="universal-seksi seksi-cover">
-	<div style="width: 100%;height: 450px;">
-		<div style="background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));background-repeat: no-repeat;background-size: cover;width: 100%;height: 100%;" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
+<section *ngIf="isNotFound">
+	<div class="page-notice">
+		<div class="page-notice-child" fxLayout="column" fxLayoutAlign="center center" >
+			<mat-card class="universal-loading-container">
+				<mat-card-content fxLayout="column">
+					<div class="mat-title"><span>Manga Not Found</span></div>
+				</mat-card-content>
+			</mat-card>
+		</div>
 	</div>
-
+</section>
+<section class="universal-seksi seksi-cover" *ngIf="!isNotFound">
+	<div class="manga-detail-bg">
+		<div class="bg-default" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
+	</div>
 	<div class="universal-container">
     	<div fxLayout="column" fxLayout.gt-sm="row">
 			<div fxFlex="100" fxFlex.gt-sm="70">
@@ -103,6 +113,30 @@
 								</mat-tab>
 								<mat-tab label="STATS">
 									<ng-template matTabContent>
+										<div class="universal-pad-top-bot">
+											<div fxLayout="column">
+												<table class="manga-tabel">
+													<tbody>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">User favorites</span></td>
+															<td><span class="mat-body-1">{{ dataTabB.user_favorites }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">User subscribes</span></td>
+															<td><span class="mat-body-1">{{ dataTabB.user_subscribes }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Views today</span></td>
+															<td><span class="mat-body-1">{{ dataTabB.views_day }}</span></td>
+														</tr>
+														<tr>
+															<td class="manga-tabel-td"><span class="mat-body-1">Total views</span></td>
+															<td><span class="mat-body-1">{{ dataTabB.views_total }}</span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
 										Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
 									</ng-template>
 								</mat-tab>
@@ -117,19 +151,19 @@
 						<mat-card-content fxLayout="column">
 							<div class="mat-title"><span>Chapters</span></div>
 							<mat-list>
-								<h3 mat-subheader>Folders</h3>
+								<h3 mat-subheader>EN</h3>
 								<mat-list-item *ngFor="let folder of folders">
 									<mat-icon mat-list-icon>folder</mat-icon>
 									<h4 mat-line>{{folder.name}}</h4>
 									<p mat-line> {{folder.updated | date}} </p>
 								</mat-list-item>
-								<mat-divider></mat-divider>
+								<!-- <mat-divider></mat-divider>
 								<h3 mat-subheader>Notes</h3>
 								<mat-list-item *ngFor="let note of notes">
 									<mat-icon mat-list-icon>note</mat-icon>
 									<h4 mat-line>{{note.name}}</h4>
 									<p mat-line> {{note.updated | date}} </p>
-								</mat-list-item>
+								</mat-list-item> -->
 							</mat-list>
 						</mat-card-content>
 					</mat-card>

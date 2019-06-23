@@ -34,13 +34,20 @@ import {
 export class DetailComponent implements OnInit, AfterViewInit {
   @ViewChild('tabGroupManga', {static: false}) tabGroup;
   tabLoadTimes: Date[] = [];
-  tabActiveIndex: number = 0;
+  tabActiveIndex = 0;
+  isNotFound = false;
   isLoad = false;
+  isError = false;
+  isDone = false;
   isLoadCards = {
     a: false,
     b: false
   };
-  isError = false;
+  isErrorCards = {
+    a1: false,
+    a2: false,
+    b: false
+  };
   CURRENT_ID: any;
 
   dataMangaA: any = {
@@ -70,6 +77,17 @@ export class DetailComponent implements OnInit, AfterViewInit {
     latest: ''
   };
 
+  dataTabB: any = {
+    views_total: 0,
+    views_day: 0,
+    user_subscribes: 0,
+    user_favorites: 0
+  };
+
+  dataChapters: any = {
+
+  };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private iconRegistry: MatIconRegistry,
@@ -78,36 +96,42 @@ export class DetailComponent implements OnInit, AfterViewInit {
     private titleTab: Title
   ) {
 
-    iconRegistry.addSvgIcon('more_vert', 
+    iconRegistry.addSvgIcon('more_vert',
       this.getImgResource('assets/icons-md/baseline-more_vert-24px.svg'));
-    iconRegistry.addSvgIcon('flag', 
+    iconRegistry.addSvgIcon('flag',
       this.getImgResource('assets/icons-md/baseline-flag-24px.svg'));
-    iconRegistry.addSvgIcon('notifications', 
+    iconRegistry.addSvgIcon('notifications',
       this.getImgResource('assets/icons-md/baseline-notifications-24px.svg'));
-    iconRegistry.addSvgIcon('favorite', 
+    iconRegistry.addSvgIcon('favorite',
       this.getImgResource('assets/icons-md/baseline-favorite-24px.svg'));
     iconRegistry.addSvgIcon('favorite_border',
       this.getImgResource('assets/icons-md/baseline-favorite_border-24px.svg'));
-    iconRegistry.addSvgIcon('share', 
+    iconRegistry.addSvgIcon('share',
       this.getImgResource('assets/icons-md/baseline-share-24px.svg'));
   }
 
   getTimeLoaded(index: number) {
     if (!this.tabLoadTimes[index]) {
       this.tabLoadTimes[index] = new Date();
-
-      if(this.tabActiveIndex === 0) {
-        this.initInfo();
-      } else if(this.tabActiveIndex === 1) {
-        this.initStats();
-      }
+      this.runTabs();
     }
     // console.log(this.tabActiveIndex);
     // console.log();
     return this.tabLoadTimes[index];
   }
 
-  public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+  runTabs() {
+    if (this.isDone) {
+      if (this.tabActiveIndex === 0) {
+        this.initInfo();
+      } else if(this.tabActiveIndex === 1) {
+        this.initStats();
+      }
+      this.initChapters();
+    }
+  }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.tabActiveIndex = tabChangeEvent.index;
     // console.log(tabChangeEvent);
   }
@@ -123,9 +147,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
     return '';
   }
 
-  getStyleResource(style: string) {
-    if (style) {
-      return this.sanitizer.bypassSecurityTrustStyle(style);
+  getStyleResource(data: string) {
+    if (data) {
+      return this.sanitizer.bypassSecurityTrustStyle(data);
     }
     return '';
   }
@@ -142,17 +166,17 @@ export class DetailComponent implements OnInit, AfterViewInit {
       (jsonData) => {
         console.log(jsonData);
         if (jsonData.error !== undefined) {
-          this.isError = true;
+          this.isErrorCards.a1 = true;
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
             this.dataTabA = jsonData.data;
           } else {
-            this.isError = true;
+            this.isErrorCards.a1 = true;
           }
         }
       },
       (err) => {
-        this.isError = true;
+        this.isErrorCards.a1 = true;
         console.error(err);
       },
       () => {
@@ -163,11 +187,59 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   initStats() {
-
+    this.isLoadCards.a = true;
+    this.detailService.requestMangaStats(this.CURRENT_ID).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        console.log(jsonData);
+        if (jsonData.error !== undefined) {
+          this.isErrorCards.a2 = true;
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            this.dataTabB = jsonData.data;
+          } else {
+            this.isErrorCards.a2 = true;
+          }
+        }
+      },
+      (err) => {
+        this.isErrorCards.a2 = true;
+        console.error(err);
+      },
+      () => {
+        console.log('observable complete');
+        this.isLoadCards.a = false;
+      }
+    );
   }
 
-  initChapters() {
-
+  initChapters() { // requestMangaChapters
+    this.isLoadCards.b = true;
+    this.detailService.requestMangaChapters(this.CURRENT_ID).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        console.log(jsonData);
+        if (jsonData.error !== undefined) {
+          this.isErrorCards.b = true;
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            // this.dataTabB = jsonData.data;
+          } else {
+            this.isErrorCards.b = true;
+          }
+        }
+      },
+      (err) => {
+        this.isErrorCards.b = true;
+        console.error(err);
+      },
+      () => {
+        console.log('observable complete');
+        this.isLoadCards.b = false;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -181,14 +253,20 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           this.isError = true;
+          if (jsonData.error === 404) {
+            this.isNotFound = true;
+            this.setTabTitle(jsonData.message);
+          }
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
+            this.isDone = true;
             this.dataMangaA = jsonData.data;
             this.setTabTitle(this.dataMangaA.title);
-            console.log(this.dataMangaA);
+            // console.log(this.dataMangaA);
+            this.runTabs();
           } else {
             this.isError = true;
           }

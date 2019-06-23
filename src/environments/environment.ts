@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   base_api_url: '//project-manga.oo/',
+  base_api_version: 'v1',
   REQUEST_CREDENTIALS: true
 };
 

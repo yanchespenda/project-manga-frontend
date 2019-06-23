@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class TrendingService {
-  baseUrl = 'https://project-manga.oo/v1/home/trending/chapter/';
+  baseUrl = environment.base_api_url + environment.base_api_version + '/home/trending/chapter/';
   sortUrl;
 
   constructor( private http: HttpClient ) {

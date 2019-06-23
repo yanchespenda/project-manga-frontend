@@ -31,6 +31,7 @@ import {
 })
 export class ListComponent implements OnInit {
   isLoad = true;
+  isError = false;
   theList: any[];
 
   constructor(
@@ -38,7 +39,7 @@ export class ListComponent implements OnInit {
     private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    console.log('list init');
+    // console.log('list init');
     this.callReq();
   }
 
@@ -51,25 +52,25 @@ export class ListComponent implements OnInit {
 
   callReq() {
     this.isLoad = true;
-    // this.isError = false;
+    this.isError = false;
     this.listService.requestData().pipe(
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
         console.log(jsonData);
         if (jsonData.error !== undefined) {
-          // this.isError = true;
+          this.isError = true;
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
             this.theList = jsonData.data.list;
             console.log(this.theList);
           } else {
-            // this.isError = true;
+            this.isError = true;
           }
         }
       },
       (err) => {
-        // this.isError = true;
+        this.isError = true;
         console.error(err);
       },
       () => {

@@ -12,8 +12,7 @@ import { HeadMenu } from './app-header-menu-model';
   providedIn: 'root'
 })
 export class AppHeaderMenuService {
-  headMenuUrl = 'https://project-manga.oo/v1/menu/head.json';
-  // headMenuUrl = 'https://project-manga.oo/storage/json/menu/head.json';
+  headMenuUrl = environment.base_api_url + environment.base_api_version + '/menu/head.json';
 
   constructor( private http: HttpClient ) {
 

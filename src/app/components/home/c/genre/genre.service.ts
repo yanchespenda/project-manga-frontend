@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GenreService {
 
-  baseUrl = 'https://project-manga.oo/v1/home/genre.json';
+  baseUrl = environment.base_api_url + environment.base_api_version + '/home/genre.json';
 
   constructor( private http: HttpClient ) {
 

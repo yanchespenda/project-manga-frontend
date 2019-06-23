@@ -32,6 +32,7 @@ import { GenreComponent } from './components/home/c/genre/genre.component';
 
 import { AppHeaderComponent } from './components/main/app-header/app-header.component';
 import { AppHeaderMenuComponent } from './components/main/app-header-menu/app-header-menu.component';
+import { DatanotfoundComponent } from './components/helper/datanotfound/datanotfound.component';
 
 import { ErrorHandlerService } from './services/http/error-handler.service';
 import { InterceptorService } from './services/http/interceptor.service';
@@ -47,7 +48,8 @@ import { InterceptorService } from './services/http/interceptor.service';
     GenreComponent,
 
     AppHeaderComponent,
-    AppHeaderMenuComponent
+    AppHeaderMenuComponent,
+    DatanotfoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DetailService {
-  baseUrl = 'https://project-manga.oo/v1/manga/manga-';
+  baseUrl = environment.base_api_url +  environment.base_api_version + '/manga/manga-';
   fixUrl: string;
 
   constructor( private http: HttpClient ) { }
@@ -19,6 +19,18 @@ export class DetailService {
 
   requestMangaInfo(id: string) {
     this.fixUrl = 'information-' + id + '.json';
+    const urlFix = this.baseUrl + this.fixUrl;
+    return this.requestData(urlFix);
+  }
+
+  requestMangaStats(id: string) {
+    this.fixUrl = 'stats-' + id + '.json';
+    const urlFix = this.baseUrl + this.fixUrl;
+    return this.requestData(urlFix);
+  }
+
+  requestMangaChapters(id: string) {
+    this.fixUrl = 'chapter-' + id + '.json';
     const urlFix = this.baseUrl + this.fixUrl;
     return this.requestData(urlFix);
   }
