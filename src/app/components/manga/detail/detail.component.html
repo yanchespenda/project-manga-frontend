@@ -9,7 +9,17 @@
 		</div>
 	</div>
 </section>
-<section class="universal-seksi seksi-cover" *ngIf="!isNotFound">
+<section *ngIf="isErrorCards.x">
+	<div class="componen-error-container is-c-topchapter">
+		<div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+			<div class="componen-error-text mat-title">
+				<span>Failed to load data</span>
+			</div>
+			<button mat-button color="primary" (click)="initManga()">Retry load</button>
+		</div>
+	</div>
+</section>
+<section class="universal-seksi seksi-cover" *ngIf="!isNotFound && !isErrorCards.x">
 	<div class="manga-detail-bg">
 		<div class="bg-default" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
 	</div>
@@ -33,9 +43,15 @@
 								<h1 class="mat-display-1">{{dataMangaA.title}} {{ tabActiveIndex }}</h1>
 								<span fxFlex></span>
 								<button mat-icon-button>
-									<mat-icon svgIcon="favorite_border"></mat-icon>
+									<mat-icon svgIcon="share"></mat-icon>
 								</button>
-								<button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA">
+								<button mat-icon-button>
+									<mat-icon svgIcon="flag"></mat-icon>
+								</button>
+								<!-- <button mat-icon-button>
+									<mat-icon svgIcon="favorite_border"></mat-icon>
+								</button> -->
+								<!-- <button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA">
 									<mat-icon svgIcon="more_vert"></mat-icon>
 								</button>
 								<mat-menu #BTNMangaDetailsA="matMenu">
@@ -52,7 +68,7 @@
 										<mat-icon svgIcon="flag"></mat-icon>
 										<span>Report Issue</span>
 									</button>
-								</mat-menu>
+								</mat-menu> -->
 							</div>
 							<div>
 								<span *ngFor="let item of dataMangaA.author; let isLast=last"><a routerLink="{{ item.link }}" title="{{ item.name }}" class="mat-subheading-2"><span itemprop="name">{{ item.name }}</span></a><span class="mat-subheading-2" *ngIf="!isLast">, </span></span>
@@ -74,7 +90,8 @@
 								<mat-tab label="INFORMATION" class="full-size">
 									<ng-template matTabContent>
 										<div class="universal-pad-top-bot">
-											<div fxLayout="column">
+											<div fxLayout="column" *ngIf="!isErrorCards.a1">
+												<span class="mat-title">GENRES</span>
 												<mat-chip-list aria-label="Categories">
 													<mat-chip *ngFor="let item of dataTabA.genre; let isLast=last" routerLink="{{ item.link }}" title="{{ item.name }}">{{ item.name }}</mat-chip>
 													<!-- <mat-chip>Two fish</mat-chip>
@@ -107,6 +124,14 @@
 													</tbody>
 												</table>
 											</div>
+											<div *ngIf="isErrorCards.a1" class="componen-error-container is-c-topchapter">
+												<div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+													<div class="componen-error-text mat-title">
+														<span>Failed to load data</span>
+													</div>
+													<button mat-button color="primary" (click)="initInfo()">Retry load</button>
+												</div>
+											</div>
 										</div>
 										Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
 									</ng-template>
@@ -115,7 +140,7 @@
 									<ng-template matTabContent>
 										<div class="universal-pad-top-bot">
 											<div fxLayout="column">
-												<table class="manga-tabel">
+												<table class="manga-tabel" *ngIf="!isErrorCards.a2">
 													<tbody>
 														<tr>
 															<td class="manga-tabel-td"><span class="mat-body-1">User favorites</span></td>
@@ -135,6 +160,14 @@
 														</tr>
 													</tbody>
 												</table>
+												<div *ngIf="isErrorCards.a2" class="componen-error-container is-c-topchapter">
+													<div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+														<div class="componen-error-text mat-title">
+															<span>Failed to load data</span>
+														</div>
+														<button mat-button color="primary" (click)="initStats()">Retry load</button>
+													</div>
+												</div>
 											</div>
 										</div>
 										Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
@@ -144,27 +177,30 @@
 						</mat-card-content>
 					</mat-card>
 				</div>
-		
+
 				<div class="layout-padding">
 					<mat-card class="universal-loading-container">
 						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoadCards.b" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
 						<mat-card-content fxLayout="column">
-							<div class="mat-title"><span>Chapters</span></div>
-							<mat-list>
-								<h3 mat-subheader>EN</h3>
-								<mat-list-item *ngFor="let folder of folders">
-									<mat-icon mat-list-icon>folder</mat-icon>
-									<h4 mat-line>{{folder.name}}</h4>
-									<p mat-line> {{folder.updated | date}} </p>
+							<div class="mat-title"><span>Chapters {{ isErrorCards | json }}</span></div>
+							<mat-list *ngIf="!isErrorCards.b">
+								<!-- <h3 mat-subheader>EN</h3> -->
+								<mat-list-item *ngFor="let item of dataChapters.list; let isLast=last">
+									<h4 mat-line><a title="{{ item.name }}" routerLink="{{ item.link }}">{{item.name}}</a></h4>
+									<mat-action-list>
+										<span class="mat-caption" mat-line>{{item.release}}</span>
+									</mat-action-list>
+									<mat-divider [inset]="true" *ngIf="!isLast"></mat-divider>
 								</mat-list-item>
-								<!-- <mat-divider></mat-divider>
-								<h3 mat-subheader>Notes</h3>
-								<mat-list-item *ngFor="let note of notes">
-									<mat-icon mat-list-icon>note</mat-icon>
-									<h4 mat-line>{{note.name}}</h4>
-									<p mat-line> {{note.updated | date}} </p>
-								</mat-list-item> -->
 							</mat-list>
+							<div *ngIf="isErrorCards.b" class="componen-error-container is-c-topchapter">
+								<div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
+									<div class="componen-error-text mat-title">
+										<span>Failed to load data</span>
+									</div>
+									<button mat-button color="primary" (click)="initChapters()">Retry load</button>
+								</div>
+							</div>
 						</mat-card-content>
 					</mat-card>
 				</div>

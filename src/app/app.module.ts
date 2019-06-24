@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { CookieService } from 'ngx-cookie-service';
 
 // Material design components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -33,6 +34,7 @@ import { GenreComponent } from './components/home/c/genre/genre.component';
 import { AppHeaderComponent } from './components/main/app-header/app-header.component';
 import { AppHeaderMenuComponent } from './components/main/app-header-menu/app-header-menu.component';
 import { DatanotfoundComponent } from './components/helper/datanotfound/datanotfound.component';
+import { FooterComponent } from './components/main/footer/footer.component';
 
 import { ErrorHandlerService } from './services/http/error-handler.service';
 import { InterceptorService } from './services/http/interceptor.service';
@@ -49,6 +51,7 @@ import { InterceptorService } from './services/http/interceptor.service';
 
     AppHeaderComponent,
     AppHeaderMenuComponent,
+    FooterComponent,
     DatanotfoundComponent
   ],
   imports: [
@@ -82,7 +85,8 @@ import { InterceptorService } from './services/http/interceptor.service';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true,
-    }
+    },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

@@ -37,17 +37,18 @@ export class DetailComponent implements OnInit, AfterViewInit {
   tabActiveIndex = 0;
   isNotFound = false;
   isLoad = false;
-  isError = false;
   isDone = false;
   isLoadCards = {
     a: false,
     b: false
   };
   isErrorCards = {
+    x: false,
     a1: false,
     a2: false,
     b: false
   };
+  chapterFirstLoad = false;
   CURRENT_ID: any;
 
   dataMangaA: any = {
@@ -85,7 +86,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   };
 
   dataChapters: any = {
-
+    list: []
   };
 
   constructor(
@@ -127,7 +128,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
       } else if(this.tabActiveIndex === 1) {
         this.initStats();
       }
-      this.initChapters();
+      if (!this.chapterFirstLoad) {
+        this.initChapters();
+      }
     }
   }
 
@@ -160,6 +163,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   initInfo() {
     this.isLoadCards.a = true;
+    this.isErrorCards.a1 = false;
     this.detailService.requestMangaInfo(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
@@ -188,6 +192,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   initStats() {
     this.isLoadCards.a = true;
+    this.isErrorCards.a2 = false;
     this.detailService.requestMangaStats(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
@@ -214,8 +219,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  initChapters() { // requestMangaChapters
+  initChapters() {
     this.isLoadCards.b = true;
+    this.isErrorCards.b = false;
     this.detailService.requestMangaChapters(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
@@ -225,7 +231,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
           this.isErrorCards.b = true;
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
-            // this.dataTabB = jsonData.data;
+            this.chapterFirstLoad = true;
+            this.dataChapters = jsonData.data;
           } else {
             this.isErrorCards.b = true;
           }
@@ -242,20 +249,15 @@ export class DetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit() {
-    console.log(this.tabGroup.selectedIndex);
-  }
-
-  ngOnInit() {
-    this.isLoad = true;
-    this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
+  initManga() {
+    this.isErrorCards.x = false;
     this.detailService.requestMangaA(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
         // console.log(jsonData);
         if (jsonData.error !== undefined) {
-          this.isError = true;
+          this.isErrorCards.x = true;
           if (jsonData.error === 404) {
             this.isNotFound = true;
             this.setTabTitle(jsonData.message);
@@ -268,12 +270,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
             // console.log(this.dataMangaA);
             this.runTabs();
           } else {
-            this.isError = true;
+            this.isErrorCards.x = true;
           }
         }
       },
       (err) => {
-        this.isError = true;
+        this.isErrorCards.x = true;
         console.error(err);
       },
       () => {
@@ -281,6 +283,16 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.isLoad = false;
       }
     );
+  }
+
+  ngAfterViewInit() {
+    console.log(this.tabGroup.selectedIndex);
+  }
+
+  ngOnInit() {
+    this.isLoad = true;
+    this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.initManga();
 
   }
 

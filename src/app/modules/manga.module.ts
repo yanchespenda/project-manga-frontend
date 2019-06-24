@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { Routes, RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+
 import { DetailComponent } from '../components/manga/detail/detail.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -61,6 +63,7 @@ const routes: Routes = [
     MatChipsModule,
     MatTableModule,
     MatListModule
-  ]
+  ],
+  providers: [ CookieService ],
 })
 export class MangaModule { }
