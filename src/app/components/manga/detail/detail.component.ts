@@ -100,6 +100,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     subscribe: false
   };
 
+  isFavoriteRun = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private iconRegistry: MatIconRegistry,
@@ -304,7 +306,42 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   toggleFavorite() {
-    // c this.snackbar.open(err.message, 'close');
+    if (!this.isFavoriteRun) {
+      this.isFavoriteRun = true;
+      if (this.dataUser.favorite) {
+        this.dataUser.favorite = false;
+      } else {
+        this.dataUser.favorite = true;
+      }
+      this.detailService.sendFavorite(this.CURRENT_ID, this.currentUser.token, this.dataUser.favorite).pipe(
+        catchError(val => of(val))
+      ).subscribe(
+        (jsonData) => {
+          console.log(jsonData);
+          if (jsonData.error !== undefined) {
+            // this.isErrorCards.b = true;
+          } else {
+            if (jsonData.status !== undefined && jsonData.status) {
+              // this.chapterFirstLoad = true;
+              this.matSnackBar.open('Favorite updated', 'close');
+            } else {
+              // this.isErrorCards.b = true;
+            }
+          }
+        },
+        (err) => {
+          // this.isErrorCards.b = true;
+          console.error(err);
+        },
+        () => {
+          this.isFavoriteRun = false;
+          // console.log('observable complete');
+          // this.isLoadCards.b = false;
+        }
+      );
+    }
+    // c this.snackbar.open(err.message, 'close'); sendFavorite
+
   }
 
   initUserData() {

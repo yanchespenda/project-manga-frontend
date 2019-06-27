@@ -44,15 +44,19 @@ export class DetailService {
     return this.requestData(urlFix, headerparam);
   }
 
+  sendFavorite(mid: string, token: string, current: any) {
+    const param = new HttpParams()
+                    .set('todo', current);
+    return this.sendDataUsers(mid, token, 1, param);
+  }
+
   sendDataUsers(mid: string, token: string, type: number, param: any) {
     this.fixUrl = 'user/' + type + '/' + mid + '.json';
     const urlFix = this.baseUrl + this.fixUrl;
-    let data = new HttpParams();
     const headerparam = {
-      Authorization: 'Bearer ' + token,
-      params: data
+      Authorization: 'Bearer ' + token
     };
-    return this.requestData(urlFix, headerparam);
+    return this.sendData(urlFix, headerparam, param);
   }
 
   requestData(theLink: string, header: any) {
@@ -66,10 +70,9 @@ export class DetailService {
   sendData(theLink: string, header: any, param: any) {
     const httpOptions = {
       headers: header,
-      params: param,
       withCredentials: environment.REQUEST_CREDENTIALS
     };
-    return this.http.post<any>(theLink, httpOptions);
+    return this.http.post<any>(theLink, param, httpOptions);
   }
 
 
