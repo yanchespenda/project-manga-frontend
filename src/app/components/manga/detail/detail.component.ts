@@ -1,11 +1,15 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry, MatTabChangeEvent} from '@angular/material';
 import { Title } from '@angular/platform-browser';
-import {DetailService} from './detail.service';
+import { DetailService } from './detail.service';
 import { throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { CookieService } from 'ngx-cookie-service';
+import { MatSnackBar } from '@angular/material';
 
 import {
   trigger,
@@ -42,6 +46,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     a: false,
     b: false
   };
+  isLogin = false;
   isErrorCards = {
     x: false,
     a1: false,
@@ -50,6 +55,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   };
   chapterFirstLoad = false;
   CURRENT_ID: any;
+  currentUser: any;
 
   dataMangaA: any = {
     id: 0,
@@ -89,12 +95,20 @@ export class DetailComponent implements OnInit, AfterViewInit {
     list: []
   };
 
+  dataUser: any = {
+    favorite: false,
+    subscribe: false
+  };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private detailService: DetailService,
-    private titleTab: Title
+    private titleTab: Title,
+    private cookieService: CookieService,
+    private authService: AuthService,
+    private matSnackBar: MatSnackBar
   ) {
 
     iconRegistry.addSvgIcon('more_vert',
@@ -103,6 +117,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.getImgResource('assets/icons-md/baseline-flag-24px.svg'));
     iconRegistry.addSvgIcon('notifications',
       this.getImgResource('assets/icons-md/baseline-notifications-24px.svg'));
+    iconRegistry.addSvgIcon('notifications_off',
+      this.getImgResource('assets/icons-md/baseline-notifications_off-24px.svg'));
     iconRegistry.addSvgIcon('favorite',
       this.getImgResource('assets/icons-md/baseline-favorite-24px.svg'));
     iconRegistry.addSvgIcon('favorite_border',
@@ -116,8 +132,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.tabLoadTimes[index] = new Date();
       this.runTabs();
     }
-    // console.log(this.tabActiveIndex);
-    // console.log();
     return this.tabLoadTimes[index];
   }
 
@@ -168,7 +182,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           this.isErrorCards.a1 = true;
         } else {
@@ -184,7 +198,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
         this.isLoadCards.a = false;
       }
     );
@@ -197,7 +211,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           this.isErrorCards.a2 = true;
         } else {
@@ -213,7 +227,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
         this.isLoadCards.a = false;
       }
     );
@@ -226,7 +240,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           this.isErrorCards.b = true;
         } else {
@@ -243,7 +257,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
         this.isLoadCards.b = false;
       }
     );
@@ -269,6 +283,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
             this.setTabTitle(this.dataMangaA.title);
             // console.log(this.dataMangaA);
             this.runTabs();
+
+            if (this.isLogin) {
+              this.initUserData();
+            }
           } else {
             this.isErrorCards.x = true;
           }
@@ -279,14 +297,56 @@ export class DetailComponent implements OnInit, AfterViewInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
         this.isLoad = false;
       }
     );
   }
 
+  toggleFavorite() {
+    // c this.snackbar.open(err.message, 'close');
+  }
+
+  initUserData() {
+    this.detailService.requestDataUsers(this.CURRENT_ID, this.currentUser.token).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        console.log(jsonData);
+        if (jsonData.error !== undefined) {
+          // this.isErrorCards.b = true;
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            // this.chapterFirstLoad = true;
+            this.dataUser = jsonData.data;
+          } else {
+            // this.isErrorCards.b = true;
+          }
+        }
+      },
+      (err) => {
+        // this.isErrorCards.b = true;
+        console.error(err);
+      },
+      () => {
+        // console.log('observable complete');
+        // this.isLoadCards.b = false;
+      }
+    );
+  }
+
+
+  getIsLogin() {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser !== null) {
+      this.isLogin = true;
+      // this.initUserData();
+    }
+  }
+
   ngAfterViewInit() {
     console.log(this.tabGroup.selectedIndex);
+    this.getIsLogin();
   }
 
   ngOnInit() {
@@ -294,6 +354,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
     this.initManga();
 
+    const setUser = {
+      id: 1,
+      username: 'string;',
+      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOlwvXC9wcm9qZWN0LW1hbmdhLm9vXC8iLCJhdWQiOiJodHRwOlwvXC9wcm9qZWN0LW1hbmdhLm9vXC8iLCJpYXQiOjE1NjE0NTU2NzYsIm5iZiI6MTU2MTQ1NTY3NywiZXhwIjoxNTY0MDQ3Njc2LCJjbG0iOiJleUpwZGlJNklreENiVEoyTW1kb1oxbERXRlpoWjNaSlNrSmNMMlZuUFQwaUxDSjJZV3gxWlNJNklscENjR0l6ZDBKamNIUnNNRFp3ZUZWalJrMU5lbUZVZFZoUk4wdFhVMGxEYjNOd05tTm9OWFY0VG04OUlpd2liV0ZqSWpvaU5USXhOekptTkdWaFpqWXdOVGxrWTJaalpHWmtOek0zWldVNVlXWTRObVV4T1RSak1XRXpPREZsTTJZeU4yRTJaVGd5WkRrd05EVmxOamd6TURabU5pSjkifQ.qFyTIV-PXdebHSFP05GnTCZIYuDRWZ-s3BYNZqq_JvpSPGqcxtnSo6QPplBpxS05sUD--0Hbd420904puBMBPQ'
+    };
+    // this.cookieService.set( 'currentUser', JSON.stringify(setUser) );
   }
 
 }

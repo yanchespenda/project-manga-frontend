@@ -38,45 +38,48 @@
 								</div>
 							</div>
 
-						<div fxLayout="column" fxFlex="100">
-							<div fxLayout="row" class="title-container">
-								<h1 class="mat-display-1">{{dataMangaA.title}} {{ tabActiveIndex }}</h1>
-								<span fxFlex></span>
-								<button mat-icon-button>
-									<mat-icon svgIcon="share"></mat-icon>
-								</button>
-								<button mat-icon-button>
-									<mat-icon svgIcon="flag"></mat-icon>
-								</button>
-								<!-- <button mat-icon-button>
-									<mat-icon svgIcon="favorite_border"></mat-icon>
-								</button> -->
-								<!-- <button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA">
-									<mat-icon svgIcon="more_vert"></mat-icon>
-								</button>
-								<mat-menu #BTNMangaDetailsA="matMenu">
-									<button mat-menu-item>
+							<div fxLayout="column" fxFlex="100">
+								<div fxLayout="row" class="title-container">
+									<h1 class="mat-display-1">{{dataMangaA.title}} {{ tabActiveIndex }}</h1>
+									<span fxFlex></span>
+									<button mat-icon-button *ngIf="!isLogin">
 										<mat-icon svgIcon="share"></mat-icon>
-										<span>Share</span>
 									</button>
-									<button mat-menu-item>
-										<mat-icon svgIcon="notifications"></mat-icon>
-										<span>Subscribe Updates</span>
-									</button>
-									<mat-divider></mat-divider>
-									<button mat-menu-item>
+									<button mat-icon-button *ngIf="!isLogin">
 										<mat-icon svgIcon="flag"></mat-icon>
-										<span>Report Issue</span>
 									</button>
-								</mat-menu> -->
+									<button mat-icon-button *ngIf="isLogin">
+										<mat-icon svgIcon="favorite_border" *ngIf="!dataUser.favorite"></mat-icon>
+										<mat-icon svgIcon="favorite" *ngIf="dataUser.favorite"></mat-icon>
+									</button>
+									<button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA" *ngIf="isLogin">
+										<mat-icon svgIcon="more_vert"></mat-icon>
+									</button>
+									<mat-menu #BTNMangaDetailsA="matMenu">
+										<button mat-menu-item>
+											<mat-icon svgIcon="share"></mat-icon>
+											<span>Share</span>
+										</button>
+										<button mat-menu-item>
+											<mat-icon *ngIf="!dataUser.subscribe" svgIcon="notifications"></mat-icon>
+											<mat-icon *ngIf="dataUser.subscribe" svgIcon="notifications_off"></mat-icon>
+											<span *ngIf="!dataUser.subscribe">Subscribe Updates</span>
+											<span *ngIf="dataUser.subscribe">Unsubscribe Updates</span>
+										</button>
+										<mat-divider></mat-divider>
+										<button mat-menu-item>
+											<mat-icon svgIcon="flag"></mat-icon>
+											<span>Report Issue</span>
+										</button>
+									</mat-menu>
+								</div>
+								<div>
+									<span *ngFor="let item of dataMangaA.author; let isLast=last"><a *ngIf="item.name!='Unknown'" routerLink="{{ item.link }}" title="{{ item.name }}" class="mat-subheading-2"><span itemprop="name">{{ item.name }}</span></a><span itemprop="name" *ngIf="item.name=='Unknown'" class="mat-subheading-2">{{ item.name }}</span><span class="mat-subheading-2" *ngIf="!isLast">, </span></span>
+								</div>
+								<div>
+									<span class="mat-subheading-2">{{dataMangaA.status}} | {{dataMangaA.chapter}} chapters</span>
+								</div>
 							</div>
-							<div>
-								<span *ngFor="let item of dataMangaA.author; let isLast=last"><a routerLink="{{ item.link }}" title="{{ item.name }}" class="mat-subheading-2"><span itemprop="name">{{ item.name }}</span></a><span class="mat-subheading-2" *ngIf="!isLast">, </span></span>
-							</div>
-							<div>
-								<span class="mat-subheading-2">{{dataMangaA.status}} | {{dataMangaA.chapter}} chapters</span>
-							</div>
-						</div>
 						
 						</mat-card-content>
 					</mat-card>

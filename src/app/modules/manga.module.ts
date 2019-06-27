@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   {
@@ -62,7 +63,8 @@ const routes: Routes = [
     MatDividerModule,
     MatChipsModule,
     MatTableModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
   ],
   providers: [ CookieService ],
 })

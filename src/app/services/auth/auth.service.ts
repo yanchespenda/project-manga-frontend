@@ -18,8 +18,9 @@ export class AuthService {
     private http: HttpClient,
     private cookieService: CookieService
   ) {
-    const temp_local = localStorage.getItem('currentUser');
-    let temp_data, isLocalPass = false;
+    const temp_local = cookieService.get('currentUser');
+    let temp_data;
+    let isLocalPass = false;
 
     console.group( 'JWT Report:' );
 
@@ -59,7 +60,7 @@ export class AuthService {
     }
   }
 
-  // Username
+  /* // Username
   login_1(username: string, csrfData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -75,9 +76,9 @@ export class AuthService {
       .pipe(map(result => {
           return result;
       }));
-  }
+  } */
 
-  // Password
+  /* // Password
   login_2(password: string, skl: string, csrfData: any) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -99,84 +100,10 @@ export class AuthService {
           }
           return result;
       }));
-  }
-
-  // PINS
-  login_3(pin: string, password: string, skl: string, csrfData: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
-      }),
-      withCredentials: environment.REQUEST_CREDENTIALS
-    };
-    const data = new HttpParams()
-      .set('pin', pin)
-      .set('password', password)
-      .set('skl', skl)
-      .set('csrf_name', csrfData['name'])
-      .set('csrf_value', csrfData['value']);
-    return this.http.post<any>(`${environment.base_api_url}v1/account/login/3`, data, httpOptions)
-      .pipe(map(result => {
-          if (result.data.status && result.data.result.code === 1 && result.data.result.data !== undefined) {
-              localStorage.setItem('currentUser', JSON.stringify(result.data.result.data));
-              this.currentUserSubject.next(result.data.result.data);
-              this.isValidUser = true;
-          }
-          return result;
-      }));
-  }
-
-  // Recovery Code
-  login_4(rrc: string, password: string, skl: string, csrfData: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
-      }),
-      withCredentials: environment.REQUEST_CREDENTIALS
-    };
-    const data = new HttpParams()
-      .set('rrc', rrc)
-      .set('password', password)
-      .set('skl', skl)
-      .set('csrf_name', csrfData['name'])
-      .set('csrf_value', csrfData['value']);
-    return this.http.post<any>(`${environment.base_api_url}v1/account/login/4`, data, httpOptions)
-      .pipe(map(result => {
-          if (result.data.status && result.data.result.code === 1 && result.data.result.data !== undefined) {
-              localStorage.setItem('currentUser', JSON.stringify(result.data.result.data));
-              this.currentUserSubject.next(result.data.result.data);
-              this.isValidUser = true;
-          }
-          return result;
-      }));
-  }
-
-  // Reset
-  login_5(email: string, type, skl: string, csrfData: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
-      }),
-      withCredentials: environment.REQUEST_CREDENTIALS
-    };
-    const data = new HttpParams()
-      .set('email', email)
-      .set('skl', skl)
-      .set('type', type)
-      .set('csrf_name', csrfData['name'])
-      .set('csrf_value', csrfData['value']);
-    return this.http.post<any>(`${environment.base_api_url}v1/account/login/5`, data, httpOptions)
-      .pipe(map(result => {
-          if (result.data.status && result.data.result.code === 1 && result.data.result.data !== undefined) {
-              // localStorage.setItem('currentUser', JSON.stringify(result.data.result.data));
-              // this.currentUserSubject.next(result.data.result.data);
-          }
-          return result;
-      }));
-  }
+  } */
 
   logout() {
-    localStorage.removeItem('currentUser');
+    this.cookieService.delete('currentUser');
     this.currentUserSubject.next(null);
   }
 
