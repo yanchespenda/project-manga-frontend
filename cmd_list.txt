@@ -10,6 +10,22 @@ ng g @schematics/angular:component {NAME} --project=frontend --module {NAME} --s
 /* Author Command */
 ng g @schematics/angular:module modules/author --project=frontend --flat
 ng g @schematics/angular:component components/author/index --project=frontend --skipImport --no-interactive
-ng g @schematics/angular:service components/author/index --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:service components/author/index --project=frontend --no-interactive
 ng g @schematics/angular:component components/author/detail --project=frontend --skipImport --no-interactive
 ng g @schematics/angular:service components/author/detail/detail --project=frontend --no-interactive
+
+/* Account Command Without Module */
+ng g @schematics/angular:component components/account/wom/signin --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:component components/account/wom/signup --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:service components/account/wom/signin/signin --project=frontend --no-interactive
+ng g @schematics/angular:service components/account/wom/signup/signup --project=frontend --no-interactive
+
+/* Account Command With Module */
+ng g @schematics/angular:module modules/account --project=frontend --flat
+ng g @schematics/angular:component components/account/wm/index --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:component components/account/wm/setting --project=frontend --skipImport --no-interactive
+
+/* Admin Command */
+ng g @schematics/angular:module modules/admin --project=frontend --flat
+
+

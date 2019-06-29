@@ -205,6 +205,32 @@ manga-app-header-menu {
             padding: 8px 16px;
         }
     }
+
+}
+
+manga-app-header{
+    .mat-toolbar{
+
+        -moz-transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
+        -moz-transition-duration: 0.4s;
+        -moz-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        -webkit-transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
+        -webkit-transition-duration: 0.4s;
+        -webkit-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
+        transition-duration: 0.4s;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+
+        transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+    }
+
+    .mat-toolbar.notActive{
+        transform: translateY(-100%);
+        -webkit-transform: translateY(-100%);
+        -moz-transform: translateY(-100%);
+    }
 }
 
 .mat-card-title-1{
@@ -351,4 +377,45 @@ manga-app-header-menu {
 
 .page-notice-child{
     height: 100%;
+}
+
+
+.layout, .layout-column, .layout-row {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex; 
+}
+
+.layout-column {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+            flex-direction: column; 
+}
+
+.layout-row {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+            flex-direction: row; 
+}
+
+.layout-align-start-center, .layout-align-center-center, .layout-align-end-center, .layout-align-space-between-center, .layout-align-space-around-center {
+    align-items: center;
+    align-content: center;
+    max-width: 100%;
+}
+
+.layout-align-center, .layout-align-center-start, .layout-align-center-center, .layout-align-center-end, .layout-align-center-stretch {
+    justify-content: center;
+}
+
+.layout-row > .flex {
+    min-width: 0;
+}
+
+.flex {
+    flex: 1;
+    box-sizing: border-box;
 }

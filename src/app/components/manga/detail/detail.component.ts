@@ -322,7 +322,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
           } else {
             if (jsonData.status !== undefined && jsonData.status) {
               this.dataUser.favorite = jsonData.data.set;
-              this.matSnackBar.open(jsonData.data.msg, 'close');
+              this.matSnackBar.open(jsonData.data.msg, 'close', {
+                duration: 3000
+              });
             } else {
               // this.isErrorCards.b = true;
             }
@@ -352,7 +354,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
           } else {
             if (jsonData.status !== undefined && jsonData.status) {
               this.dataUser.subscribe = jsonData.data.set;
-              this.matSnackBar.open(jsonData.data.msg, 'close');
+              this.matSnackBar.open(jsonData.data.msg, 'close', {
+                duration: 3000
+              });
             } else {
               // this.isErrorCards.b = true;
             }

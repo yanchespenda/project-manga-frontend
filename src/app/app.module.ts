@@ -31,6 +31,9 @@ import { PopularComponent } from './components/home/c/popular/popular.component'
 import { ListComponent } from './components/home/c/list/list.component';
 import { GenreComponent } from './components/home/c/genre/genre.component';
 
+import { SigninComponent } from './components/account/wom/signin/signin.component';
+import { SignupComponent } from './components/account/wom/signup/signup.component';
+
 import { AppHeaderComponent } from './components/main/app-header/app-header.component';
 import { AppHeaderMenuComponent } from './components/main/app-header-menu/app-header-menu.component';
 import { DatanotfoundComponent } from './components/helper/datanotfound/datanotfound.component';
@@ -52,7 +55,10 @@ import { InterceptorService } from './services/http/interceptor.service';
     AppHeaderComponent,
     AppHeaderMenuComponent,
     FooterComponent,
-    DatanotfoundComponent
+    DatanotfoundComponent,
+
+    SigninComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

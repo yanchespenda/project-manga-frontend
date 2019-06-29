@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: ':id',
     component: DetailComponent,
-    data: { title: 'loading', id: 2 }
+    data: { title: 'loading', id: 2, isMenuHidden: true }
   },
   {
     path: ':id/:name',
     component: DetailComponent,
-    data: { title: 'loading', id: 3 }
+    data: { title: 'loading', id: 3, isMenuHidden: true }
   }
 ];
 

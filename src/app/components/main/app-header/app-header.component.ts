@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
@@ -22,12 +23,16 @@ export class AppHeaderComponent implements OnInit {
   isSideBySide = false;
   isStarting = true;
   isInit = true;
+  ishideTopNav = false;
+  isLogin = false;
+  currentUser: any;
 
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
   ) {
     iconRegistry.addSvgIcon(
       'menu-24px',
@@ -39,6 +44,13 @@ export class AppHeaderComponent implements OnInit {
       this.isStarting = false;
     } else {
       this.isStarting = true;
+    }
+  }
+
+  getIsLogin() {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser !== null) {
+      this.isLogin = true;
     }
   }
 
@@ -66,8 +78,18 @@ export class AppHeaderComponent implements OnInit {
         } else {
           this.isStarting = false;
         }
+        if (event.hideTopNav !== undefined) {
+          if (event.hideTopNav) {
+            this.ishideTopNav = true;
+          } else {
+            this.ishideTopNav = false;
+          }
+        } else {
+          this.ishideTopNav = false;
+        }
         console.log(event);
       });
+    this.getIsLogin();
   }
 
 }

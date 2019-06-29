@@ -1,3 +1,5 @@
+import { SigninComponent } from './components/account/wom/signin/signin.component';
+import { SignupComponent } from './components/account/wom/signup/signup.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
@@ -44,6 +46,19 @@ const routes: Routes = [
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Author', id: 6 }
+  },
+  // Signin / Signip
+  {
+    path: 'oauth/signin',
+    component: SigninComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Signin', id: 7, isMenuHidden: true, hideTopNav: true }
+  },
+  {
+    path: 'oauth/signup',
+    component: SignupComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Signup', id: 8, isMenuHidden: true, hideTopNav: true }
   },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];

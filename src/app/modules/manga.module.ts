@@ -26,17 +26,17 @@ const routes: Routes = [
     path: '',
     component: IndexComponent,
     // canActivate: [AuthGuardService],
-    data: { title: 'Manga', id: 1 }
+    data: { title: 'Manga', id: 1, isMenuHidden: false }
   },
   {
     path: ':id',
     component: DetailComponent,
-    data: { title: 'loading', id: 2 }
+    data: { title: 'loading', id: 2, isMenuHidden: false }
   },
   {
     path: ':id/:name',
     component: DetailComponent,
-    data: { title: 'loading', id: 3 }
+    data: { title: 'loading', id: 3, isMenuHidden: false }
   }
 ];
 
