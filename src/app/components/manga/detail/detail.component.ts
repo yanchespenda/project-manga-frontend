@@ -101,6 +101,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   };
 
   isFavoriteRun = false;
+  isSubscribeRun = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -139,19 +140,23 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   runTabs() {
     if (this.isDone) {
-      if (this.tabActiveIndex === 0) {
-        this.initInfo();
-      } else if(this.tabActiveIndex === 1) {
-        this.initStats();
-      }
-      if (!this.chapterFirstLoad) {
-        this.initChapters();
+      if (!this.tabLoadTimes[this.tabActiveIndex]) {
+        this.tabLoadTimes[this.tabActiveIndex] = new Date();
+        if (this.tabActiveIndex === 0) {
+          this.initInfo();
+        } else if(this.tabActiveIndex === 1) {
+          this.initStats();
+        }
+        if (!this.chapterFirstLoad) {
+          this.initChapters();
+        }
       }
     }
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.tabActiveIndex = tabChangeEvent.index;
+    this.runTabs();
     // console.log(tabChangeEvent);
   }
 
@@ -285,7 +290,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
             this.setTabTitle(this.dataMangaA.title);
             // console.log(this.dataMangaA);
             this.runTabs();
-
             if (this.isLogin) {
               this.initUserData();
             }
@@ -308,11 +312,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
   toggleFavorite() {
     if (!this.isFavoriteRun) {
       this.isFavoriteRun = true;
-      if (this.dataUser.favorite) {
-        this.dataUser.favorite = false;
-      } else {
-        this.dataUser.favorite = true;
-      }
       this.detailService.sendFavorite(this.CURRENT_ID, this.currentUser.token, this.dataUser.favorite).pipe(
         catchError(val => of(val))
       ).subscribe(
@@ -322,26 +321,52 @@ export class DetailComponent implements OnInit, AfterViewInit {
             // this.isErrorCards.b = true;
           } else {
             if (jsonData.status !== undefined && jsonData.status) {
-              // this.chapterFirstLoad = true;
-              this.matSnackBar.open('Favorite updated', 'close');
+              this.dataUser.favorite = jsonData.data.set;
+              this.matSnackBar.open(jsonData.data.msg, 'close');
             } else {
               // this.isErrorCards.b = true;
             }
           }
         },
         (err) => {
-          // this.isErrorCards.b = true;
+          this.isFavoriteRun = false;
           console.error(err);
         },
         () => {
           this.isFavoriteRun = false;
-          // console.log('observable complete');
-          // this.isLoadCards.b = false;
         }
       );
     }
-    // c this.snackbar.open(err.message, 'close'); sendFavorite
+  }
 
+  toggleSubscribe() {
+    if (!this.isSubscribeRun) {
+      this.isFavoriteRun = true;
+      this.detailService.sendSubscribe(this.CURRENT_ID, this.currentUser.token, this.dataUser.subscribe).pipe(
+        catchError(val => of(val))
+      ).subscribe(
+        (jsonData) => {
+          console.log(jsonData);
+          if (jsonData.error !== undefined) {
+            // this.isErrorCards.b = true;
+          } else {
+            if (jsonData.status !== undefined && jsonData.status) {
+              this.dataUser.subscribe = jsonData.data.set;
+              this.matSnackBar.open(jsonData.data.msg, 'close');
+            } else {
+              // this.isErrorCards.b = true;
+            }
+          }
+        },
+        (err) => {
+          this.isSubscribeRun = false;
+          console.error(err);
+        },
+        () => {
+          this.isSubscribeRun = false;
+        }
+      );
+    }
   }
 
   initUserData() {
@@ -383,12 +408,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log(this.tabGroup.selectedIndex);
-    this.getIsLogin();
   }
 
   ngOnInit() {
     this.isLoad = true;
     this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.getIsLogin();
     this.initManga();
 
     const setUser = {

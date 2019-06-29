@@ -48,7 +48,7 @@
 									<button mat-icon-button *ngIf="!isLogin">
 										<mat-icon svgIcon="flag"></mat-icon>
 									</button>
-									<button mat-icon-button *ngIf="isLogin"(click)="toggleFavorite()">
+									<button mat-icon-button *ngIf="isLogin" (click)="toggleFavorite()">
 										<mat-icon svgIcon="favorite_border" *ngIf="!dataUser.favorite"></mat-icon>
 										<mat-icon svgIcon="favorite" *ngIf="dataUser.favorite"></mat-icon>
 									</button>
@@ -60,7 +60,7 @@
 											<mat-icon svgIcon="share"></mat-icon>
 											<span>Share</span>
 										</button>
-										<button mat-menu-item>
+										<button mat-menu-item (click)="toggleSubscribe()">
 											<mat-icon *ngIf="!dataUser.subscribe" svgIcon="notifications"></mat-icon>
 											<mat-icon *ngIf="dataUser.subscribe" svgIcon="notifications_off"></mat-icon>
 											<span *ngIf="!dataUser.subscribe">Subscribe Updates</span>
@@ -102,9 +102,7 @@
 													<mat-chip color="accent" selected>Accent fish</mat-chip> -->
 												</mat-chip-list>
 												<span class="mat-title universal-pad-top-24">SUMMARY</span>
-												<p class="mat-body-1">
-													{{ dataTabA.summary }}
-												</p>
+												<div class="parent-paragrap"><p class="mat-body-1">{{ dataTabA.summary }}</p></div>
 												<span class="mat-title universal-pad-top-24">OTHER FACTS</span>
 												<table class="manga-tabel">
 													<tbody>
@@ -136,7 +134,7 @@
 												</div>
 											</div>
 										</div>
-										Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}}
+										<!-- Content 1 - Loaded: {{getTimeLoaded(1) | date:'medium'}} -->
 									</ng-template>
 								</mat-tab>
 								<mat-tab label="STATS">
@@ -173,7 +171,8 @@
 												</div>
 											</div>
 										</div>
-										Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}}
+										<!-- Content 2 - Loaded: {{getTimeLoaded(2) | date:'medium'}} -->
+										<!-- <p>{{ dataTabB | json }}</p> -->
 									</ng-template>
 								</mat-tab>
 							</mat-tab-group>
@@ -185,7 +184,7 @@
 					<mat-card class="universal-loading-container">
 						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoadCards.b" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
 						<mat-card-content fxLayout="column">
-							<div class="mat-title"><span>Chapters {{ isErrorCards | json }}</span></div>
+							<div class="mat-title"><span>CHAPTERS</span></div>
 							<mat-list *ngIf="!isErrorCards.b">
 								<!-- <h3 mat-subheader>EN</h3> -->
 								<mat-list-item *ngFor="let item of dataChapters.list; let isLast=last">
@@ -213,7 +212,7 @@
 			<div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
 				<mat-card>
 					<mat-card-content>
-						TEST
+						<span class="mat-title">SIMILAR MANGA</span>
 					</mat-card-content>
 				</mat-card>
 			</div>

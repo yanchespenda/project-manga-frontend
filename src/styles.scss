@@ -250,6 +250,15 @@ manga-app-header-menu {
     border-bottom-left-radius: 4px;
 }
 
+.parent-paragrap{
+    word-wrap: break-word;
+}
+
+.parent-paragrap > p,
+.parent-paragrap p{
+    white-space: pre-wrap;
+}
+
 .trending_tile{
     cursor: pointer;
     background-size: cover;

@@ -50,6 +50,12 @@ export class DetailService {
     return this.sendDataUsers(mid, token, 1, param);
   }
 
+  sendSubscribe(mid: string, token: string, current: any) {
+    const param = new HttpParams()
+                    .set('todo', current);
+    return this.sendDataUsers(mid, token, 2, param);
+  }
+
   sendDataUsers(mid: string, token: string, type: number, param: any) {
     this.fixUrl = 'user/' + type + '/' + mid + '.json';
     const urlFix = this.baseUrl + this.fixUrl;
