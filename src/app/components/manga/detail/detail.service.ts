@@ -59,9 +59,10 @@ export class DetailService {
   sendDataUsers(mid: string, token: string, type: number, param: any) {
     this.fixUrl = 'user/' + type + '/' + mid + '.json';
     const urlFix = this.baseUrl + this.fixUrl;
-    const headerparam = {
-      Authorization: 'Bearer ' + token
-    };
+    const headerparam = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+      'Content-Type':  'application/x-www-form-urlencoded'
+    });
     return this.sendData(urlFix, headerparam, param);
   }
 

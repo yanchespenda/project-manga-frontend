@@ -1,17 +1,94 @@
 <section class="universal-seksi seksi-cover">
 	<div class="custom-md-card-login login-top">
 		<mat-card class="md-card-login nmd-br loading-parent">
+			<div *ngIf="isLoading" class="mpl-cover"></div>
+			<mat-progress-bar [@loadingAnimation]="'in'" (@loadingAnimation.done)="animationDone()" *ngIf="isLoading" class="mpl-div nmd-brt" color="primary" mode="indeterminate"></mat-progress-bar>
 			<mat-card-content class="custom-md-card-content-login">
 				<div class="login-logo-area">
 					<div class="layout-align-center-center layout-row">
 						<div class="login-logo" title="logo">
-							<img src="https://elearning.oo/aset/uploads/files/image/icons8-learning-100.png" width="24" height="24" alt="logo" onclick="">
+							<img src="/assets/images/angular-black-transparent.svg" width="24" height="24" alt="PROJECT MANGA">
 						</div>
 						<span class="login-logo-text">PROJECT MANGA</span>
 					</div>
 				</div>
 				<div class="login-parent">
-					
+					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel login-parent">
+						<div #mceCarouselItems class="mce-carousel-content-wrapper">
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormA">
+										<div>
+											<div class="login-info-box-parent">
+												<h1 class="md-headline"><span>Sign in</span></h1>
+												<div>
+													<h6 *ngIf="!isErrorPrimary" class="md-subhead subtitle-text">Use your Project Manga account</h6>
+													<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
+												</div>
+											</div>
+										</div>
+										<div class="login-form-padding">
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>Username or Email</mat-label>
+												<input #inputUsername formControlName="username" matInput value="" autocomplete="off">
+												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessageUsername() }}</mat-error>
+											</mat-form-field>
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>Password</mat-label>
+												<input #inputPassword [type]="pswdHide ? 'password' : 'text'" formControlName="password" matInput value="" autocomplete="off">
+												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessagePassword() }}</mat-error>
+												<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
+													<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>
+												</button>
+											</mat-form-field>
+											<div class="form_action_area">
+												<div class="layout-row">
+													<a class="login-a-link-text">Forgot password?</a>
+												</div>
+												<div class="login-action-parent layout-align-center-center layout-row">
+													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
+													<mat-menu #menu="matMenu">
+														<button mat-menu-item routerLink="/oauth/signup">Create new account</button>
+														<button mat-menu-item>Need help?</button>
+													</mat-menu>
+													<div class="flex"></div>
+													<button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+												</div>
+											</div>
+
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormB">
+										<div class="login-info-box-parent">
+											<h1 class="md-headline">
+												<span>One more step</span>
+											</h1>
+											<div class="login-info-box">
+												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back">
+												<div class="login-info-box-round-avatar">
+													<!-- <mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity_24px"></mat-icon> -->
+												</div>
+												<div class="login-info-box-round-text login-info-box-round-text-ltl">{{ temporaryUsername }}</div>
+													<div class="login-info-box-round-backbtn">
+														<!-- <mat-icon svgIcon="keyboard_arrow_down_24px"></mat-icon> -->
+													</div>
+												</div>
+											</div>
+											<div class="login-info-box-subtext">
+												<h6 class="md-subhead">Enter 6 digits key from your Google Authenticator App</h6>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div> 
+
+						</div>
+					</div>
 				</div>
 			</mat-card-content>
 		</mat-card>

@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../../models';
+import { User, AuthResponse } from '../../models';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -13,6 +13,9 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   public isValidUser: boolean;
+
+  baseUrl = environment.base_api_url +  environment.base_oauth + '/';
+  baseUrlAccount = this.baseUrl + 'account/';
 
   constructor(
     private http: HttpClient,
@@ -38,7 +41,7 @@ export class AuthService {
       this.currentUserSubject = new BehaviorSubject<User>(temp_data);
     } else {
       this.isValidUser = false;
-      this.currentUserSubject = new BehaviorSubject<User>({'id': 0, 'username': '', 'token': ''});
+      this.currentUserSubject = new BehaviorSubject<User>({id: 0, username: '', token: ''});
     }
     this.currentUser = this.currentUserSubject.asObservable();
 
@@ -60,8 +63,8 @@ export class AuthService {
     }
   }
 
-  /* // Username
-  login_1(username: string, csrfData: any) {
+  // Login
+  login_1(username: string, password: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded'
@@ -69,14 +72,21 @@ export class AuthService {
       withCredentials: environment.REQUEST_CREDENTIALS
     };
     const data = new HttpParams()
-      .set('username', username)
-      .set('csrf_name', csrfData['name'])
-      .set('csrf_value', csrfData['value']);
-    return this.http.post<any>(`${environment.base_api_url}v1/account/login/1`, data, httpOptions)
-      .pipe(map(result => {
-          return result;
-      }));
-  } */
+                  .set('username', username)
+                  .set('password', password);
+    return this.sendData(this.baseUrlAccount + 'login/v0', data, httpOptions);
+  }
+
+  // postData(url: string, data: any, option: any) {
+  //   return this.http.post<AuthResponse>(url, data, option)
+  //   .pipe(map(result => {
+  //       return result;
+  //   }));
+  // }
+
+  sendData(url: string, data: any, option: any) {
+    return this.http.post<any>(url, data, option);
+  }
 
   /* // Password
   login_2(password: string, skl: string, csrfData: any) {
