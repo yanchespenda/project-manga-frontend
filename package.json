@@ -36,6 +36,7 @@
     "express": "^4.17.1",
     "hammerjs": "^2.0.8",
     "ng-lazyload-image": "^5.1.2",
+    "ng-recaptcha": "^4.3.0",
     "ngx-cookie-service": "^2.2.0",
     "ngx-hm-carousel": "^1.7.0",
     "rxjs": "~6.5.2",

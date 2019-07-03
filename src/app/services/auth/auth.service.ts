@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   // Login
-  login_1(username: string, password: string) {
+  login_1(username: string, password: string, rtoken: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded'
@@ -73,7 +73,8 @@ export class AuthService {
     };
     const data = new HttpParams()
                   .set('username', username)
-                  .set('password', password);
+                  .set('password', password)
+                  .set('rtoken', rtoken);
     return this.sendData(this.baseUrlAccount + 'login/v0', data, httpOptions);
   }
 

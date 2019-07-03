@@ -58,7 +58,7 @@
     margin-top: 0;
 }
 .login-info-box {
-    height: 32px;
+    /* height: 32px; */
     margin-top: 8px;
 }
 .login-info-box-subtext {
@@ -92,15 +92,15 @@
 .login-info-box-round-avatar {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    height: 20px;
+    height: 24px;
     margin-right: 8px;
 }
 .login-info-box-round-avatar img, .login-info-box-round-avatar svg {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     display: block;
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
 }
 .login-info-box-round-text {
     max-width: 160px;
@@ -123,11 +123,13 @@
     }
 }
 .login-info-box-round-text-ltl {
-    direction: ltr;
+    /* direction: ltr; */
     text-align: left;
 }
 
 .login-info-box-round-backbtn {
+    border-radius: 10px;
+    height: 24px;
     margin-left: 4px;
 }
 .login-info-box-round-backbtn svg {

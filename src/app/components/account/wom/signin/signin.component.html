@@ -15,6 +15,8 @@
 				<div class="login-parent">
 					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel login-parent">
 						<div #mceCarouselItems class="mce-carousel-content-wrapper">
+
+							<!-- 0. USERNAME & PASSWORD -->
 							<div class="mce-carousel-content carousel-content">
 								<div>
 									<form class="" [formGroup]="loginFormA">
@@ -43,12 +45,14 @@
 											</mat-form-field>
 											<div class="form_action_area">
 												<div class="layout-row">
-													<a class="login-a-link-text">Forgot password?</a>
+													<a class="login-a-link-text" (click)="goReset()">Forgot password?</a>
 												</div>
 												<div class="login-action-parent layout-align-center-center layout-row">
 													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
 													<mat-menu #menu="matMenu">
-														<button mat-menu-item routerLink="/oauth/signup">Create new account</button>
+														<a mat-menu-item [href]="'/oauth/signup'">Create new account</a>
+														<a mat-menu-item [href]="'/oauth/activation'">Activation account</a>
+														<a mat-menu-item [href]="'/'">Go to homepage</a>
 														<button mat-menu-item>Need help?</button>
 													</mat-menu>
 													<div class="flex"></div>
@@ -61,31 +65,208 @@
 								</div>
 							</div>
 
+							<!-- 1. GOOGLE AUTH -->
 							<div class="mce-carousel-content carousel-content">
 								<div>
 									<form class="" [formGroup]="loginFormB">
 										<div class="login-info-box-parent">
 											<h1 class="md-headline">
-												<span>One more step</span>
+												<span>One more step 1</span>
 											</h1>
 											<div class="login-info-box">
-												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back">
-												<div class="login-info-box-round-avatar">
-													<!-- <mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity_24px"></mat-icon> -->
-												</div>
-												<div class="login-info-box-round-text login-info-box-round-text-ltl">{{ temporaryUsername }}</div>
-													<div class="login-info-box-round-backbtn">
-														<!-- <mat-icon svgIcon="keyboard_arrow_down_24px"></mat-icon> -->
+												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back" (click)="changeAccount()">
+													<div fxLayout="row" fxLayoutAlign="space-around center">
+														<div class="login-info-box-round-avatar">
+															<mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity"></mat-icon>
+														</div>
+														<div class="login-info-box-round-text login-info-box-round-text-ltl">{{ temporaryData.username }}</div>
+														<div class="login-info-box-round-backbtn">
+															<mat-icon svgIcon="keyboard_arrow_down"></mat-icon>
+														</div>
 													</div>
+													
 												</div>
 											</div>
 											<div class="login-info-box-subtext">
 												<h6 class="md-subhead">Enter 6 digits key from your Google Authenticator App</h6>
 											</div>
+											<div class="login-form-padding">
+												<mat-form-field class="full-size" appearance="outline">
+													<mat-label>Google Auth Key</mat-label>
+													<input #inputGC type="text" formControlName="googleCode" placeholder="Example: 123 456" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormB.invalid">{{ getErrorMessageGC() }}</mat-error>
+												</mat-form-field>
+
+												<div class="form_action_area">
+													<div class="layout-row">
+														<a *ngIf="temporaryData.b2fa2" class="login-a-link-text" (click)="goReset()">Have a recovery code?</a>
+														<a *ngIf="!temporaryData.b2fa2" class="login-a-link-text" (click)="goReset()">Reset google auth?</a>
+													</div>
+													<div class="login-action-parent layout-align-center-center layout-row">
+														<div class="flex"></div>
+														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</form>
 								</div>
-							</div> 
+							</div>
+
+							<!-- 2. RECOVERY CODE -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormC">
+										<div class="login-info-box-parent">
+											<h1 class="md-headline">
+												<span>One more step 2</span>
+											</h1>
+											<div class="login-info-box">
+												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back" (click)="changeAccount()">
+													<div fxLayout="row" fxLayoutAlign="space-around center">
+														<div class="login-info-box-round-avatar">
+															<mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity"></mat-icon>
+														</div>
+														<div class="login-info-box-round-text login-info-box-round-text-ltl">{{ temporaryData.username }}</div>
+														<div class="login-info-box-round-backbtn">
+															<mat-icon svgIcon="keyboard_arrow_down"></mat-icon>
+														</div>
+													</div>
+													
+												</div>
+											</div>
+											<div class="login-info-box-subtext">
+												<h6 class="md-subhead">Enter 8 digits recovery code</h6>
+											</div>
+											<div class="login-form-padding">
+												<mat-form-field class="full-size" appearance="outline">
+													<mat-label>Recovery Code</mat-label>
+													<input #inputRC type="text" formControlName="recoveryCode" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormC.invalid">{{ getErrorMessageRC() }}</mat-error>
+												</mat-form-field>
+
+												<div class="form_action_area">
+													<div class="layout-row">
+														<a class="login-a-link-text" (click)="goReset()">Reset recovery code?</a>
+													</div>
+													<div class="login-action-parent layout-align-center-center layout-row">
+														<div class="flex"></div>
+														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- 3. RESET -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormC">
+										<div class="login-info-box-parent">
+											<h1 class="md-headline">
+												<span>{{ resetData.text }}</span>
+											</h1>
+											<div class="login-info-box" *ngIf="resetData.useAccountBar">
+												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back" (click)="changeAccount()">
+													<div fxLayout="row" fxLayoutAlign="space-around center">
+														<div class="login-info-box-round-avatar">
+															<mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity"></mat-icon>
+														</div>
+														<div class="login-info-box-round-text login-info-box-round-text-ltl">{{ temporaryData.username }}</div>
+														<div class="login-info-box-round-backbtn">
+															<mat-icon svgIcon="keyboard_arrow_down"></mat-icon>
+														</div>
+													</div>
+													
+												</div>
+											</div>
+											<div class="login-info-box-subtext">
+												<h6 class="md-subhead">Enter your email</h6>
+											</div>
+											<div class="login-form-padding">
+												<mat-form-field class="full-size" appearance="outline">
+													<mat-label>Recovery Code</mat-label>
+													<input #inputRC type="text" formControlName="recoveryCode" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormC.invalid">{{ getErrorMessageRC() }}</mat-error>
+												</mat-form-field>
+
+												<div class="form_action_area">
+													<div class="layout-row">
+														<a class="login-a-link-text" (click)="goReset()">Login?</a>
+													</div>
+													<div class="login-action-parent layout-align-center-center layout-row">
+														<div class="flex"></div>
+														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; CONFIRM &nbsp;</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- 4. RESET CONFIRMATION -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormC">
+										<div class="login-info-box-parent">
+											<h1 class="md-headline">
+												<span>Reset Confirmation</span>
+											</h1>
+											<div class="login-info-box-subtext">
+												<h6 class="md-subhead">Enter the code</h6>
+											</div>
+											<div class="login-form-padding">
+												<mat-form-field class="full-size" appearance="outline">
+													<mat-label>Recovery Code</mat-label>
+													<input #inputRC type="text" formControlName="recoveryCode" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormC.invalid">{{ getErrorMessageRC() }}</mat-error>
+												</mat-form-field>
+
+												<div class="form_action_area">
+													<div class="layout-row">
+														<a class="login-a-link-text" (click)="goReset()">Reset recovery code?</a>
+													</div>
+													<div class="login-action-parent layout-align-center-center layout-row">
+														<div class="flex"></div>
+														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- 5. MESSAGES -->
+							<div class="mce-carousel-content carousel-content">
+								<div class="login-info-box-parent">
+									<h1 class="md-headline">
+										<span></span>
+									</h1>
+									<!-- <div class="login-info-box" *ngIf="temp_User.username">
+										<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back">
+											<div class="login-info-box-round-avatar">
+											<mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity_24px"></mat-icon>
+											</div>
+											<div class="login-info-box-round-text login-info-box-round-text-ltl"></div>
+											<div class="login-info-box-round-backbtn">
+												<mat-icon svgIcon="keyboard_arrow_down_24px"></mat-icon>
+											</div>
+										</div>
+									</div> -->
+									<div class="login-info-box-subtext">
+										<h6 class="md-subhead"></h6>
+									</div>
+									<div class="form_action_area">
+										<div class="login-action-parent layout-align-center-center layout-row">
+											<button mat-flat-button color="primary" (click)="goBack()">&nbsp; OK &nbsp;</button>
+										</div>
+									</div>
+								</div>
+							</div>
 
 						</div>
 					</div>
@@ -93,4 +274,6 @@
 			</mat-card-content>
 		</mat-card>
 	</div>
+
+	{{ temporaryData | json }}
 </section>

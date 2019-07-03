@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieService } from 'ngx-cookie-service';
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 
 // Material design components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -70,6 +71,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     ReactiveFormsModule,
     FlexLayoutModule,
     LazyLoadImageModule,
+    RecaptchaV3Module,
 
     // Material Components
     MatToolbarModule,
@@ -92,7 +94,11 @@ import { InterceptorService } from './services/http/interceptor.service';
       useClass: InterceptorService,
       multi: true,
     },
-    CookieService
+    CookieService,
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.RECAPTCHA_SITE_KEY
+    },
   ],
   bootstrap: [AppComponent]
 })
