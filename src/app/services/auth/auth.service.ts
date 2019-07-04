@@ -63,6 +63,15 @@ export class AuthService {
     }
   }
 
+  loginSet(id: number, username: string, token: any, xp: any) {
+    const setUser = {
+      id,
+      username,
+      token
+    };
+    this.cookieService.set( 'currentUser', JSON.stringify(setUser), new Date(xp), '/');
+  }
+
   // Login
   login_1(username: string, password: string, rtoken: string) {
     const httpOptions = {
@@ -78,12 +87,28 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'login/v0', data, httpOptions);
   }
 
-  // postData(url: string, data: any, option: any) {
-  //   return this.http.post<AuthResponse>(url, data, option)
-  //   .pipe(map(result => {
-  //       return result;
-  //   }));
-  // }
+  // Login Google Auth || Recovery code
+  login_2x3(username: string, password: string, code: string, security: string, rtoken: string, isGA: boolean) {
+    let target;
+    if (isGA) {
+      target = 'v1';
+    } else {
+      target = 'v2';
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const data = new HttpParams()
+                  .set('username', username)
+                  .set('password', password)
+                  .set('code', code)
+                  .set('security', security)
+                  .set('rtoken', rtoken);
+    return this.sendData(this.baseUrlAccount + 'login/' + target, data, httpOptions);
+  }
 
   sendData(url: string, data: any, option: any) {
     return this.http.post<any>(url, data, option);

@@ -312,7 +312,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   toggleFavorite() {
     if (!this.isFavoriteRun) {
       this.isFavoriteRun = true;
-      this.detailService.sendFavorite(this.CURRENT_ID, this.currentUser.token, this.dataUser.favorite).pipe(
+      this.detailService.sendFavorite(this.CURRENT_ID, this.dataUser.favorite).pipe(
         catchError(val => of(val))
       ).subscribe(
         (jsonData) => {
@@ -344,7 +344,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   toggleSubscribe() {
     if (!this.isSubscribeRun) {
       this.isFavoriteRun = true;
-      this.detailService.sendSubscribe(this.CURRENT_ID, this.currentUser.token, this.dataUser.subscribe).pipe(
+      this.detailService.sendSubscribe(this.CURRENT_ID, this.dataUser.subscribe).pipe(
         catchError(val => of(val))
       ).subscribe(
         (jsonData) => {
@@ -374,7 +374,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   initUserData() {
-    this.detailService.requestDataUsers(this.CURRENT_ID, this.currentUser.token).pipe(
+    this.detailService.requestDataUsers(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
@@ -419,13 +419,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
     this.getIsLogin();
     this.initManga();
-
-    const setUser = {
-      id: 1,
-      username: 'string;',
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJodHRwOlwvXC9wcm9qZWN0LW1hbmdhLm9vXC8iLCJhdWQiOiJodHRwOlwvXC9wcm9qZWN0LW1hbmdhLm9vXC8iLCJpYXQiOjE1NjE0NTU2NzYsIm5iZiI6MTU2MTQ1NTY3NywiZXhwIjoxNTY0MDQ3Njc2LCJjbG0iOiJleUpwZGlJNklreENiVEoyTW1kb1oxbERXRlpoWjNaSlNrSmNMMlZuUFQwaUxDSjJZV3gxWlNJNklscENjR0l6ZDBKamNIUnNNRFp3ZUZWalJrMU5lbUZVZFZoUk4wdFhVMGxEYjNOd05tTm9OWFY0VG04OUlpd2liV0ZqSWpvaU5USXhOekptTkdWaFpqWXdOVGxrWTJaalpHWmtOek0zWldVNVlXWTRObVV4T1RSak1XRXpPREZsTTJZeU4yRTJaVGd5WkRrd05EVmxOamd6TURabU5pSjkifQ.qFyTIV-PXdebHSFP05GnTCZIYuDRWZ-s3BYNZqq_JvpSPGqcxtnSo6QPplBpxS05sUD--0Hbd420904puBMBPQ'
-    };
-    // this.cookieService.set( 'currentUser', JSON.stringify(setUser) );
   }
 
 }

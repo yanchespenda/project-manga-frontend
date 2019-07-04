@@ -2,7 +2,7 @@
 	<div class="custom-md-card-login login-top">
 		<mat-card class="md-card-login nmd-br loading-parent">
 			<div *ngIf="isLoading" class="mpl-cover"></div>
-			<mat-progress-bar [@loadingAnimation]="'in'" (@loadingAnimation.done)="animationDone()" *ngIf="isLoading" class="mpl-div nmd-brt" color="primary" mode="indeterminate"></mat-progress-bar>
+			<mat-progress-bar [@loadingAnimation]="'in'" (@loadingAnimation.done)="animationDone()" *ngIf="isLoading" class="mpl-div nmdrc-t" color="primary" mode="indeterminate"></mat-progress-bar>
 			<mat-card-content class="custom-md-card-content-login">
 				<div class="login-logo-area">
 					<div class="layout-align-center-center layout-row">
@@ -88,7 +88,8 @@
 												</div>
 											</div>
 											<div class="login-info-box-subtext">
-												<h6 class="md-subhead">Enter 6 digits key from your Google Authenticator App</h6>
+												<h6 *ngIf="!isErrorPrimary" class="md-subhead">Enter 6 digits key from your Google Authenticator App</h6>
+												<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
 											</div>
 											<div class="login-form-padding">
 												<mat-form-field class="full-size" appearance="outline">
@@ -99,7 +100,7 @@
 
 												<div class="form_action_area">
 													<div class="layout-row">
-														<a *ngIf="temporaryData.b2fa2" class="login-a-link-text" (click)="goReset()">Have a recovery code?</a>
+														<a *ngIf="temporaryData.b2fa2" class="login-a-link-text" (click)="goReset()">Use recovery code?</a>
 														<a *ngIf="!temporaryData.b2fa2" class="login-a-link-text" (click)="goReset()">Reset google auth?</a>
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
@@ -136,7 +137,8 @@
 												</div>
 											</div>
 											<div class="login-info-box-subtext">
-												<h6 class="md-subhead">Enter 8 digits recovery code</h6>
+												<h6 *ngIf="!isErrorPrimary" class="md-subhead">Enter 8 digits recovery code</h6>
+												<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
 											</div>
 											<div class="login-form-padding">
 												<mat-form-field class="full-size" appearance="outline">
@@ -151,7 +153,7 @@
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
 														<div class="flex"></div>
-														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+														<button mat-flat-button color="primary" (click)="SubmitC()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
 													</div>
 												</div>
 											</div>
@@ -163,7 +165,7 @@
 							<!-- 3. RESET -->
 							<div class="mce-carousel-content carousel-content">
 								<div>
-									<form class="" [formGroup]="loginFormC">
+									<form class="" [formGroup]="loginFormD">
 										<div class="login-info-box-parent">
 											<h1 class="md-headline">
 												<span>{{ resetData.text }}</span>
@@ -183,13 +185,14 @@
 												</div>
 											</div>
 											<div class="login-info-box-subtext">
-												<h6 class="md-subhead">Enter your email</h6>
+												<h6 *ngIf="!isErrorPrimary" class="md-subhead">Enter your email</h6>
+												<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
 											</div>
 											<div class="login-form-padding">
 												<mat-form-field class="full-size" appearance="outline">
-													<mat-label>Recovery Code</mat-label>
-													<input #inputRC type="text" formControlName="recoveryCode" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
-													<mat-error *ngIf="loginFormC.invalid">{{ getErrorMessageRC() }}</mat-error>
+													<mat-label>Email</mat-label>
+													<input #inputEmail type="text" formControlName="email" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormD.invalid">{{ getErrorMessageEmail() }}</mat-error>
 												</mat-form-field>
 
 												<div class="form_action_area">
@@ -198,7 +201,7 @@
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
 														<div class="flex"></div>
-														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; CONFIRM &nbsp;</button>
+														<button mat-flat-button color="primary" (click)="SubmitD()" [disabled]="isLoading">&nbsp; {{ resetData.btn }} &nbsp;</button>
 													</div>
 												</div>
 											</div>
@@ -210,7 +213,7 @@
 							<!-- 4. RESET CONFIRMATION -->
 							<div class="mce-carousel-content carousel-content">
 								<div>
-									<form class="" [formGroup]="loginFormC">
+									<form class="" [formGroup]="loginFormE">
 										<div class="login-info-box-parent">
 											<h1 class="md-headline">
 												<span>Reset Confirmation</span>
@@ -220,18 +223,18 @@
 											</div>
 											<div class="login-form-padding">
 												<mat-form-field class="full-size" appearance="outline">
-													<mat-label>Recovery Code</mat-label>
-													<input #inputRC type="text" formControlName="recoveryCode" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
-													<mat-error *ngIf="loginFormC.invalid">{{ getErrorMessageRC() }}</mat-error>
+													<mat-label>Confirmation Code</mat-label>
+													<input #inputEmailConfirm type="text" formControlName="emailConfirm" placeholder="Example: 1234 5678" matInput value="" autocomplete="off">
+													<mat-error *ngIf="loginFormE.invalid">{{ getErrorMessageEmailConfirm() }}</mat-error>
 												</mat-form-field>
 
 												<div class="form_action_area">
 													<div class="layout-row">
-														<a class="login-a-link-text" (click)="goReset()">Reset recovery code?</a>
+														<!-- <a class="login-a-link-text" (click)="goReset()">Reset recovery code?</a> -->
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
 														<div class="flex"></div>
-														<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; SIGN IN &nbsp;</button>
+														<button mat-flat-button color="primary" (click)="SubmitE()" [disabled]="isLoading">&nbsp; CONFIRM &nbsp;</button>
 													</div>
 												</div>
 											</div>
@@ -246,19 +249,8 @@
 									<h1 class="md-headline">
 										<span></span>
 									</h1>
-									<!-- <div class="login-info-box" *ngIf="temp_User.username">
-										<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back">
-											<div class="login-info-box-round-avatar">
-											<mat-icon class="mat-icon-box-text-inline" svgIcon="perm_identity_24px"></mat-icon>
-											</div>
-											<div class="login-info-box-round-text login-info-box-round-text-ltl"></div>
-											<div class="login-info-box-round-backbtn">
-												<mat-icon svgIcon="keyboard_arrow_down_24px"></mat-icon>
-											</div>
-										</div>
-									</div> -->
 									<div class="login-info-box-subtext">
-										<h6 class="md-subhead"></h6>
+										<h6 class="md-subhead">{{ messageData.txt }}</h6>
 									</div>
 									<div class="form_action_area">
 										<div class="login-action-parent layout-align-center-center layout-row">
