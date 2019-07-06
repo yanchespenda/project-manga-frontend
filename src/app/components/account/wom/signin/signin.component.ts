@@ -665,9 +665,11 @@ export class SigninComponent implements OnInit {
   get valC() {
     return this.loginFormC.controls;
   }
+
   get valD() {
     return this.loginFormD.controls;
   }
+
   get valE() {
     return this.loginFormE.controls;
   }
