@@ -7,9 +7,9 @@
 				<div class="login-logo-area">
 					<div class="layout-align-center-center layout-row">
 						<div class="login-logo" title="logo">
-							<img src="/assets/images/angular-black-transparent.svg" width="24" height="24" alt="PROJECT MANGA">
+							<img src="/assets/images/angular-black-transparent.svg" width="24" height="24" alt="{{ webData.name }}">
 						</div>
-						<span class="login-logo-text">PROJECT MANGA</span>
+						<span class="login-logo-text">{{ webData.name }}</span>
 					</div>
 				</div>
 				<div class="login-parent">
@@ -220,7 +220,8 @@
 												<span>Reset Confirmation</span>
 											</h1>
 											<div class="login-info-box-subtext">
-												<h6 class="md-subhead">Enter the code</h6>
+												<h6 *ngIf="!isErrorPrimary" class="md-subhead">Enter the code</h6>
+												<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
 											</div>
 											<div class="login-form-padding">
 												<mat-form-field class="full-size" appearance="outline">

@@ -25,7 +25,7 @@ export class AuthService {
     let temp_data;
     let isLocalPass = false;
 
-    console.group( 'JWT Report:' );
+    // console.group( 'JWT Report:' );
 
     if (temp_local !== undefined && temp_local !== null && temp_local !== '') {
       try {
@@ -46,13 +46,13 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
 
 
-    console.log( 'temp_local:', temp_local );
-    console.log( 'isLocalPass:', isLocalPass );
-    console.log( 'temp_data:', temp_data );
-    console.log( 'this.isValidUser:', this.isValidUser );
-    console.log( 'this.currentUserSubject:', this.currentUserSubject );
-    console.log('わかりますデスクトップ');
-    console.groupEnd();
+    // console.log( 'temp_local:', temp_local );
+    // console.log( 'isLocalPass:', isLocalPass );
+    // console.log( 'temp_data:', temp_data );
+    // console.log( 'this.isValidUser:', this.isValidUser );
+    // console.log( 'this.currentUserSubject:', this.currentUserSubject );
+    // console.log('わかりますデスクトップ');
+    // console.groupEnd();
   }
 
   public get currentUserValue(): User {
@@ -131,33 +131,40 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'request/v0', data, httpOptions);
   }
 
-  sendData(url: string, data: any, option: any) {
-    return this.http.post<any>(url, data, option);
-  }
-
-  /* // Password
-  login_2(password: string, skl: string, csrfData: any) {
+  // Login Request Confirm
+  login_request_confirm(username: string, code: string, rtoken: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded'
       }),
       withCredentials: environment.REQUEST_CREDENTIALS
     };
-    const data = new HttpParams()
-      .set('password', password)
-      .set('skl', skl)
-      .set('csrf_name', csrfData['name'])
-      .set('csrf_value', csrfData['value']);
-    return this.http.post<any>(`${environment.base_api_url}v1/account/login/2`, data, httpOptions)
-      .pipe(map(result => {
-          if (result.data.status && result.data.result.code === 1 && result.data.result.data !== undefined) {
-              localStorage.setItem('currentUser', JSON.stringify(result.data.result.data));
-              this.currentUserSubject.next(result.data.result.data);
-              this.isValidUser = true;
-          }
-          return result;
-      }));
-  } */
+    const  data = new HttpParams()
+                  .set('email', username)
+                  .set('rtoken', rtoken)
+                  .set('code', code);
+    return this.sendData(this.baseUrlAccount + 'request/v1', data, httpOptions);
+  }
+
+  // Login Request Confirm
+  do(username: string, code: string, rtoken: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('email', username)
+                  .set('rtoken', rtoken)
+                  .set('code', code);
+    return this.sendData(this.baseUrlAccount + 'request/v1', data, httpOptions);
+  }
+
+  sendData(url: string, data: any, option: any) {
+    return this.http.post<any>(url, data, option);
+  }
+
 
   logout() {
     this.cookieService.delete('currentUser');

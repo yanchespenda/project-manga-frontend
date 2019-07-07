@@ -1,0 +1,25 @@
+<section class="universal-seksi seksi-cover">
+	<div class="custom-md-card-login login-top">
+		<mat-card class="md-card-login nmd-br loading-parent">
+			<div *ngIf="isLoading" class="mpl-cover"></div>
+			<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoading" class="mpl-div nmdrc-t" color="primary" mode="indeterminate"></mat-progress-bar>
+			<mat-card-content class="custom-md-card-content-login">
+				<div class="login-logo-area">
+					<div class="layout-align-center-center layout-row">
+						<div class="login-logo" title="logo">
+							<img src="/assets/images/angular-black-transparent.svg" width="24" height="24" alt="{{ webData.name }}">
+						</div>
+						<span class="login-logo-text">{{ webData.name }}</span>
+					</div>
+				</div>
+				<div class="login-parent">
+					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel login-parent">
+						<div #mceCarouselItems class="mce-carousel-content-wrapper">
+						
+						</div>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</section>

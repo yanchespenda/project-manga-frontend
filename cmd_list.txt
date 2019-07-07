@@ -17,6 +17,7 @@ ng g @schematics/angular:service components/author/detail/detail --project=front
 /* Account Command Without Module */
 ng g @schematics/angular:component components/account/wom/signin --project=frontend --skipImport --no-interactive
 ng g @schematics/angular:component components/account/wom/signup --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:component components/account/wom/do --project=frontend --skipImport --no-interactive
 ng g @schematics/angular:service components/account/wom/signin/signin --project=frontend --no-interactive
 ng g @schematics/angular:service components/account/wom/signup/signup --project=frontend --no-interactive
 

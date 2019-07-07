@@ -9,7 +9,9 @@ export const environment = {
   base_oauth: 'oauth',
   REQUEST_CREDENTIALS: true,
 
-  RECAPTCHA_SITE_KEY: '6LeC06sUAAAAALKO32xlH6zg5deJRJHRwke6r8ym'
+  RECAPTCHA_SITE_KEY: '6LeC06sUAAAAALKO32xlH6zg5deJRJHRwke6r8ym',
+
+  nameWeb: 'PROJECT MANGA',
 };
 
 /*

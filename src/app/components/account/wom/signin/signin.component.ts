@@ -1,17 +1,13 @@
+import { environment } from './../../../../../environments/environment';
 import { AuthService } from './../../../../services/auth/auth.service';
 import { Component, OnInit,
   ViewChild, ElementRef, Renderer2, OnDestroy, Inject } from '@angular/core';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
-
-import { BehaviorSubject, Observable, interval } from 'rxjs';
-import { map, first, filter, catchError } from 'rxjs/operators';
-import { throwError, of, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { of, Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-
 import { MatSnackBar, MatIconRegistry } from '@angular/material';
-
 import { Title, Meta, DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -31,13 +27,34 @@ export interface DialogData {
   templateUrl: './signin.dialog.email.html',
 })
 export class SigninDialogComponent {
+  loginFormDialogA: FormGroup = this.formBuilder.group({
+    email: [
+      '', [Validators.required, Validators.email]
+    ]
+  });
 
   constructor(
     public dialogRef: MatDialogRef<SigninDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
+
+  }
+
+  getErrorMessage() {
+    if (this.loginFormDialogA.controls.email.hasError('required')) {
+      return 'Please input your email';
+    } else if (this.loginFormDialogA.controls.email.hasError('email')) {
+      return 'Email not valid';
+    }
+  }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
+  }
+
+  onSubmit(): void {
+    this.dialogRef.close(this.loginFormDialogA.controls.email.value);
   }
 
 }
@@ -69,6 +86,9 @@ export class SigninComponent implements OnInit, OnDestroy {
   @ViewChild('inputEmailConfirm', {static: true}) inputEmailConfirm: ElementRef;
 
   private recaptchaSubscriber: Subscription;
+  webData = {
+    name: environment.nameWeb
+  };
 
   isLoading = false;
   pswdHide = true;
@@ -214,6 +234,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   stepper(idx: number) {
+    console.log(idx);
     this.currentIndex = this.nextIndex;
     this.nextIndex = idx;
 
@@ -617,8 +638,6 @@ export class SigninComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(this.loginFormD);
-
     this.isErrorPrimary = false;
     this.isLoading = true;
 
@@ -645,6 +664,7 @@ export class SigninComponent implements OnInit, OnDestroy {
                 this.messageData.txt = jsonData.data.core.message;
                 this.stepper(this.dataPageIndex.message);
               } else if (jsonData.data.code === 2) {
+                this.temporaryData.username = this.valD.email.value;
                 this.stepper(this.dataPageIndex.resetConfirm);
               }
             } else {
@@ -685,7 +705,84 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   SubmitE() {
-    this.openDialog();
+    if (this.loginFormE.invalid) {
+      this.inputEmailConfirm.nativeElement.focus();
+      return;
+    }
+
+    if (this.temporaryData.username === null) {
+      this.openDialog();
+    } else {
+      this.isErrorPrimary = false;
+      this.isLoading = true;
+
+      this.recaptchaUnsubscribe();
+      this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a5')
+        .subscribe((token) => {
+          this.authService.login_request_confirm(
+            this.temporaryData.username,
+            this.valE.emailConfirm.value,
+            token
+          ).pipe(
+            catchError(val => of(val))
+          ).subscribe(
+            (jsonData) => {
+              console.log(jsonData);
+              if (jsonData.status) {
+                this.messageData.txt = jsonData.data.core.message;
+                this.stepper(this.dataPageIndex.message);
+              } else {
+                const getDataError = jsonData.data.code;
+                if (getDataError.length !== undefined && getDataError.length > 0) {
+                  for (const row of getDataError) {
+                    if (row === 30) {
+                      this.errorMSGF = 'Code required';
+                      this.valE.emailConfirm.setErrors({required: true});
+                    } else if (row === 31) {
+                      this.errorMSGF = 'Code to short';
+                      this.valE.emailConfirm.setErrors({min: true});
+                    } else if (row === 32) {
+                      this.errorMSGF = 'Code to long';
+                      this.valE.emailConfirm.setErrors({max: true});
+                    } else if (row === 33) {
+                      this.errorMSGF = 'The code was expired';
+                      this.valE.emailConfirm.setErrors({exp: true});
+                    } else if (row === 34) {
+                      this.errorMSGF = 'The code not valid';
+                      this.valE.emailConfirm.setErrors({valid: true});
+                    } else if (row === 50) {
+                      this.errorMSG = 'Email required';
+                      this.isErrorPrimary = true;
+                    } else if (row === 51) {
+                      this.errorMSG = 'Email not valid';
+                      this.isErrorPrimary = true;
+                      this.temporaryData.username = null;
+                    } else if (row === 52) {
+                      this.errorMSG = 'Email account not found';
+                      this.isErrorPrimary = true;
+                      this.temporaryData.username = null;
+                    } else if (row === 3 || row === 90) {
+                      this.errorMSG = jsonData.message;
+                      this.isErrorPrimary = true;
+                    }
+                    this.inputEmailConfirm.nativeElement.focus();
+                  }
+                }
+                this.isLoading = false;
+              }
+            },
+            (err) => {
+              this.isLoading = false;
+              console.error(err);
+            },
+            () => {
+
+            }
+          );
+        });
+    }
+
+
   }
 
   get valA() {
@@ -717,9 +814,15 @@ export class SigninComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       console.log(result);
-      this.messageData.txt = result;
+      // this.messageData.txt = result;
+      if (result === null) {
+        this.openDialog();
+      } else {
+        this.temporaryData.username = result;
+        this.SubmitE();
+      }
+
     });
   }
 

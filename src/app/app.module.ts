@@ -34,6 +34,7 @@ import { ListComponent } from './components/home/c/list/list.component';
 import { GenreComponent } from './components/home/c/genre/genre.component';
 
 import { SigninComponent, SigninDialogComponent } from './components/account/wom/signin/signin.component';
+import { DoComponent } from './components/account/wom/do/do.component';
 import { SignupComponent } from './components/account/wom/signup/signup.component';
 
 import { AppHeaderComponent } from './components/main/app-header/app-header.component';
@@ -62,7 +63,9 @@ import { InterceptorService } from './services/http/interceptor.service';
     SigninComponent,
     SigninDialogComponent,
 
-    SignupComponent
+    SignupComponent,
+
+    DoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

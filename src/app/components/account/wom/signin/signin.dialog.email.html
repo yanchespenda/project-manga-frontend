@@ -1,15 +1,12 @@
 <h1 mat-dialog-title>Please input your email</h1>
-<div mat-dialog-content>
-    <!-- <p>What's your email?</p> -->
-    <!-- <mat-form-field>
-        <input matInput [(ngModel)]="data.dialogEmail">
-    </mat-form-field> -->
+<div mat-dialog-content [formGroup]="loginFormDialogA">
     <mat-form-field class="full-size" appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="data.dialogEmail" autocomplete="off" required>
+        <input formControlName="email" matInput autocomplete="off" cdkFocusInitial>
+        <mat-error *ngIf="loginFormDialogA.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">No Thanks</button>
-    <button mat-button [mat-dialog-close]="data.dialogEmail" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button (click)="onSubmit()" [disabled]="loginFormDialogA.invalid">Submit</button>
 </div>
