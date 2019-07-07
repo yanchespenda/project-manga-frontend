@@ -60,6 +60,18 @@ const routes: Routes = [
     // canActivate: [AuthGuardService],
     data: { title: 'Signup', id: 8, isMenuHidden: true, hideTopNav: true }
   },
+  {
+    path: 'oauth/reset',
+    component: SignupComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Reset', id: 9, isMenuHidden: true, hideTopNav: true }
+  },
+  {
+    path: 'oauth/activation',
+    component: SignupComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Activation', id: 10, isMenuHidden: true, hideTopNav: true }
+  },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];
 

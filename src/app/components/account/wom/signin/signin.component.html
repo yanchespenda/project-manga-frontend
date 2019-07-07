@@ -52,6 +52,7 @@
 													<mat-menu #menu="matMenu">
 														<a mat-menu-item [href]="'/oauth/signup'">Create new account</a>
 														<a mat-menu-item [href]="'/oauth/activation'">Activation account</a>
+														<a mat-menu-item (click)="goReset2FA()">Reset 2FA</a>
 														<a mat-menu-item [href]="'/'">Go to homepage</a>
 														<button mat-menu-item>Need help?</button>
 													</mat-menu>
@@ -71,7 +72,7 @@
 									<form class="" [formGroup]="loginFormB">
 										<div class="login-info-box-parent">
 											<h1 class="md-headline">
-												<span>One more step 1</span>
+												<span>One more step</span>
 											</h1>
 											<div class="login-info-box">
 												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back" (click)="changeAccount()">
@@ -120,7 +121,7 @@
 									<form class="" [formGroup]="loginFormC">
 										<div class="login-info-box-parent">
 											<h1 class="md-headline">
-												<span>One more step 2</span>
+												<span>One more step</span>
 											</h1>
 											<div class="login-info-box">
 												<div class="login-info-box-round login-info-box-rounded" tabindex="0" role="link" aria-label="Back" (click)="changeAccount()">
@@ -197,7 +198,7 @@
 
 												<div class="form_action_area">
 													<div class="layout-row">
-														<a class="login-a-link-text" (click)="goReset()">Login?</a>
+														<a class="login-a-link-text" (click)="changeAccount()">Login?</a>
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
 														<div class="flex"></div>
@@ -230,7 +231,7 @@
 
 												<div class="form_action_area">
 													<div class="layout-row">
-														<!-- <a class="login-a-link-text" (click)="goReset()">Reset recovery code?</a> -->
+														<a class="login-a-link-text" (click)="changeAccount()">Login?</a>
 													</div>
 													<div class="login-action-parent layout-align-center-center layout-row">
 														<div class="flex"></div>

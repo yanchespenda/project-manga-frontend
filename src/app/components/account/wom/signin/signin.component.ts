@@ -1,14 +1,14 @@
 import { AuthService } from './../../../../services/auth/auth.service';
-import { Component, OnInit, ChangeDetectionStrategy, Input,
-  ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit,
+  ViewChild, ElementRef, Renderer2, OnDestroy, Inject } from '@angular/core';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, interval } from 'rxjs';
 import { map, first, filter, catchError } from 'rxjs/operators';
 import { throwError, of, Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { MatSnackBar, MatIconRegistry } from '@angular/material';
 
@@ -21,6 +21,26 @@ import {
   animate,
   transition
 } from '@angular/animations';
+
+export interface DialogData {
+  dialogEmail: string;
+}
+
+@Component({
+  selector: 'manga-signin-dialog',
+  templateUrl: './signin.dialog.email.html',
+})
+export class SigninDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<SigninDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
 
 @Component({
   selector: 'manga-signin',
@@ -38,7 +58,7 @@ import {
     ])
   ]
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
   @ViewChild('mceCarousel', {static: true}) mceCarousel: ElementRef;
   @ViewChild('mceCarouselItems', {static: true}) mceCarouselItems: ElementRef;
   @ViewChild('inputUsername', {static: true}) inputUsername: ElementRef;
@@ -77,7 +97,7 @@ export class SigninComponent implements OnInit {
   });
   loginFormE: FormGroup = this.formBuilder.group({
     emailConfirm: [
-      '', [Validators.required, Validators.pattern(/^[\d]{6}$/)]
+      '', [Validators.required, Validators.pattern(/^([\a-zA-Z0-9]{8}|[\a-zA-Z0-9]{4}\s[\a-zA-Z0-9]{4})$/)]
     ]
   });
 
@@ -122,6 +142,7 @@ export class SigninComponent implements OnInit {
     private renderer2: Renderer2,
     private authService: AuthService,
     private recaptchaV3Service: ReCaptchaV3Service,
+    private matDialog: MatDialog,
   ) {
     iconRegistry.addSvgIcon('visibility',
       this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
@@ -200,7 +221,7 @@ export class SigninComponent implements OnInit {
     this.mce_carousel_update();
     if (idx === this.dataPageIndex.default) {
       this.pswdHide = true;
-      if (this.currentIndex === this.dataPageIndex.message || this.dataPageIndex.resetAccount) {
+      if (this.currentIndex === this.dataPageIndex.message || this.currentIndex === this.dataPageIndex.resetAccount) {
         this.loginFormA.reset();
       } else {
         this.valA.password.reset();
@@ -226,6 +247,7 @@ export class SigninComponent implements OnInit {
     }
     setTimeout(() => {
       if (idx === this.dataPageIndex.default) {
+        this.resetData.text = null;
         if (this.currentIndex === this.dataPageIndex.message || this.dataPageIndex.resetAccount) {
           this.inputUsername.nativeElement.focus();
         } else {
@@ -259,11 +281,15 @@ export class SigninComponent implements OnInit {
       } else {
         this.stepper(this.dataPageIndex.resetAccount);
       }
-    } else if (this.nextIndex === this.dataPageIndex.resetAccount) {
+    } else if (this.nextIndex === this.dataPageIndex.resetAccount || this.nextIndex === this.dataPageIndex.resetConfirm) {
       this.stepper(this.dataPageIndex.default);
     } else {
       this.stepper(this.dataPageIndex.resetAccount);
     }
+  }
+
+  goReset2FA() {
+    this.stepper(this.dataPageIndex.resetConfirm);
   }
 
   goBack() {
@@ -275,7 +301,6 @@ export class SigninComponent implements OnInit {
   }
 
   changeAccount() {
-    this.resetData.text = null;
     this.stepper(this.dataPageIndex.default);
   }
 
@@ -316,18 +341,18 @@ export class SigninComponent implements OnInit {
   }
 
   getErrorMessageEmail() {
-    if (this.valC.recoveryCode.hasError('required')) {
+    if (this.valD.email.hasError('required')) {
       this.errorMSGE = 'Please input your email';
-    } else if (this.valC.recoveryCode.hasError('email')) {
+    } else if (this.valD.email.hasError('email')) {
       this.errorMSGE = 'Email not valid';
     }
     return this.errorMSGE;
   }
 
   getErrorMessageEmailConfirm() {
-    if (this.valC.recoveryCode.hasError('required')) {
+    if (this.valE.emailConfirm.hasError('required')) {
       this.errorMSGF = 'Please input your email confirmation code';
-    } else if (this.valC.recoveryCode.hasError('pattern')) {
+    } else if (this.valE.emailConfirm.hasError('pattern')) {
       this.errorMSGF = 'Code not valid';
     }
     return this.errorMSGF;
@@ -592,42 +617,51 @@ export class SigninComponent implements OnInit {
       return;
     }
 
+    console.log(this.loginFormD);
+
     this.isErrorPrimary = false;
     this.isLoading = true;
 
     this.recaptchaUnsubscribe();
     this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a4')
       .subscribe((token) => {
-        this.authService.login_2x3(
-          this.valA.username.value,
-          this.valA.password.value,
-          this.valC.recoveryCode.value,
-          this.temporaryData.security,
+        let isCurrent = 0;
+        if (this.nextIndex === this.dataPageIndex.default) {
+          isCurrent = 1;
+        } else if (this.nextIndex === this.dataPageIndex.googleCode || this.nextIndex === this.dataPageIndex.recoveryCode) {
+          isCurrent = 2;
+        }
+        this.authService.login_request(
+          this.valD.email.value,
           token,
-          false
+          isCurrent
         ).pipe(
           catchError(val => of(val))
         ).subscribe(
           (jsonData) => {
             console.log(jsonData);
             if (jsonData.status) {
-              const getCore = jsonData.data.core;
-
+              if (jsonData.data.code === 1) {
+                this.messageData.txt = jsonData.data.core.message;
+                this.stepper(this.dataPageIndex.message);
+              } else if (jsonData.data.code === 2) {
+                this.stepper(this.dataPageIndex.resetConfirm);
+              }
             } else {
               const getDataError = jsonData.data.code;
               if (getDataError.length !== undefined && getDataError.length > 0) {
                 for (const row of getDataError) {
                   if (row === 50) {
-                    this.errorMSGD = 'Email required';
+                    this.errorMSGE = 'Email required';
                     this.valD.email.setErrors({required: true});
                   } else if (row === 51) {
-                    this.errorMSGD = 'Email not valid';
+                    this.errorMSGE = 'Email not valid';
                     this.valD.email.setErrors({email: true});
                   } else if (row === 52) {
-                    this.errorMSGD = 'Email account not found';
+                    this.errorMSGE = 'Email account not found';
                     this.valD.email.setErrors({notfound: true});
                   } else if (row === 53) {
-                    this.errorMSGD = 'Email domain not valid';
+                    this.errorMSGE = 'Email domain not valid';
                     this.valD.email.setErrors({domain: true});
                   } else if (row === 3 || row === 90) {
                     this.errorMSG = jsonData.message;
@@ -651,7 +685,7 @@ export class SigninComponent implements OnInit {
   }
 
   SubmitE() {
-
+    this.openDialog();
   }
 
   get valA() {
@@ -674,6 +708,21 @@ export class SigninComponent implements OnInit {
     return this.loginFormE.controls;
   }
 
+  openDialog(): void {
+    const dialogRef = this.matDialog.open(SigninDialogComponent, {
+      width: '450px',
+      data: {
+        dialogEmail: ''
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      this.messageData.txt = result;
+    });
+  }
+
   ngOnInit() {
     this.mce_carousel_init();
 
@@ -686,6 +735,10 @@ export class SigninComponent implements OnInit {
     //     '', [Validators.required]
     //   ]
     // });
+  }
+
+  ngOnDestroy() {
+    this.recaptchaUnsubscribe();
   }
 
 }

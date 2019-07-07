@@ -110,6 +110,27 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'login/' + target, data, httpOptions);
   }
 
+  // Login Request
+  login_request(username: string, rtoken: string, isCurrent: number) {
+    let target;
+    if (isCurrent === 1) {
+      target = 'a';
+    } else {
+      target = 'b';
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('email', username)
+                  .set('rtoken', rtoken)
+                  .set('type', target);
+    return this.sendData(this.baseUrlAccount + 'request/v0', data, httpOptions);
+  }
+
   sendData(url: string, data: any, option: any) {
     return this.http.post<any>(url, data, option);
   }
