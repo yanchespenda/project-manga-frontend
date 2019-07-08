@@ -146,8 +146,8 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'request/v1', data, httpOptions);
   }
 
-  // Login Request Confirm
-  do(username: string, code: string, rtoken: string) {
+  // Do
+  do(e: string, t: string, n: string, d: string, rtoken: string) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded'
@@ -155,10 +155,12 @@ export class AuthService {
       withCredentials: environment.REQUEST_CREDENTIALS
     };
     const  data = new HttpParams()
-                  .set('email', username)
-                  .set('rtoken', rtoken)
-                  .set('code', code);
-    return this.sendData(this.baseUrlAccount + 'request/v1', data, httpOptions);
+                  .set('e', e)
+                  .set('t', t)
+                  .set('d', d)
+                  .set('n', n)
+                  .set('rtoken', rtoken);
+    return this.sendData(this.baseUrlAccount + 'do/v0', data, httpOptions);
   }
 
   sendData(url: string, data: any, option: any) {

@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -83,6 +84,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     MatToolbarModule,
     MatCardModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatInputModule,
     MatIconModule,
     MatMenuModule,

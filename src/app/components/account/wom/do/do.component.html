@@ -15,7 +15,82 @@
 				<div class="login-parent">
 					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel login-parent">
 						<div #mceCarouselItems class="mce-carousel-content-wrapper">
-						
+
+							<!-- 0. Validating Token -->
+							<div class="mce-carousel-content carousel-content">
+								<div fxLayout="row" fxLayoutAlign="space-around center">
+									<div fxLayout="column">
+										<div fxLayout="row" fxLayoutAlign="space-around center" class="rainbow-spinner" *ngIf="!isErrorPrimary">
+											<mat-progress-spinner mode="indeterminate" diameter="48"></mat-progress-spinner>
+										</div>
+										<h1 class="md-headline" [class.mat-error]="isErrorPrimary"><span>{{ getInitialText() }}</span></h1>
+									</div>
+								</div>
+							</div>
+
+							<!-- 1. New Password & Retype Password -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="loginFormA">
+										<div>
+											<div class="login-info-box-parent">
+												<h1 class="md-headline"><span>Sign in</span></h1>
+												<div>
+													<h6 *ngIf="!isErrorPrimary" class="md-subhead subtitle-text">Use your Project Manga account</h6>
+													<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
+												</div>
+											</div>
+										</div>
+										<div class="login-form-padding">
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>New Password</mat-label>
+												<input #inputPass1 [type]="pswdHide ? 'password' : 'text'" formControlName="pass1" matInput value="" autocomplete="off">
+												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessagePass1() }}</mat-error>
+												<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
+													<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>
+												</button>
+											</mat-form-field>
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>Repeat New Password</mat-label>
+												<input #inputPass2 [type]="pswdHide ? 'password' : 'text'" formControlName="pass2" matInput value="" autocomplete="off">
+												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessagePass2() }}</mat-error>
+												<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
+													<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>
+												</button>
+											</mat-form-field>
+											<div class="form_action_area">
+												<div class="login-action-parent layout-align-center-center layout-row">
+													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
+													<mat-menu #menu="matMenu">
+														<a mat-menu-item [href]="'/'">Go to homepage</a>
+														<button mat-menu-item>Need help?</button>
+													</mat-menu>
+													<div class="flex"></div>
+													<button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; CHANGE PASSWORD &nbsp;</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- 2. MESSAGES -->
+							<div class="mce-carousel-content carousel-content">
+								<div class="login-info-box-parent">
+									<!-- <h1 class="md-headline">
+										<span></span>
+									</h1> -->
+									<div class="login-info-box-subtext">
+										<h1 class="md-headline">{{ messageData.txt }}</h1>
+									</div>
+									<div class="form_action_area">
+										<div class="login-action-parent layout-align-center-center layout-row">
+											<button mat-flat-button color="primary" (click)="goBack()">&nbsp; Go To Homepage &nbsp;</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>

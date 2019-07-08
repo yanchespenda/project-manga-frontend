@@ -420,4 +420,43 @@ manga-app-header{
     box-sizing: border-box;
 }
 
+/* .rainbow-spinner {
+    .mat-progress-spinner,
+    .mat-spinner {
+        circle {
+            animation: colors 5.6s ease-in-out infinite;
+        }
+    }
+}
+
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    animation: colors 5.6s ease-in-out infinite;
+} */
+
+.mat-progress-spinner, .mat-spinner {
+    @keyframes colors {
+        0% {
+            stroke: #4285F4 !important;
+        }
+        25% {
+            stroke: #DE3E35 !important;
+        }
+        50% {
+            stroke: #F7C223 !important;
+        }
+        75% {
+            stroke: #1B9A59 !important;
+        }
+        100% {
+            stroke: #4285F4 !important;
+        }
+    }
+    circle {
+        animation: colors 5.6s ease-in-out infinite;
+    }
+
+}
+
+/* .mat-progress-spinner circle, .mat-spinner circle */
+
 @import './styles/account.scss';
