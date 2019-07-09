@@ -52,7 +52,7 @@
 											</mat-form-field>
 											<mat-form-field class="full-size" appearance="outline">
 												<mat-label>Repeat New Password</mat-label>
-												<input #inputPass2 [type]="pswdHide ? 'password' : 'text'" formControlName="pass2" matInput value="" autocomplete="off">
+												<input #inputPass2 [type]="pswdHide ? 'password' : 'text'" formControlName="pass2" matInput value="" autocomplete="off" [errorStateMatcher]="matcher">
 												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessagePass2() }}</mat-error>
 												<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
 													<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>

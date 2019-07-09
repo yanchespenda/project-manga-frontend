@@ -3,12 +3,12 @@ import { environment } from './../../../../../environments/environment';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationStart, Event as NavigationEvent } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, FormGroupDirective, NgForm } from '@angular/forms';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { catchError } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
 
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, ErrorStateMatcher } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -18,6 +18,15 @@ import {
   animate,
   transition
 } from '@angular/animations';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
+  }
+}
 
 @Component({
   selector: 'manga-do',
@@ -49,19 +58,17 @@ export class DoComponent implements OnInit {
     N: false,
     D: false
   };
-  private recaptchaSubscriber: Subscription;
+  recaptchaSubscriber: Subscription;
   isLoading = false;
   doError = false;
   isErrorPrimary = false;
   pswdHide = true;
-  loginFormA: FormGroup = this.formBuilder.group({
-    pass1: [
-      '', [Validators.required, Validators.minLength(6)]
-    ],
-    pass2: [
-      '', [Validators.required, Validators.minLength(6)/* , DoComponent.childrenEqual */]
-    ]
-  }, { validator: DoComponent.childrenEqual});
+  matcher = new MyErrorStateMatcher();
+  loginFormA = this.formBuilder.group({
+    pass1: ['', [Validators.required]],
+    pass2: ['']
+  }, {validator: this.checkPasswords});
+
   initMSG: string;
   errorMSG: string;
   errorMSGA: string;
@@ -72,16 +79,12 @@ export class DoComponent implements OnInit {
     txt: null
   };
 
-  static childrenEqual: ValidatorFn  = (formGroup: FormGroup) => {
-    // const getParent = formGroup.parent;
-    console.log(formGroup);
-    console.log(formGroup.controls);
-    const [firstControlName, ...otherControlNames] = Object.keys(formGroup.controls || {});
-    console.log(firstControlName);
-    console.log(otherControlNames);
-    const isValid = otherControlNames.every(controlName => formGroup.get(controlName).value === formGroup.get(firstControlName).value);
-    // const isValid = false;
-    return isValid ? null : { childrenNotEqual: true };
+
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    const pass = group.controls.pass1.value;
+    const confirmPass = group.controls.pass2.value;
+
+    return pass === confirmPass ? null : { childrenNotEqual: true };
   }
 
   constructor(
@@ -153,7 +156,7 @@ export class DoComponent implements OnInit {
       this.errorMSGB = 'Please input your new password again';
     } else if (this.valA.pass2.hasError('minlength')) {
       this.errorMSGB = 'Password to short';
-    } else if (this.valA.pass2.hasError('childrenNotEqual')) {
+    } else if (this.loginFormA.hasError('childrenNotEqual')) {
       this.errorMSGB = 'Password does not match';
     }
     return this.errorMSGB;

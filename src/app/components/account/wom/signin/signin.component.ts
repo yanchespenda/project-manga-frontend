@@ -50,7 +50,7 @@ export class SigninDialogComponent {
   }
 
   onNoClick(): void {
-    this.dialogRef.close(null);
+    this.dialogRef.close(false);
   }
 
   onSubmit(): void {
@@ -230,11 +230,11 @@ export class SigninComponent implements OnInit, OnDestroy {
   }
 
   animationDone() {
-    console.log('End');
+    // console.log('End');
   }
 
   stepper(idx: number) {
-    console.log(idx);
+    // console.log(idx);
     this.currentIndex = this.nextIndex;
     this.nextIndex = idx;
 
@@ -818,7 +818,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       // this.messageData.txt = result;
       if (result === null) {
         this.openDialog();
-      } else {
+      } else if (result === false) {
         this.temporaryData.username = result;
         this.SubmitE();
       }

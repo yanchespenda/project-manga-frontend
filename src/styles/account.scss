@@ -182,23 +182,23 @@
         padding-left: 40px;
         padding-right: 40px;
     }
-    .login-footer{
+    /* .login-footer{
         position: fixed;
     }
     .login-footer .login-footer-content{
         border-top: none !important;
-    }
+    } */
     .login-body-background, .login-body-background md-content{
         background-color: rgb(255,255,255);
     }
 }
 @media only screen and (max-height: 700px){
-    .login-footer{
+    /* .login-footer{
         position: relative !important;;
     }
     .login-footer-content{
         border-top: none !important;;
-    }
+    } */
 }
 
 .custom-md-card-content-login {
@@ -223,20 +223,12 @@
     color: #2196F3;
 }
 
-.login-footer{
+/* .login-footer{
     position: fixed;
     bottom: 0;
     width: 100%;
-}
+} */
 
-.login-footer .login-footer-content {
-    -webkit-align-self: flex-end;
-    align-self: flex-end;
-    padding: 16px 32px;
-    text-align: center;
-    font-size: small;
-    border-top: 1px solid #ddd;
-}
 
 .loading-parent {
     position: relative !important;

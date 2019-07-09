@@ -1,5 +1,6 @@
 .login-footer{
     // position: fixed;
+    position: relative !important;;
     bottom: 0;
     width: 100%;
 }
@@ -24,7 +25,8 @@
 
 @media only screen and (max-width: 600px){
     .login-footer{
-        position: fixed;
+        position: relative !important;;
+        // position: fixed;
     }
     .login-footer .login-footer-content{
         border-top: none !important;
