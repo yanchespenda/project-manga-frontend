@@ -1,6 +1,7 @@
 import { SigninComponent } from './components/account/wom/signin/signin.component';
 import { SignupComponent } from './components/account/wom/signup/signup.component';
 import { DoComponent } from './components/account/wom/do/do.component';
+import { LogoutComponent } from './components/account/wom/logout/logout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 
@@ -66,6 +67,18 @@ const routes: Routes = [
     component: DoComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Do', id: 9, isMenuHidden: true, hideTopNav: true }
+  },
+  {
+    path: 'oauth/do/activation',
+    component: DoComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Do', id: 10, isMenuHidden: true, hideTopNav: true }
+  },
+  {
+    path: 'oauth/do/logout',
+    component: LogoutComponent,
+    // canActivate: [AuthGuardService],
+    data: { title: 'Logout', id: 11, isMenuHidden: true, hideTopNav: true }
   },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieService } from 'ngx-cookie-service';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+// import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 // Material design components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,6 +38,7 @@ import { GenreComponent } from './components/home/c/genre/genre.component';
 import { SigninComponent, SigninDialogComponent } from './components/account/wom/signin/signin.component';
 import { DoComponent } from './components/account/wom/do/do.component';
 import { SignupComponent } from './components/account/wom/signup/signup.component';
+import { LogoutComponent } from './components/account/wom/logout/logout.component';
 
 import { AppHeaderComponent } from './components/main/app-header/app-header.component';
 import { AppHeaderMenuComponent } from './components/main/app-header-menu/app-header-menu.component';
@@ -66,7 +68,8 @@ import { InterceptorService } from './services/http/interceptor.service';
 
     SignupComponent,
 
-    DoComponent
+    DoComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -79,6 +82,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     FlexLayoutModule,
     LazyLoadImageModule,
     RecaptchaV3Module,
+    // MatPasswordStrengthModule.forRoot(),
 
     // Material Components
     MatToolbarModule,

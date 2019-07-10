@@ -44,11 +44,17 @@
 										<div class="login-form-padding">
 											<mat-form-field class="full-size" appearance="outline">
 												<mat-label>New Password</mat-label>
-												<input #inputPass1 [type]="pswdHide ? 'password' : 'text'" formControlName="pass1" matInput value="" autocomplete="off">
+												<input #inputPass1 [type]="pswdHide ? 'password' : 'text'" formControlName="pass1" matInput value="" autocomplete="off" (keyup)="onPassStr($event)">
 												<mat-error *ngIf="loginFormA.invalid">{{ getErrorMessagePass1() }}</mat-error>
 												<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
 													<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>
 												</button>
+												<mat-hint align="start" aria-live="polite">
+													{{ getStrenghtMessage() }}
+												</mat-hint>
+												<mat-hint align="end" aria-live="polite">
+													{{ loginFormA.controls.pass1.value.length }} / 25
+												</mat-hint>
 											</mat-form-field>
 											<mat-form-field class="full-size" appearance="outline">
 												<mat-label>Repeat New Password</mat-label>

@@ -21,24 +21,24 @@ export class AuthService {
     private http: HttpClient,
     private cookieService: CookieService
   ) {
-    const temp_local = cookieService.get('currentUser');
-    let temp_data;
+    const tempLocal = cookieService.get('currentUser');
+    let tempData;
     let isLocalPass = false;
 
     // console.group( 'JWT Report:' );
 
-    if (temp_local !== undefined && temp_local !== null && temp_local !== '') {
+    if (tempLocal !== undefined && tempLocal !== null && tempLocal !== '') {
       try {
-        temp_data = JSON.parse(temp_local);
+        tempData = JSON.parse(tempLocal);
         isLocalPass = true;
       } catch {
         isLocalPass = false;
       }
     }
 
-    if (temp_data !== undefined && isLocalPass) {
+    if (tempData !== undefined && isLocalPass) {
       this.isValidUser = true;
-      this.currentUserSubject = new BehaviorSubject<User>(temp_data);
+      this.currentUserSubject = new BehaviorSubject<User>(tempData);
     } else {
       this.isValidUser = false;
       this.currentUserSubject = new BehaviorSubject<User>({id: 0, username: '', token: ''});
@@ -46,9 +46,9 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
 
 
-    // console.log( 'temp_local:', temp_local );
+    // console.log( 'tempLocal:', tempLocal );
     // console.log( 'isLocalPass:', isLocalPass );
-    // console.log( 'temp_data:', temp_data );
+    // console.log( 'tempData:', tempData );
     // console.log( 'this.isValidUser:', this.isValidUser );
     // console.log( 'this.currentUserSubject:', this.currentUserSubject );
     // console.log('わかりますデスクトップ');
@@ -69,6 +69,7 @@ export class AuthService {
       username,
       token
     };
+    this.logout();
     this.cookieService.set( 'currentUser', JSON.stringify(setUser), new Date(xp), '/');
   }
 
@@ -162,6 +163,24 @@ export class AuthService {
                   .set('rtoken', rtoken);
     return this.sendData(this.baseUrlAccount + 'do/v0', data, httpOptions);
   }
+  // Do
+  doA(e: string, t: string, n: string, d: string, rtoken: string, ps1: string, ps2: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('e', e)
+                  .set('t', t)
+                  .set('d', d)
+                  .set('n', n)
+                  .set('p1', ps1)
+                  .set('p2', ps2)
+                  .set('rtoken', rtoken);
+    return this.sendData(this.baseUrlAccount + 'do/v1', data, httpOptions);
+  }
 
   sendData(url: string, data: any, option: any) {
     return this.http.post<any>(url, data, option);
@@ -169,7 +188,7 @@ export class AuthService {
 
 
   logout() {
-    this.cookieService.delete('currentUser');
+    this.cookieService.delete('currentUser', '/');
     this.currentUserSubject.next(null);
   }
 

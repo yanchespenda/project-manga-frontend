@@ -18,6 +18,7 @@ ng g @schematics/angular:service components/author/detail/detail --project=front
 ng g @schematics/angular:component components/account/wom/signin --project=frontend --skipImport --no-interactive
 ng g @schematics/angular:component components/account/wom/signup --project=frontend --skipImport --no-interactive
 ng g @schematics/angular:component components/account/wom/do --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:component components/account/wom/logout --project=frontend --skipImport --no-interactive --inline-style=false --inline-template=false
 ng g @schematics/angular:service components/account/wom/signin/signin --project=frontend --no-interactive
 ng g @schematics/angular:service components/account/wom/signup/signup --project=frontend --no-interactive
 

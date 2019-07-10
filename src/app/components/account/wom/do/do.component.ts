@@ -3,12 +3,12 @@ import { environment } from './../../../../../environments/environment';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationStart, Event as NavigationEvent } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { catchError } from 'rxjs/operators';
 import { of, Subscription } from 'rxjs';
 
-import { MatIconRegistry, ErrorStateMatcher } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -19,14 +19,6 @@ import {
   transition
 } from '@angular/animations';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
-    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
-
-    return (invalidCtrl || invalidParent);
-  }
-}
 
 @Component({
   selector: 'manga-do',
@@ -63,29 +55,24 @@ export class DoComponent implements OnInit {
   doError = false;
   isErrorPrimary = false;
   pswdHide = true;
-  matcher = new MyErrorStateMatcher();
+  pswdMeter = false;
   loginFormA = this.formBuilder.group({
-    pass1: ['', [Validators.required]],
-    pass2: ['']
-  }, {validator: this.checkPasswords});
+    pass1: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]],
+    pass2: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]]
+  });
 
   initMSG: string;
   errorMSG: string;
   errorMSGA: string;
   errorMSGB: string;
+  strenghtMSG: string;
+  strenghtPoint: number;
   currentIndex: any;
   nextIndex: number;
   messageData = {
     txt: null
   };
 
-
-  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    const pass = group.controls.pass1.value;
-    const confirmPass = group.controls.pass2.value;
-
-    return pass === confirmPass ? null : { childrenNotEqual: true };
-  }
 
   constructor(
     private router: Router,
@@ -116,6 +103,9 @@ export class DoComponent implements OnInit {
 
     this.renderer2.setAttribute(this.mceCarousel.nativeElement, 'mce-carousel-selected', idx.toString());
     this.mce_carousel_update();
+    if (idx === 1) {
+
+    }
     // if (idx === this.dataPageIndex.default) {
     //   this.pswdHide = true;
     //   if (this.currentIndex === this.dataPageIndex.message || this.currentIndex === this.dataPageIndex.resetAccount) {
@@ -127,7 +117,9 @@ export class DoComponent implements OnInit {
     //   this.loginFormA.markAsUntouched();
     // }
     setTimeout(() => {
-
+      if (idx === 1) {
+        this.inputPass1.nativeElement.focus();
+      }
       this.isLoading = false;
     }, 600);
   }
@@ -147,6 +139,8 @@ export class DoComponent implements OnInit {
       this.errorMSGA = 'Please input your new password';
     } else if (this.valA.pass1.hasError('minlength')) {
       this.errorMSGA = 'Password to short';
+    } else if (this.valA.pass1.hasError('maxlength')) {
+      this.errorMSGA = 'Password to long';
     }
     return this.errorMSGA;
   }
@@ -156,7 +150,9 @@ export class DoComponent implements OnInit {
       this.errorMSGB = 'Please input your new password again';
     } else if (this.valA.pass2.hasError('minlength')) {
       this.errorMSGB = 'Password to short';
-    } else if (this.loginFormA.hasError('childrenNotEqual')) {
+    } else if (this.valA.pass2.hasError('maxlength')) {
+      this.errorMSGB = 'Password to long';
+    } else if (this.valA.pass2.hasError('childrenNotEqual')) {
       this.errorMSGB = 'Password does not match';
     }
     return this.errorMSGB;
@@ -166,8 +162,47 @@ export class DoComponent implements OnInit {
     return this.errorMSG;
   }
 
+  getStrenghtMessage() {
+    return this.strenghtMSG;
+  }
+
   getInitialText() {
     return this.initMSG;
+  }
+
+  validateStrength(input: string) {
+    // Initialize counter to zero
+    let counter = 0;
+
+    // On each test that is passed, increment the counter
+    if (/[a-z]/.test(input)) {
+        // If string contain at least one lowercase alphabet character
+        counter++;
+    }
+    if (/[A-Z]/.test(input)) {
+        counter++;
+    }
+    if (/[0-9]/.test(input)) {
+        counter++;
+    }
+    // if (/[!@#$&*]/.test(input)) {
+    if (/[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(input)) {
+        counter++;
+    }
+
+    // Check if at least three rules are satisfied
+    return counter;
+  }
+
+  onPassStr(event: any) {
+    this.strenghtPoint = this.validateStrength(event.target.value);
+    if (this.strenghtPoint === 2) {
+      this.strenghtMSG = 'Moderete';
+    } else if (this.strenghtPoint === 3) {
+      this.strenghtMSG = 'Strong';
+    } else {
+      this.strenghtMSG = 'Weak';
+    }
   }
 
   initToken() {
@@ -238,9 +273,87 @@ export class DoComponent implements OnInit {
       return;
     }
 
-    console.log(this.loginFormA);
+    if (this.valA.pass1.value !== this.valA.pass2.value) {
+      this.valA.pass2.setErrors({childrenNotEqual: true});
+      return;
+    }
+
+    // console.log(this.loginFormA);
     this.isErrorPrimary = false;
     this.isLoading = true;
+
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscriber = this.recaptchaV3Service.execute('do_x2')
+      .subscribe((token) => {
+        this.authService.doA(this.dataInit.E, this.dataInit.T, this.dataInit.N, this.dataInit.D, token,
+          this.valA.pass1.value, this.valA.pass2.value).pipe(
+          catchError(val => of(val))
+        ).subscribe(
+          (jsonData) => {
+            console.log(jsonData);
+            if (jsonData.status) {
+              this.messageData.txt = jsonData.data.core.msg || null;
+              this.stepper(2);
+            } else {
+              const getDataError = jsonData.data.code;
+              if (getDataError.length !== undefined && getDataError.length > 0) {
+                for (const row of getDataError) {
+                  if (row === 10) {
+                    this.errorMSG = 'Param e required';
+                    this.isErrorPrimary = true;
+                  } else if (row === 11) {
+                    this.errorMSG = 'Param t required';
+                    this.isErrorPrimary = true;
+                  } else if (row === 12) {
+                    this.errorMSG = 'Param n required';
+                    this.isErrorPrimary = true;
+                  } else if (row === 13) {
+                    this.errorMSG = 'Param do required';
+                    this.isErrorPrimary = true;
+                  } else if (row === 20) {
+                    this.valA.pass1.setErrors({required: true});
+                  } else if (row === 21) {
+                    this.valA.pass1.setErrors({minlength: true});
+                  } else if (row === 22) {
+                    this.valA.pass1.setErrors({maxlength: true});
+                  } else if (row === 30) {
+                    this.valA.pass2.setErrors({required: true});
+                  } else if (row === 31) {
+                    this.valA.pass2.setErrors({minlength: true});
+                  } else if (row === 32) {
+                    this.valA.pass2.setErrors({maxlength: true});
+                  } else if (row === 33) {
+                    this.valA.pass2.setErrors({childrenNotEqual: true});
+                  } else if (row === 3 || row === 90 || row === 0) {
+                    this.errorMSG = jsonData.message;
+                    this.isErrorPrimary = true;
+                  }
+                  if (row >= 20 && row < 30) {
+                    this.inputPass1.nativeElement.focus();
+                  } else if (row >= 30 && row < 40) {
+                    this.inputPass2.nativeElement.focus();
+                  }
+                }
+              }
+              this.isLoading = false;
+            }
+          },
+          (err) => {
+            this.isLoading = false;
+            console.error(err);
+          },
+          () => {
+
+          }
+        );
+      },
+      (err) => {
+        this.isErrorPrimary = true;
+        console.error(err);
+      },
+      () => {
+
+      });
   }
 
   get valA() {
