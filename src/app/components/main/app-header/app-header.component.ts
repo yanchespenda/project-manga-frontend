@@ -36,7 +36,17 @@ export class AppHeaderComponent implements OnInit {
   ) {
     iconRegistry.addSvgIcon(
       'menu-24px',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons-md/baseline-menu-24px.svg'));
+      this.getImgResource('assets/icons-md/baseline-menu-24px.svg'));
+    iconRegistry.addSvgIcon(
+      'setting-24px',
+      this.getImgResource('assets/icons-md/baseline-settings-24px.svg'));
+  }
+
+  getImgResource(image: string) {
+    if (image) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+    }
+    return '';
   }
 
   toogle_humbeger() {

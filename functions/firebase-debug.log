@@ -1,0 +1,80 @@
+[debug] [2019-07-10T21:29:20.528Z] ----------------------------------------------------------------------
+[debug] [2019-07-10T21:29:20.532Z] Command:       C:\App_Compiler\nodejs\node.exe C:\Users\Mea\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-07-10T21:29:20.532Z] CLI Version:   7.0.0
+[debug] [2019-07-10T21:29:20.532Z] Platform:      win32
+[debug] [2019-07-10T21:29:20.532Z] Node Version:  v11.5.0
+[debug] [2019-07-10T21:29:20.542Z] Time:          Thu Jul 11 2019 04:29:20 GMT+0700 (Western Indonesia Time)
+[debug] [2019-07-10T21:29:20.542Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-10T21:29:20.560Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-10T21:29:20.560Z] > authorizing via signed-in user
+[debug] [2019-07-10T21:29:20.560Z] [iam] checking project serpongchat for permissions ["firebase.projects.get"]
+[debug] [2019-07-10T21:29:20.562Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat:testIamPermissions  
+
+[debug] [2019-07-10T21:29:21.982Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-10T21:29:21.984Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat  
+ 
+[debug] [2019-07-10T21:29:23.290Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\laragon\www_angular\project-manga\frontend'...
+[info] 
+[warn] !  Your requested "node" version "8" doesn't match your global version "11"
+[debug] [2019-07-10T21:29:23.302Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424/clients/_:getWebAppConfig  
+ 
+[debug] [2019-07-10T21:29:23.302Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424:getServerAppConfig  
+ 
+[debug] [2019-07-10T21:29:23.809Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-07-10T21:29:23.905Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\laragon\www_angular\project-manga\frontend\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/browser
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-07-10T21:29:24.343Z] Functions runtime initialized.
+[debug] [2019-07-10T21:29:24.344Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-10T21:29:24.714Z] firebase-admin has been stubbed.
+[info] i  functions: HTTP trigger initialized at http://localhost:5001/serpongchat/us-central1/ssr
+[debug] [2019-07-10T21:34:25.740Z] ----------------------------------------------------------------------
+[debug] [2019-07-10T21:34:25.742Z] Command:       C:\App_Compiler\nodejs\node.exe C:\Users\Mea\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-07-10T21:34:25.742Z] CLI Version:   7.0.0
+[debug] [2019-07-10T21:34:25.742Z] Platform:      win32
+[debug] [2019-07-10T21:34:25.742Z] Node Version:  v11.5.0
+[debug] [2019-07-10T21:34:25.744Z] Time:          Thu Jul 11 2019 04:34:25 GMT+0700 (Western Indonesia Time)
+[debug] [2019-07-10T21:34:25.744Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-10T21:34:25.774Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-10T21:34:25.774Z] > authorizing via signed-in user
+[debug] [2019-07-10T21:34:25.774Z] [iam] checking project serpongchat for permissions ["firebase.projects.get"]
+[debug] [2019-07-10T21:34:25.776Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat:testIamPermissions  
+
+[debug] [2019-07-10T21:34:27.863Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-10T21:34:27.864Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/serpongchat  
+ 
+[debug] [2019-07-10T21:34:29.441Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\laragon\www_angular\project-manga\frontend'...
+[info] 
+[warn] !  Your requested "node" version "8" doesn't match your global version "11"
+[debug] [2019-07-10T21:34:29.446Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424/clients/_:getWebAppConfig  
+ 
+[debug] [2019-07-10T21:34:29.447Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/505877249424:getServerAppConfig  
+ 
+[debug] [2019-07-10T21:34:30.566Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-07-10T21:34:30.608Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\laragon\www_angular\project-manga\frontend\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/browser
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-07-10T21:34:31.043Z] Functions runtime initialized.
+[debug] [2019-07-10T21:34:31.044Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-10T21:34:31.542Z] firebase-admin has been stubbed.
+[info] i  functions: HTTP trigger initialized at http://localhost:5001/serpongchat/us-central1/ssr
+[debug] [2019-07-10T21:49:55.994Z] File C:\laragon\www_angular\project-manga\frontend\functions\lib\index.js.map changed, reloading triggers
+[debug] [2019-07-10T21:49:55.998Z] File C:\laragon\www_angular\project-manga\frontend\functions\lib\index.js changed, reloading triggers
+[debug] [2019-07-10T21:49:57.350Z] Functions runtime initialized.
+[debug] [2019-07-10T21:49:57.350Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-10T21:49:57.574Z] firebase-admin has been stubbed.
+[debug] [2019-07-10T22:03:07.946Z] File C:\laragon\www_angular\project-manga\frontend\functions\lib\index.js.map changed, reloading triggers
+[debug] [2019-07-10T22:03:07.949Z] File C:\laragon\www_angular\project-manga\frontend\functions\lib\index.js changed, reloading triggers
+[debug] [2019-07-10T22:03:09.290Z] Functions runtime initialized.
+[debug] [2019-07-10T22:03:09.290Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-10T22:03:09.421Z] firebase-admin has been stubbed.

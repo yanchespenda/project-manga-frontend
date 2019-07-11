@@ -1,8 +1,8 @@
 import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry, MatTabChangeEvent} from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry, MatTabChangeEvent } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { DetailService } from './detail.service';
 import { throwError, of } from 'rxjs';
