@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { User, AuthResponse } from '../../models';
@@ -188,8 +188,38 @@ export class AuthService {
 
 
   logout() {
-    this.cookieService.delete('currentUser', '/');
-    this.currentUserSubject.next(null);
+    const getLogin = this.currentUserValue;
+    if (getLogin === null) {
+      return true;
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('e', null);
+    this.sendData(this.baseUrlAccount + 'do/vx', data, httpOptions).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        if (jsonData.status) {
+          this.cookieService.delete('currentUser', '/');
+          this.currentUserSubject.next(null);
+          return true;
+        } else {
+          return false;
+        }
+      },
+      (err) => {
+        return false;
+      },
+      () => {
+
+      }
+    );
+    return false;
   }
 
 //   Object.toparams = function ObjecttoParams(obj) {

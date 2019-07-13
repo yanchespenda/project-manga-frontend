@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatIconRegistry } from '@angular/material';
+import { environment } from './../../../../../environments/environment';
+import { AuthService } from './../../../../services/auth/auth.service';
 
 @Component({
   selector: 'manga-logout',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService, private matSnackBar: MatSnackBar) { }
 
   ngOnInit() {
+    if (this.authService.logout()) {
+      window.open('/', '_self');
+    } else {
+      this.matSnackBar.open('Failed to logout', 'exit', {
+        duration: 3000
+      });
+    }
   }
 
 }

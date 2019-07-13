@@ -13,7 +13,7 @@
         <span fxFlex></span>
         <!-- <span>{{ isStarting }}</span> -->
         <!-- <button mat-button routerLink="/oauth/signin" *ngIf="!isLogin">Login</button> -->
-        <a mat-button [href]="'/oauth/signin'">Login</a>
+        <a mat-button [href]="'/oauth/signin'" *ngIf="!isLogin">Login</a>
         <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLogin">Menu</button>
         <mat-menu #menu="matMenu">
             <div class="popup-container-base popup-container" aria-label="Informasi Akun" aria-hidden="false" img-loaded="1">

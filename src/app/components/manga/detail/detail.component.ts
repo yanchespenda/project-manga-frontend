@@ -144,7 +144,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         this.tabLoadTimes[this.tabActiveIndex] = new Date();
         if (this.tabActiveIndex === 0) {
           this.initInfo();
-        } else if(this.tabActiveIndex === 1) {
+        } else if (this.tabActiveIndex === 1) {
           this.initStats();
         }
         if (!this.chapterFirstLoad) {
