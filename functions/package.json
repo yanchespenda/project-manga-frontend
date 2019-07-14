@@ -10,10 +10,12 @@
     "logs": "firebase functions:log"
   },
   "main": "lib/index.js",
-  "engines": { "node": "8" },
+  "engines": {
+    "node": "8"
+  },
   "dependencies": {
-    "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.2.0",
+    "firebase-admin": "^7.0.0",
+    "firebase-functions": "^2.3.1",
     "fs-extra": "^7.0.1"
   },
   "devDependencies": {

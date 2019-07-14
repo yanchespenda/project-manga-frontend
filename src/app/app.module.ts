@@ -8,7 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieModule } from 'ngx-cookie';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 // import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
@@ -82,6 +82,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     FlexLayoutModule,
     LazyLoadImageModule,
     RecaptchaV3Module,
+    CookieModule.forRoot(),
     // MatPasswordStrengthModule.forRoot(),
 
     // Material Components
@@ -107,7 +108,6 @@ import { InterceptorService } from './services/http/interceptor.service';
       useClass: InterceptorService,
       multi: true,
     },
-    CookieService,
     {
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.RECAPTCHA_SITE_KEY

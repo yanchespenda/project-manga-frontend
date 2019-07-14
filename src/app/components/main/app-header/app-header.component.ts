@@ -25,6 +25,7 @@ export class AppHeaderComponent implements OnInit {
   isInit = true;
   ishideTopNav = false;
   isLogin = false;
+  isUseChapterNav = false;
   currentUser: any;
 
   constructor(
@@ -96,6 +97,15 @@ export class AppHeaderComponent implements OnInit {
           }
         } else {
           this.ishideTopNav = false;
+        }
+        if (event.useChapterNav !== undefined) {
+          if (event.useChapterNav) {
+            this.isUseChapterNav = true;
+          } else {
+            this.isUseChapterNav = false;
+          }
+        } else {
+          this.isUseChapterNav = false;
         }
         console.log(event);
       });

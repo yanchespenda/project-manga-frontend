@@ -1,9 +1,15 @@
+
+
 // COLOR PALETTE
 $offwhite: #FAFAFA;
 
 // VARIABLES
 $hamburgerShownMargin: 0 8px 0 0;
 $hamburgerHiddenMargin: 0 16px 0 -64px;
+
+.app-tollbar.reader-toolbar{
+    background-color: #202124;
+}
 
 .app-tollbar .mat-toolbar-row{
     padding-left: 0px;
@@ -66,6 +72,10 @@ $hamburgerHiddenMargin: 0 16px 0 -64px;
                 transform: scale(1.1);
             }
         }
+    }
+
+    &.chapternav {
+        margin-left: 16px;
     }
 }
 
@@ -197,6 +207,7 @@ a:link, .w, .q:active, .q:visited {
 a:link, .w, #prs a:visited, #prs a:active, .q:active, .q:visited, .kl:active, .tbotu {
     color: #1a0dab;
 }
+
 .gb_W, .gb_X, .popup-button-box, .gb_1 {
     display: inline-block;
     line-height: 28px;

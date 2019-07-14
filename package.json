@@ -40,7 +40,6 @@
     "ng-lazyload-image": "^5.1.2",
     "ng-recaptcha": "^4.3.0",
     "ngx-cookie": "^4.1.2",
-    "ngx-cookie-service": "^2.2.0",
     "ngx-hm-carousel": "^1.7.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.10.0",

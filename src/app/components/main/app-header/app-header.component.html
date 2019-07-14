@@ -1,4 +1,4 @@
-<mat-toolbar class="app-tollbar" color="primary" [class.notActive]="ishideTopNav">
+<mat-toolbar class="app-tollbar" color="primary" [class.notActive]="ishideTopNav" *ngIf="!isUseChapterNav">
     <mat-toolbar-row>
         <button mat-button class="hamburger" [class.is-close]="isStarting" [class.starting]="isInit"  title="Docs menu">
         <!-- <button mat-button class="hamburger" title="Side menu"> -->
@@ -21,15 +21,15 @@
                     <a class="popup-avatar-container" href="https://myaccount.google.com/?utm_source=OGB&amp;tab=wk">
                         <div class="popup-avatar-round" style="position:relative">
                             <div class="popup-avatar-size popup-avatar-img" title="Profil"></div>
-                            <span class="popup-avatar-txt">Ubah</span>
+                            <!-- <span class="popup-avatar-txt">Ubah</span> -->
                         </div>
                     </a>
                     <div class="popup-content-container">
                         <div class="popup-content-name">Alfian Rikzandi</div>
                         <!-- <div class="popup-content-email">denydirgantara94@gmail.com</div> -->
-                        <div class="popup-content-link-container">
-                            <a href="https://myaccount.google.com/privacypolicy" target="_blank">Privasi</a>
-                        </div>
+                        <!-- <div class="popup-content-link-container"> -->
+                            <!-- <a href="https://myaccount.google.com/privacypolicy" target="_blank">Privasi</a> -->
+                        <!-- </div> -->
                         <!-- <a class="popup-content-link-container gb_le popup-content-link-margin" mat-raised-button color="primary" href="https://myaccount.google.com/?utm_source=OGB&amp;tab=wk&amp;utm_medium=act" target="_blank">Akun Google</a> -->
                         <!-- <button mat-icon-button aria-label="Setting">
                             <mat-icon svgIcon="setting-24px"></mat-icon>
@@ -47,5 +47,17 @@
                 </div>
             </div>
         </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-toolbar class="app-tollbar reader-toolbar" *ngIf="isUseChapterNav">
+    <mat-toolbar-row>
+        <a class="nav-link home chapternav" routerLink="/" [ngSwitch]="isSideBySide">
+        <!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
+            <img *ngSwitchCase="true" src="assets/images/angular-white-transparent@2x.svg" width="150" height="40" title="Home" alt="Home">
+            <img *ngSwitchDefault src="assets/images/angular-white-transparent.svg" width="37" height="40" title="Home" alt="Home">
+        </a>
+        <manga-app-header-menu></manga-app-header-menu>
+        <span fxFlex></span>
     </mat-toolbar-row>
 </mat-toolbar>

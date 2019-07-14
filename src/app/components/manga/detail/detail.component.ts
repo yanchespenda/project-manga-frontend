@@ -8,7 +8,7 @@ import { DetailService } from './detail.service';
 import { throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 import { MatSnackBar } from '@angular/material';
 
 import {

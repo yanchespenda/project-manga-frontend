@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { User, AuthResponse } from '../../models';
 
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -70,7 +70,8 @@ export class AuthService {
       token
     };
     this.logout();
-    this.cookieService.set( 'currentUser', JSON.stringify(setUser), new Date(xp), '/');
+    this.cookieService.put( 'currentUser', JSON.stringify(setUser), {path: '/', expires: new Date(xp),
+      secure: environment.COOKIES_SECURED });
   }
 
   // Login
@@ -205,7 +206,7 @@ export class AuthService {
     ).subscribe(
       (jsonData) => {
         if (jsonData.status) {
-          this.cookieService.delete('currentUser', '/');
+          this.cookieService.remove('currentUser', {path: '/'});
           this.currentUserSubject.next(null);
           return true;
         } else {

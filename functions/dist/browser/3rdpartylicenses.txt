@@ -153,6 +153,9 @@ MIT
 @angular/service-worker
 MIT
 
+@nguniversal/express-engine
+MIT
+
 core-js
 MIT
 Copyright (c) 2014-2019 Denis Pushkarev
@@ -251,11 +254,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-ngx-cookie-service
+ngx-cookie
 MIT
 MIT License
 
-Copyright (c) 2017 7leads GmbH
+Copyright (c) 2017 Samet Alemdar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
