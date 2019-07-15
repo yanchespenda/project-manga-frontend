@@ -1,7 +1,7 @@
 Generate Component: 
 
 ng g @schematics/angular:component {NAME} --project=frontend --skipImport --no-interactive
-ng g @schematics/angular:service {NAME} --project=frontend --skipImport --no-interactive
+ng g @schematics/angular:service services/window/window --project=frontend --no-interactive 
 
 ng g @schematics/angular:module {NAME} --project=frontend --flat
 ng g @schematics/angular:component {NAME} --project=frontend --module {NAME} --skipImport

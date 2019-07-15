@@ -1,0 +1,155 @@
+[debug] [2019-07-15T14:17:50.735Z] ----------------------------------------------------------------------
+[debug] [2019-07-15T14:17:50.738Z] Command:       C:\App_Compiler\nodejs\node.exe C:\Users\Mea\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-07-15T14:17:50.738Z] CLI Version:   7.0.0
+[debug] [2019-07-15T14:17:50.738Z] Platform:      win32
+[debug] [2019-07-15T14:17:50.738Z] Node Version:  v11.5.0
+[debug] [2019-07-15T14:17:50.739Z] Time:          Mon Jul 15 2019 21:17:50 GMT+0700 (Western Indonesia Time)
+[debug] [2019-07-15T14:17:50.739Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-15T14:17:50.777Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-15T14:17:50.777Z] > authorizing via signed-in user
+[debug] [2019-07-15T14:17:50.777Z] [iam] checking project projectf-mobile for permissions ["firebase.projects.get"]
+[debug] [2019-07-15T14:17:50.778Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-15T14:17:50.779Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-15T14:17:51.487Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-15T14:17:51.496Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/projectf-mobile:testIamPermissions  
+
+[debug] [2019-07-15T14:17:54.525Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-15T14:17:54.526Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/projectf-mobile  
+ 
+[debug] [2019-07-15T14:17:56.445Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\laragon\www_angular\project-manga\frontend'...
+[info] 
+[warn] !  Your requested "node" version "8" doesn't match your global version "11"
+[debug] [2019-07-15T14:17:56.452Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1030032108581/clients/_:getWebAppConfig  
+ 
+[debug] [2019-07-15T14:17:56.453Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1030032108581:getServerAppConfig  
+ 
+[debug] [2019-07-15T14:17:58.040Z] <<< HTTP RESPONSE 200
+[info] +  functions: Emulator started at http://localhost:5001
+[debug] [2019-07-15T14:17:58.185Z] <<< HTTP RESPONSE 200
+[info] i  functions: Watching "C:\laragon\www_angular\project-manga\frontend\functions" for Cloud Functions...
+[info] i  hosting: Serving hosting files from: dist/browser
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-07-15T14:17:58.635Z] Functions runtime initialized.
+[debug] [2019-07-15T14:17:58.635Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-15T14:17:59.409Z] firebase-admin has been stubbed.
+[info] i  functions: HTTP trigger initialized at http://localhost:5001/projectf-mobile/us-central1/ssr
+[debug] [2019-07-15T14:21:11.219Z] Accepted request GET /projectf-mobile/us-central1/ssr --> ssr
+[debug] [2019-07-15T14:21:11.571Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "ssr"
+[debug] [2019-07-15T14:21:11.573Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-15T14:21:11.705Z] firebase-admin has been stubbed.
+[debug] [2019-07-15T14:21:12.275Z] Trigger "ssr" has been found, beginning invocation!
+[debug] [2019-07-15T14:21:12.275Z] 
+[debug] [2019-07-15T14:21:12.275Z] Running ssr in mode HTTPS
+[info] i  Your code does not appear to initialize the 'firebase-admin' module, so we've done it automatically.
+   - Learn more: https://firebase.google.com/docs/admin/setup
+[debug] [2019-07-15T14:21:12.290Z] {"socketPath":"\\\\?\\pipe\\C:\\laragon\\www_angular\\project-manga\\frontend\\functions\\5584"}
+[debug] [2019-07-15T14:21:12.292Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\laragon\\www_angular\\project-manga\\frontend\\functions\\5584"}
+[debug] [2019-07-15T14:21:12.298Z] Ephemeral server used!
+[debug] [2019-07-15T14:21:12.298Z] Bodyundefined
+[debug] [2019-07-15T14:21:12.323Z] Ephemeral server survived.
+[info] >  [Error]
+[info] >  Error retrieving icon: 
+[info] >  Observable {
+[info] >    _isScalar: false,
+[info] >    source:
+[info] >     Observable {
+[info] >       _isScalar: false,
+[info] >       source:
+[info] >        Observable {
+[info] >          _isScalar: false,
+[info] >          source: [Observable],
+[info] >          operator: [MergeMapOperator] },
+[info] >       operator: FilterOperator { predicate: [Function], thisArg: undefined } },
+[info] >    operator: MapOperator { project: [Function], thisArg: undefined } }
+[info] >  [Error]
+[info] >  route start
+[info] >  genre cons
+[info] >  route finish
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  trending init
+[info] >  1.json
+[info] >  //project-manga.oo/v1/home/trending/chapter/1.json
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  genre init
+[info] >  ERROR [Error]
+[info] i  functions: Finished "ssr" in ~1s
+[debug] [2019-07-15T14:21:12.577Z] Accepted request GET /assets/images/angular-white-transparent.svg --> angular-white-transparent.svg
+[debug] [2019-07-15T14:21:12.952Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "angular-white-transparent.svg"
+[debug] [2019-07-15T14:21:12.954Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-15T14:21:13.081Z] firebase-admin has been stubbed.
+[warn] !  Could not find trigger "angular-white-transparent.svg" in your functions directory.
+[warn] !  Your function was killed because it raised an unhandled error.
+[debug] [2019-07-15T14:23:14.917Z] Accepted request GET /projectf-mobile/us-central1/ssr --> ssr
+[debug] [2019-07-15T14:23:15.270Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "ssr"
+[debug] [2019-07-15T14:23:15.272Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-15T14:23:15.416Z] firebase-admin has been stubbed.
+[debug] [2019-07-15T14:23:16.006Z] Trigger "ssr" has been found, beginning invocation!
+[debug] [2019-07-15T14:23:16.006Z] 
+[debug] [2019-07-15T14:23:16.006Z] Running ssr in mode HTTPS
+[info] i  Your code does not appear to initialize the 'firebase-admin' module, so we've done it automatically.
+   - Learn more: https://firebase.google.com/docs/admin/setup
+[debug] [2019-07-15T14:23:16.015Z] {"socketPath":"\\\\?\\pipe\\C:\\laragon\\www_angular\\project-manga\\frontend\\functions\\16240"}
+[debug] [2019-07-15T14:23:16.016Z] [functions] Runtime ready! Sending request! {"socketPath":"\\\\?\\pipe\\C:\\laragon\\www_angular\\project-manga\\frontend\\functions\\16240"}
+[debug] [2019-07-15T14:23:16.022Z] Ephemeral server used!
+[debug] [2019-07-15T14:23:16.022Z] Bodyundefined
+[debug] [2019-07-15T14:23:16.046Z] Ephemeral server survived.
+[info] >  [Error]
+[info] >  Error retrieving icon: 
+[info] >  Observable {
+[info] >    _isScalar: false,
+[info] >    source:
+[info] >     Observable {
+[info] >       _isScalar: false,
+[info] >       source:
+[info] >        Observable {
+[info] >          _isScalar: false,
+[info] >          source: [Observable],
+[info] >          operator: [MergeMapOperator] },
+[info] >       operator: FilterOperator { predicate: [Function], thisArg: undefined } },
+[info] >    operator: MapOperator { project: [Function], thisArg: undefined } }
+[info] >  [Error]
+[info] >  route start
+[info] >  genre cons
+[info] >  route finish
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  { title: 'Home', id: 1, isMenuHidden: true }
+[info] >  trending init
+[info] >  1.json
+[info] >  //project-manga.oo/v1/home/trending/chapter/1.json
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  [Error]
+[info] >  [Error]
+[info] >  observable complete
+[info] >  genre init
+[info] >  ERROR [Error]
+[info] i  functions: Finished "ssr" in ~1s
+[debug] [2019-07-15T14:23:16.329Z] Accepted request GET /assets/images/angular-white-transparent.svg --> angular-white-transparent.svg
+[debug] [2019-07-15T14:23:16.716Z] Functions runtime initialized.
+[info] i  functions: Beginning execution of "angular-white-transparent.svg"
+[debug] [2019-07-15T14:23:16.717Z] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"protect_env":true,"admin_stubs":true}
+[debug] [2019-07-15T14:23:16.848Z] firebase-admin has been stubbed.
+[warn] !  Could not find trigger "angular-white-transparent.svg" in your functions directory.
+[warn] !  Your function was killed because it raised an unhandled error.

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+// import { ScrollingModule } from '@angular/cdk/scrolling';
 import { Routes, RouterModule } from '@angular/router';
 import { DetailComponent } from '../components/chapter/detail/detail.component';
 
@@ -23,7 +23,8 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    // ScrollingModule
   ]
 })
 export class ChapterModule { }

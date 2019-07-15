@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieModule } from 'ngx-cookie';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
@@ -47,6 +48,7 @@ import { FooterComponent } from './components/main/footer/footer.component';
 
 import { ErrorHandlerService } from './services/http/error-handler.service';
 import { InterceptorService } from './services/http/interceptor.service';
+import { WINDOW_PROVIDERS } from "./services/window/window.service";
 
 @NgModule({
   declarations: [
@@ -83,6 +85,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     LazyLoadImageModule,
     RecaptchaV3Module,
     CookieModule.forRoot(),
+    // ScrollingModule,
     // MatPasswordStrengthModule.forRoot(),
 
     // Material Components
@@ -102,6 +105,7 @@ import { InterceptorService } from './services/http/interceptor.service';
     MatDialogModule
   ],
   providers: [
+    WINDOW_PROVIDERS,
     ErrorHandlerService,
     {
       provide: HTTP_INTERCEPTORS,

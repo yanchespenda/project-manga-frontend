@@ -1,5 +1,14 @@
 <section>
 	<div class="reader-container">
-
+		<div class="reader-pre-container">
+			<div #renderContainer fxLayout="column" fxLayoutAlign="center center" class="reader-virtual-scroll">
+				<div class="reader-canvas-container" *ngFor="let item of sampleData; let last = last">
+					<div>{{ windowScroll | json }}</div>
+					<figure>
+						<canvas style="margin-top: 20px;" #dataCanvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0" width="1115"></canvas>
+					</figure>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>

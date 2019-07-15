@@ -5,4 +5,31 @@
     position: relative;
     width: 100%;
     min-height: 100vh;
+
+    .reader-pre-container{
+        text-align: center;
+
+        .reader-canvas-container{
+            position: relative;
+            max-width: 1115px;
+            margin: 0 auto;
+
+            div {
+                position: absolute;
+                top: 0px; 
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+            }
+
+            figure{
+                margin: 0 0 1rem;
+
+                canvas{
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+    }
 }
