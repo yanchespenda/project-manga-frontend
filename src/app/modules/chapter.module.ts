@@ -4,16 +4,14 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { DetailComponent } from '../components/chapter/detail/detail.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 const routes: Routes = [
   {
     path: ':id',
     component: DetailComponent,
     data: { title: 'loading', id: 2, isMenuHidden: true, useChapterNav: true }
-  },
-  {
-    path: ':id/:name',
-    component: DetailComponent,
-    data: { title: 'loading', id: 3, isMenuHidden: true, useChapterNav: true  }
   }
 ];
 
@@ -25,6 +23,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     // ScrollingModule
+    FlexLayoutModule,
+    MatProgressSpinnerModule
   ]
 })
 export class ChapterModule { }

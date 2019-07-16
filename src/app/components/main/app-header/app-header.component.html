@@ -14,7 +14,10 @@
         <!-- <span>{{ isStarting }}</span> -->
         <!-- <button mat-button routerLink="/oauth/signin" *ngIf="!isLogin">Login</button> -->
         <a mat-button [href]="'/oauth/signin'" *ngIf="!isLogin">Login</a>
-        <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLogin">Menu</button>
+        <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLogin">Menu</button> -->
+        <a class="nav-link" [matMenuTriggerFor]="menu" *ngIf="isLogin">
+            <img src="assets/images/angular-white-transparent@2x.svg" width="150" height="40" title="Home" alt="Home">
+        </a>
         <mat-menu #menu="matMenu">
             <div class="popup-container-base popup-container" aria-label="Informasi Akun" aria-hidden="false" img-loaded="1">
                 <div class="popup-block">

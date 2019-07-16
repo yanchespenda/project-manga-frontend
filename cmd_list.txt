@@ -6,6 +6,8 @@ ng g @schematics/angular:service services/window/window --project=frontend --no-
 ng g @schematics/angular:module {NAME} --project=frontend --flat
 ng g @schematics/angular:component {NAME} --project=frontend --module {NAME} --skipImport
 
+/* Manga Chapter Command src\app\components\chapter\detail\detail.component.ts */
+ng g @schematics/angular:service components/chapter/detail/detail --project=frontend --no-interactive
 
 /* Author Command */
 ng g @schematics/angular:module modules/author --project=frontend --flat

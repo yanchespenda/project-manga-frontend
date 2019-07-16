@@ -48,7 +48,7 @@ import { FooterComponent } from './components/main/footer/footer.component';
 
 import { ErrorHandlerService } from './services/http/error-handler.service';
 import { InterceptorService } from './services/http/interceptor.service';
-import { WINDOW_PROVIDERS } from "./services/window/window.service";
+import { WINDOW_PROVIDERS } from './services/window/window.service';
 
 @NgModule({
   declarations: [
