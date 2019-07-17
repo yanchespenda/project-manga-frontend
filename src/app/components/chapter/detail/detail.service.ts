@@ -9,7 +9,7 @@ import { environment } from './../../../../environments/environment';
   providedIn: 'root'
 })
 export class DetailService {
-  baseUrl = environment.base_api_url +  environment.base_api_version + '/manga/manga-';
+  baseUrl = environment.base_api_url +  environment.base_api_version + '/chapter/chapter-';
   currentUser: any;
   isLogged = false;
 
@@ -23,8 +23,8 @@ export class DetailService {
     }
   }
 
-  initChapter(mid: string, cid: string) {
-    const preLink = mid + '/chapter-' + cid + '.json';
+  initChapter(cid: string) {
+    const preLink = cid + '.json';
     const urlFix = this.baseUrl + preLink;
     return this.dataGet(urlFix, null);
   }

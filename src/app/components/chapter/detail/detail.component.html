@@ -1,17 +1,42 @@
+<mat-toolbar class="app-tollbar reader-toolbar">
+	<mat-toolbar-row>
+		<a class="nav-link home chapternav" routerLink="/">
+		<!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
+			<img src="assets/images/angular-white-transparent.svg" width="37" height="40" title="Home" alt="Home">
+		</a>
+		<div>
+			<mat-form-field style="color: white; width: 400px;">
+				<mat-select [(value)]="chapterSelected" (selectionChange)="chapterSelectorChange($event.value)">
+					<!-- <mat-select [value]="chapterSelected"> -->
+					<mat-option [value]="item.id" *ngFor="let item of chapterSelect; let last = last">{{ item.text }}</mat-option>
+					<!-- <mat-option value="option2">Option 2</mat-option> -->
+					<!-- <mat-option value="option3">Option 3</mat-option> -->
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<!-- <span style="color: white;">{{ chapterSelected }}</span> -->
+		<span fxFlex></span>
+		<button mat-button title="Report" style="color: white;">
+			<mat-icon svgIcon="flag"></mat-icon>
+		</button>
+	</mat-toolbar-row>
+</mat-toolbar>
 <section>
 	<div class="reader-container">
 		<div class="reader-pre-container">
-			<!-- <div fxLayout="column" fxLayoutAlign="center center">
+			<div fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading" class="loading-container">
 				<div fxFlex>
 					<mat-progress-spinner diameter="36" mode="indeterminate"></mat-progress-spinner>
 				</div>
-			</div> -->
-			<div #renderContainer fxLayout="column" fxLayoutAlign="center center" class="reader-virtual-scroll">
-				<div #canvasParent [id]="genCanvasParentID(item.id)" class="reader-canvas-container" *ngFor="let item of sampleData; let last = last">
-					<div>{{ windowScroll | json }}</div>
-					<figure>
-						<canvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0" width="1115"></canvas>
-					</figure>
+			</div>
+			<div>
+				<div #renderContainer fxLayout="column" fxLayoutAlign="center center" class="reader-virtual-scroll">
+					<div #canvasParent [id]="genCanvasParentID(item.id)" class="reader-canvas-container" *ngFor="let item of chapterData; let last = last">
+						<!-- <div>{{ windowScroll | json }}</div> -->
+						<figure>
+							<canvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0" width="1115"></canvas>
+						</figure>
+					</div>
 				</div>
 			</div>
 		</div>

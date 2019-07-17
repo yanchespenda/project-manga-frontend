@@ -6,6 +6,10 @@ import { DetailComponent } from '../components/chapter/detail/detail.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -24,7 +28,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     // ScrollingModule
     FlexLayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule
   ]
 })
 export class ChapterModule { }

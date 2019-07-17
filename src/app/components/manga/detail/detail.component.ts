@@ -272,7 +272,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
 
   initManga() {
     this.isErrorCards.x = false;
-    this.detailService.requestMangaA(this.CURRENT_ID).pipe(
+    this.detailService.requestMangaA(this.CURRENT_ID)
+    .pipe(
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {

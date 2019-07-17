@@ -3,12 +3,13 @@ import { WINDOW } from './../../../services/window/window.service';
 import { Component, OnInit, OnDestroy, Renderer2, Inject,
   Input, ElementRef, AfterViewInit, ViewChild, ViewChildren, QueryList, HostListener } from '@angular/core';
 import { DOCUMENT, ViewportScroller,  } from '@angular/common';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { switchMap, takeUntil, pairwise, map } from 'rxjs/operators';
+import { Title, DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { fromEvent, of } from 'rxjs';
+import { switchMap, takeUntil, pairwise, map, catchError } from 'rxjs/operators';
 
 import { DetailService } from './detail.service';
+import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'manga-detail',
@@ -18,7 +19,7 @@ import { DetailService } from './detail.service';
 export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('renderContainer', { static: true }) renderContainer: ElementRef;
   @ViewChildren('canvasParent') renderContainers !: QueryList<ElementRef>;
-  sampleData: any = [
+  /* chapterData: any = [
     {
       id: 1,
       img: environment.base_api_url + 'storage/manga/2019/07/c01.png'
@@ -103,16 +104,20 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
       id: 21,
       img: environment.base_api_url + 'storage/manga/2019/07/c21.png'
     }
-  ];
+  ]; */
+  chapterData: any = [];
   dataScroll: any = [];
   getLastIndex = 0;
   canvasDataList: any = [];
   currentInterval = 5;
   curentActive = 0;
   curentOnScroll = 0;
-
   CURRENT_MID: any = 0;
   CURRENT_CID: any = 0;
+  isLoading = false;
+  chapterSelect: any = [];
+  chapterSelected: any = 0;
+  chapterNext: any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -122,10 +127,26 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private viewportScroller: ViewportScroller,
     private titleTab: Title,
     private detailService: DetailService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
     this.renderer2.addClass(this.document.body, 'reader-mode');
     this.currentInterval = environment.setIntervalOnLoad;
+    this.iconInit();
+  }
+
+  iconInit() {
+    this.iconRegistry.addSvgIcon('flag',
+      this.getImgResource('assets/icons-md/baseline-flag-24px.svg'));
+  }
+
+  getImgResource(image: string) {
+    if (image) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(image);
+    }
+    return '';
   }
 
   setTabTitle(title: string) {
@@ -141,26 +162,34 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.setCanvasList();
-      this.canvasInit();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.setCanvasList();
+    //   this.canvasInit();
+    // }, 1000);
   }
 
   getImgFromArray(id) {
-    for (const data of this.sampleData) {
-      if (data.id.toString() === id) {
+    for (const data of this.chapterData) {
+      if (data.id.toString() === id.toString()) {
         return data.img;
       }
     }
     return false;
   }
 
+  getRouteFromArray(id) {
+    for (const data of this.chapterSelect) {
+      if (data.id.toString() === id.toString()) {
+        return data.link;
+      }
+    }
+    return '/';
+  }
+
   setCanvasList() {
     this.canvasDataList = Array.from(this.document.getElementsByClassName('dataMainCanvas'));
   }
 
-  // dataScroll
   canvasInit() {
     this.curentActive = this.currentInterval;
     let indexCounter = 0;
@@ -192,7 +221,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   dataCanvasScroll() {
     this.renderContainers.map((element: any, idx) => {
       const getCanvasScrollTop = element.nativeElement.offsetTop;
-      if (this.dataScroll.length !== this.sampleData.length) {
+      if (this.dataScroll.length !== this.chapterData.length) {
         this.dataScroll.push({state: 0, top: getCanvasScrollTop});
       } else {
         if (this.dataScroll[idx].top !== undefined) {
@@ -202,14 +231,69 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  chapterSelectorChange(evn) {
+    // console.log(evn);
+    // console.log(this.chapterSelect);
+    const getRoute = this.getRouteFromArray(evn);
+    // console.log(getRoute);
+    this.router.navigate([ getRoute ]);
+    this.CURRENT_CID = evn;
+    this.loadInit();
+  }
+
   loadInit() {
-    // this.detailService.initChapter();
+    this.isLoading = true;
+    this.detailService.initChapter(this.CURRENT_CID)
+      .pipe(
+        catchError(val => of(val))
+      ).subscribe(
+        (jsonData) => {
+          // console.log(jsonData);
+          if (jsonData.error !== undefined) {
+            // this.isErrorCards.x = true;
+            if (jsonData.error === 404) {
+              // this.isNotFound = true;
+              this.setTabTitle(jsonData.message);
+            }
+          } else {
+            if (jsonData.status !== undefined && jsonData.status) {
+              const chapterData = jsonData.data;
+              // this.isDone = true;
+              this.setTabTitle(chapterData.manga_info.title);
+              this.chapterData = chapterData.list;
+              this.chapterSelect = chapterData.chapter;
+              // console.log(this.dataMangaA);
+              // this.runTabs();
+              // if (this.isLogin) {
+                // this.initUserData();
+              // }
+              setTimeout(() => {
+                this.chapterSelected = chapterData.chapter_selected;
+                // this.chapterSelected = 10;
+                this.setCanvasList();
+                this.canvasInit();
+              }, 100);
+              console.log(this.chapterData);
+            } else {
+              // this.isErrorCards.x = true;
+            }
+          }
+        },
+        (err) => {
+          // this.isErrorCards.x = true;
+          console.error(err);
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
   }
 
   ngOnInit() {
     this.CURRENT_CID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.loadInit();
     // const getCanvasContainer = this.renderContainer.nativeElement;
-    // console.log(this.sampleData.length);
+    // console.log(this.chapterData.length);
     // console.log(getCanvasContainer.childNodes);
     // getCanvasContainer.childNodes.forEach( (element, index) => {
     //   console.log(getCanvasContainer.childNodes[index]);
@@ -240,10 +324,10 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
             element.width = tempImg.width;
             element.height = tempImg.height;
             getCTX.drawImage(tempImg, 0, 0);
+            this.dataCanvasScroll();
           };
           tempImg.src = GetIMGData;
           this.curentActive++;
-          this.dataCanvasScroll();
         }
       }
     });

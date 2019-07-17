@@ -41,6 +41,11 @@ $hamburgerHiddenMargin: 0 16px 0 -64px;
         transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
+    &.right-place {
+        background-color: red;
+        margin: 0;
+    }
+
     &:hover {
         color: $offwhite;
     }
