@@ -4,19 +4,16 @@
 		<!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
 			<img src="assets/images/angular-white-transparent.svg" width="37" height="40" title="Home" alt="Home">
 		</a>
-		<div>
-			<mat-form-field style="color: white; width: 400px;">
+		<div class="cahpter-selector-container">
+			<mat-form-field class="cahpter-selector">
 				<mat-select [(value)]="chapterSelected" (selectionChange)="chapterSelectorChange($event.value)">
-					<!-- <mat-select [value]="chapterSelected"> -->
-					<mat-option [value]="item.id" *ngFor="let item of chapterSelect; let last = last">{{ item.text }}</mat-option>
-					<!-- <mat-option value="option2">Option 2</mat-option> -->
-					<!-- <mat-option value="option3">Option 3</mat-option> -->
+					<mat-option [value]="item.id" *ngFor="let item of chapterSelect; let last = last"><span>{{ item.text }}</span></mat-option>
 				</mat-select>
 			</mat-form-field>
 		</div>
 		<!-- <span style="color: white;">{{ chapterSelected }}</span> -->
 		<span fxFlex></span>
-		<button mat-button title="Report" style="color: white;">
+		<button mat-button title="Report" style="color: white;" (click)="openDialog()">
 			<mat-icon svgIcon="flag"></mat-icon>
 		</button>
 	</mat-toolbar-row>

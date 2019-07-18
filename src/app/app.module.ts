@@ -28,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -49,6 +50,8 @@ import { FooterComponent } from './components/main/footer/footer.component';
 import { ErrorHandlerService } from './services/http/error-handler.service';
 import { InterceptorService } from './services/http/interceptor.service';
 import { WINDOW_PROVIDERS } from './services/window/window.service';
+import { ChapterReportDialogComponent } from './components/main/dialog/dialog.report';
+
 
 @NgModule({
   declarations: [
@@ -66,12 +69,15 @@ import { WINDOW_PROVIDERS } from './services/window/window.service';
     DatanotfoundComponent,
 
     SigninComponent,
-    SigninDialogComponent,
 
     SignupComponent,
 
     DoComponent,
-    LogoutComponent
+    LogoutComponent,
+
+    // DIALOGS
+    SigninDialogComponent,
+    ChapterReportDialogComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -102,7 +108,8 @@ import { WINDOW_PROVIDERS } from './services/window/window.service';
     MatListModule,
     MatSelectModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule
   ],
   providers: [
     WINDOW_PROVIDERS,
@@ -118,6 +125,9 @@ import { WINDOW_PROVIDERS } from './services/window/window.service';
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [SigninDialogComponent]
+  entryComponents: [
+    SigninDialogComponent,
+    ChapterReportDialogComponent
+  ]
 })
 export class AppModule { }

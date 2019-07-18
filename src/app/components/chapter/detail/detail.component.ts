@@ -1,3 +1,4 @@
+import { ChapterReportDialogComponent } from './../../main/dialog/dialog.report';
 import { environment } from './../../../../environments/environment';
 import { WINDOW } from './../../../services/window/window.service';
 import { Component, OnInit, OnDestroy, Renderer2, Inject,
@@ -9,10 +10,10 @@ import { fromEvent, of } from 'rxjs';
 import { switchMap, takeUntil, pairwise, map, catchError } from 'rxjs/operators';
 
 import { DetailService } from './detail.service';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'manga-detail',
+  selector: 'manga-chapter-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
@@ -130,11 +131,33 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    public matDialog: MatDialog
   ) {
     this.renderer2.addClass(this.document.body, 'reader-mode');
     this.currentInterval = environment.setIntervalOnLoad;
     this.iconInit();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.matDialog.open(ChapterReportDialogComponent, {
+      width: '450px',
+      data: {
+        reportRequest: 1
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      // this.messageData.txt = result;
+      if (result === null) {
+        this.openDialog();
+      } else if (result === false) {
+        // this.temporaryData.username = result;
+        // this.SubmitE();
+      }
+
+    });
   }
 
   iconInit() {

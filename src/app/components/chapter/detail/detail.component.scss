@@ -38,8 +38,22 @@
     }
 }
 
-.app-tollbar.reader-toolbar{
-    background-color: #202124;
+.app-tollbar{
+
+    &.reader-toolbar{
+        background-color: #202124;
+    }
+    
+    .cahpter-selector-container{
+        .cahpter-selector{
+            color: white;
+
+            @media screen and (min-width: 600px) {
+                width: 400px;
+            }
+        }
+
+    }
 }
 
 .nav-link.home {

@@ -24,7 +24,7 @@ export interface DialogData {
 
 @Component({
   selector: 'manga-signin-dialog',
-  templateUrl: './signin.dialog.email.html',
+  templateUrl: './../../../main/dialog/signin.email.html',
 })
 export class SigninDialogComponent {
   loginFormDialogA: FormGroup = this.formBuilder.group({
