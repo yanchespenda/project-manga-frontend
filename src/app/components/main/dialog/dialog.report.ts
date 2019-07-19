@@ -1,6 +1,10 @@
-import { Component, Inject } from '@angular/core';
-
+import { environment } from './../../../../environments/environment.prod';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AuthService } from './../../../services/auth/auth.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 export interface DialogData {
   reportRequest: number;
@@ -11,21 +15,28 @@ export interface DialogData {
   templateUrl: './dialog.report.html',
   styleUrls: ['./dialog.style.scss'],
 })
-export class ChapterReportDialogComponent {
+export class ChapterReportDialogComponent implements OnInit {
   /* loginFormDialogA: FormGroup = this.formBuilder.group({
       email: [
       '', [Validators.required, Validators.email]
       ]
   }); */
   favoriteSeason: string;
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+  issues: any;
+  currentUser: any;
+  isLogged: boolean;
+  baseUrl = environment.base_api_url +  environment.base_api_version + '/issue/';
 
   constructor(
     public dialogRef: MatDialogRef<ChapterReportDialogComponent>,
-    // private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
-
+    this.currentUser = authService.currentUserValue;
+    if (this.currentUser !== null) {
+      this.isLogged = true;
+    }
   }
 
   getErrorMessage() {
@@ -36,12 +47,78 @@ export class ChapterReportDialogComponent {
     // }
   }
 
+  loadIssue() {
+    this.dataGet(this.baseUrl + 'types', null)
+    .pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        // console.log(jsonData);
+        if (jsonData.error !== undefined) {
+          // this.isErrorCards.x = true;
+          if (jsonData.error === 404) {
+            // this.isNotFound = true;
+          }
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            const chapterData = jsonData.data;
+
+            this.issues = chapterData;
+            // this.isDone = true;
+
+            // setTimeout(() => {
+            //   this.chapterSelected = chapterData.chapter_selected;
+            //   // this.chapterSelected = 10;
+            //   this.setCanvasList();
+            //   this.canvasInit();
+            // }, 100);
+            // console.log(this.chapterData);
+          } else {
+            // this.isErrorCards.x = true;
+          }
+        }
+      },
+      (err) => {
+        // this.isErrorCards.x = true;
+        console.error(err);
+      },
+      () => {
+        // this.isLoading = false;
+      }
+    );
+  }
+
+  dataGet(theLink: string, header: any) {
+    const httpOptions = {
+      headers: header,
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    if (this.isLogged) {
+      httpOptions.headers = new HttpHeaders({
+        Authorization: 'Bearer ' + this.currentUser.token
+      });
+    }
+    return this.http.get<any>(theLink, httpOptions);
+  }
+
+  dataPost(theLink: string, header: any, param: any) {
+    const httpOptions = {
+      headers: header,
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    return this.http.post<any>(theLink, param, httpOptions);
+  }
+
   onNoClick(): void {
     this.dialogRef.close(false);
   }
 
   onSubmit(): void {
     // this.dialogRef.close(this.loginFormDialogA.controls.email.value);
+  }
+
+  ngOnInit() {
+    this.loadIssue();
   }
 
 }

@@ -3,8 +3,8 @@ import { environment } from './../../../../environments/environment';
 import { WINDOW } from './../../../services/window/window.service';
 import { Component, OnInit, OnDestroy, Renderer2, Inject,
   Input, ElementRef, AfterViewInit, ViewChild, ViewChildren, QueryList, HostListener } from '@angular/core';
-import { DOCUMENT, ViewportScroller,  } from '@angular/common';
-import { Title, DomSanitizer } from '@angular/platform-browser';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
+import { Title, DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, of } from 'rxjs';
 import { switchMap, takeUntil, pairwise, map, catchError } from 'rxjs/operators';
@@ -132,7 +132,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private router: Router,
-    public matDialog: MatDialog
+    public matDialog: MatDialog,
+    private meta: Meta
   ) {
     this.renderer2.addClass(this.document.body, 'reader-mode');
     this.currentInterval = environment.setIntervalOnLoad;
@@ -285,11 +286,17 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
               this.setTabTitle(chapterData.manga_info.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
-              // console.log(this.dataMangaA);
-              // this.runTabs();
-              // if (this.isLogin) {
-                // this.initUserData();
-              // }
+
+              this.meta.addTags([
+                { name: 'twitter:card', content: 'summary' },
+                { name: 'og:url', content: this.window.location.href },
+                { name: 'og:title', content: chapterData.meta.title },
+                { name: 'og:description', content: chapterData.meta.description },
+                { name: 'og:type', content: chapterData.meta.type },
+                { name: 'og:image', content: chapterData.meta.image },
+                { name: 'description', content: chapterData.meta.description },
+              ]);
+
               setTimeout(() => {
                 this.chapterSelected = chapterData.chapter_selected;
                 // this.chapterSelected = 10;
