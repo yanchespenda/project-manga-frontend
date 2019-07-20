@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1563402702570,
+  "timestamp": 1563575551152,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,17 +8,17 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/5.4ac32c59bda56376a91e.js",
+        "/5.4213b684e5b07ccf4949.js",
         "/6.1c572cf79c95a437b512.js",
-        "/7.dd5e85eacd8f0ad5f1d4.js",
+        "/7.70b23802a1f03ffcc761.js",
         "/8.d66b1d003659612d9228.js",
-        "/9.c182d5d832e911dbca6f.js",
+        "/9.f875d9e1339f0aca22c5.js",
         "/favicon.ico",
         "/index.html",
-        "/main.de99e04e91f0193157d6.js",
+        "/main.ac149cd1247b50ac7813.js",
         "/polyfills-es5.7adef1c747f5acee0d46.js",
         "/polyfills.c698b51fc9241d8eb01a.js",
-        "/runtime.65f7ddbd9f7e932165c2.js",
+        "/runtime.df43b3a3eb38ee842a30.js",
         "/styles.2c0f3dadaeed2811f4cd.css"
       ],
       "patterns": []
@@ -317,11 +317,11 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/5.4ac32c59bda56376a91e.js": "4583fd0764b6a1b56fd1eb689cb92b776419fac6",
+    "/5.4213b684e5b07ccf4949.js": "4583fd0764b6a1b56fd1eb689cb92b776419fac6",
     "/6.1c572cf79c95a437b512.js": "81daec2dbb49f33b5a62cf97792a206d60ae9704",
-    "/7.dd5e85eacd8f0ad5f1d4.js": "b95d67741ff6494bd01dc8dd6867d140fcbcce3e",
+    "/7.70b23802a1f03ffcc761.js": "19dc98d2ba6d977aef13995c8e4b9fc409dca484",
     "/8.d66b1d003659612d9228.js": "77465e7b9dae1929797a8efa579303b0fb0aac4e",
-    "/9.c182d5d832e911dbca6f.js": "2c6031a1fbc40128c4f4d6d3fae9def2ddbba80f",
+    "/9.f875d9e1339f0aca22c5.js": "4f3e507e020773de846de911603fc9796fa69b06",
     "/assets/icons-md/baseline-access_alarm-24px.svg": "ea776fee4f08938eace14ce54c2b36730b08bb69",
     "/assets/icons-md/baseline-access_alarms-24px.svg": "a72761eaaef376d54163e03779a71d9c709394fe",
     "/assets/icons-md/baseline-access_time-24px.svg": "a9679e98f7f4d7a0339a5296d2c76083217e1c06",
@@ -605,12 +605,12 @@
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "5697d2f064c99efce99e961f5893bae1d656b2d5",
-    "/main.de99e04e91f0193157d6.js": "90a8d9e229c9a733b97ec40388e20b8354a2356f",
+    "/index.html": "9255f8d993125842050bbb7152eb73447b7f33d1",
+    "/main.ac149cd1247b50ac7813.js": "c0010e7d29563c9e390e4a421569abc9e1e5e494",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
     "/polyfills-es5.7adef1c747f5acee0d46.js": "00421af980a976f941f2a2c04531475bea17a21b",
     "/polyfills.c698b51fc9241d8eb01a.js": "79113f823991ba575bb8cc93f5097fa6becdb321",
-    "/runtime.65f7ddbd9f7e932165c2.js": "e1965eb03dad90daf8d5eda34595c8b4a1116ae1",
+    "/runtime.df43b3a3eb38ee842a30.js": "c3ac29375cb25dccedbd798ab0418dc777a7ca48",
     "/styles.2c0f3dadaeed2811f4cd.css": "f2b52546970e464b72bfd51a275efd0257c07f9d"
   },
   "navigationUrls": [

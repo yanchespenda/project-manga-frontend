@@ -119,6 +119,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   chapterSelect: any = [];
   chapterSelected: any = 0;
   chapterNext: any;
+  dialogData: any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -144,7 +145,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     const dialogRef = this.matDialog.open(ChapterReportDialogComponent, {
       width: '450px',
       data: {
-        reportRequest: 1
+        issueRequest: 2,
+        dialogData: this.dialogData
       }
     });
 
@@ -286,6 +288,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
               this.setTabTitle(chapterData.manga_info.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
+              this.dialogData = chapterData.manga_info;
 
               this.meta.addTags([
                 { name: 'twitter:card', content: 'summary' },

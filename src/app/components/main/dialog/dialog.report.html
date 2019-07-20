@@ -1,24 +1,54 @@
-<h1 mat-dialog-title>Report Issue</h1>
-<div mat-dialog-content fxLayout="column">
-    <!-- [formGroup]="loginFormDialogA" -->
-    <p class="mat-subheading-1">What problem are you encountering?</p>
-    <!-- <mat-form-field class="full-size" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input formControlName="email" matInput autocomplete="off" cdkFocusInitial>
-        <mat-error *ngIf="loginFormDialogA.invalid">{{ getErrorMessage() }}</mat-error>
-    </mat-form-field> -->
-    <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        [(ngModel)]="favoriteSeason" fxLayout="column">
-        <mat-radio-button class="example-radio-button" *ngFor="let issue of issues" [value]="issue">
-            {{issue}}
-        </mat-radio-button>
-    </mat-radio-group>
-    <div>Your favorite season is: {{favoriteSeason}}</div>
-    <div>{{ data | json }}</div>
+<h1 mat-dialog-title><span *ngIf="dialogStep == 1">Report Issue</span><span *ngIf="dialogStep == 2">Confirm Your Issue</span></h1>
+<div mat-dialog-content fxLayout="column" class="dialog-container">
+    <div *ngIf="dialogStep == 1">
+        <!-- [formGroup]="loginFormDialogA" -->
+        <p class="mat-subheading-1">What problem are you encountering?</p>
+        <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            [(ngModel)]="issueSelected" fxLayout="column">
+            <mat-radio-button class="example-radio-button" *ngFor="let issue of issues" [value]="issue.id">
+                {{issue.name}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <!-- <div>Your favorite season is: {{issueSelected}}</div> -->
+        <!-- <div>{{ issues | json }}</div> -->
+    </div>
+    <div *ngIf="dialogStep == 2">
+        <p class="mat-subheading-1">You are reporting "Vol.1 Chapter 14: The desert of ruin" with “Duplicated chapter” issue.</p>
+        <mat-form-field class="full-size" appearance="outline">
+            <mat-label>Additional comments or suggestion (optional)</mat-label>
+            <input matInput autocomplete="off">
+            <!-- <mat-error *ngIf="loginFormDialogA.invalid">{{ getErrorMessage() }}</mat-error> -->
+        </mat-form-field>
+        <input type="file"
+            #file
+            style="display: none"
+            (change)="onFilesAdded()"
+            />
+        <div fxLayout="row">
+            <button mat-raised-button color="primary" (click)="addFiles()">ATTACH A FILE</button>
+            <!-- <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar> -->
+            <div fxFlex>
+                <div style="padding: 0 0 0 8px;line-height: 36px;">
+                    <div style="max-width: 250px;overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    max-height: 36px;">
+                        <span class="mat-body-1" *ngFor="let file of files">{{file.name}}</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </div>
 <div mat-dialog-actions>
-    <!-- <button mat-button (click)="onNoClick()">Cancel</button> -->
+    <button mat-button (click)="onCancel()">CANCEL</button>
+    <span fxFlex></span>
+    <button *ngIf="dialogStep == 1" mat-button (click)="onNext()">NEXT</button>
+    <button *ngIf="dialogStep == 2" mat-button (click)="onSubmit()">SUBMIT</button>
     <!-- <button mat-button (click)="onSubmit()" [disabled]="loginFormDialogA.invalid">Submit</button> -->
 </div>
