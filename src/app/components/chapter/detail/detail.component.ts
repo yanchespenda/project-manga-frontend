@@ -20,92 +20,6 @@ import { MatIconRegistry, MatDialog } from '@angular/material';
 export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('renderContainer', { static: true }) renderContainer: ElementRef;
   @ViewChildren('canvasParent') renderContainers !: QueryList<ElementRef>;
-  /* chapterData: any = [
-    {
-      id: 1,
-      img: environment.base_api_url + 'storage/manga/2019/07/c01.png'
-    },
-    {
-      id: 2,
-      img: environment.base_api_url + 'storage/manga/2019/07/c02.png'
-    },
-    {
-      id: 3,
-      img: environment.base_api_url + 'storage/manga/2019/07/c03.png'
-    },
-    {
-      id: 4,
-      img: environment.base_api_url + 'storage/manga/2019/07/c04.png'
-    },
-    {
-      id: 5,
-      img: environment.base_api_url + 'storage/manga/2019/07/c05.png'
-    },
-    {
-      id: 6,
-      img: environment.base_api_url + 'storage/manga/2019/07/c06.png'
-    },
-    {
-      id: 7,
-      img: environment.base_api_url + 'storage/manga/2019/07/c07.png'
-    },
-    {
-      id: 8,
-      img: environment.base_api_url + 'storage/manga/2019/07/c08.png'
-    },
-    {
-      id: 9,
-      img: environment.base_api_url + 'storage/manga/2019/07/c09.png'
-    },
-    {
-      id: 10,
-      img: environment.base_api_url + 'storage/manga/2019/07/c10.png'
-    },
-    {
-      id: 11,
-      img: environment.base_api_url + 'storage/manga/2019/07/c11.png'
-    },
-    {
-      id: 12,
-      img: environment.base_api_url + 'storage/manga/2019/07/c12.png'
-    },
-    {
-      id: 13,
-      img: environment.base_api_url + 'storage/manga/2019/07/c13.png'
-    },
-    {
-      id: 14,
-      img: environment.base_api_url + 'storage/manga/2019/07/c14.png'
-    },
-    {
-      id: 15,
-      img: environment.base_api_url + 'storage/manga/2019/07/c15.png'
-    },
-    {
-      id: 16,
-      img: environment.base_api_url + 'storage/manga/2019/07/c16.png'
-    },
-    {
-      id: 17,
-      img: environment.base_api_url + 'storage/manga/2019/07/c17.png'
-    },
-    {
-      id: 18,
-      img: environment.base_api_url + 'storage/manga/2019/07/c18.png'
-    },
-    {
-      id: 19,
-      img: environment.base_api_url + 'storage/manga/2019/07/c19.png'
-    },
-    {
-      id: 20,
-      img: environment.base_api_url + 'storage/manga/2019/07/c20.png'
-    },
-    {
-      id: 21,
-      img: environment.base_api_url + 'storage/manga/2019/07/c21.png'
-    }
-  ]; */
   chapterData: any = [];
   dataScroll: any = [];
   getLastIndex = 0;
@@ -212,6 +126,15 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     return '/';
   }
 
+  getNameFromArray(id) {
+    for (const data of this.chapterSelect) {
+      if (data.id.toString() === id.toString()) {
+        return data.text;
+      }
+    }
+    return '/';
+  }
+
   setCanvasList() {
     this.canvasDataList = Array.from(this.document.getElementsByClassName('dataMainCanvas'));
   }
@@ -267,7 +190,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadInit();
   }
 
-  loadInit() {
+  async loadInit() {
     this.isLoading = true;
     this.detailService.initChapter(this.CURRENT_CID)
       .pipe(
@@ -288,7 +211,6 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
               this.setTabTitle(chapterData.manga_info.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
-              this.dialogData = chapterData.manga_info;
 
               this.meta.addTags([
                 { name: 'twitter:card', content: 'summary' },
@@ -302,6 +224,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
               setTimeout(() => {
                 this.chapterSelected = chapterData.chapter_selected;
+                this.dialogData = this.getNameFromArray(this.chapterSelected);
                 // this.chapterSelected = 10;
                 this.setCanvasList();
                 this.canvasInit();

@@ -15,28 +15,24 @@
         <!-- <div>{{ issues | json }}</div> -->
     </div>
     <div *ngIf="dialogStep == 2">
-        <p class="mat-subheading-1">You are reporting "Vol.1 Chapter 14: The desert of ruin" with “Duplicated chapter” issue.</p>
+        <p class="mat-subheading-1">You are reporting “{{ data.dialogData }}” with “{{ getCurrentSelectedIssue() }}” issue.</p>
         <mat-form-field class="full-size" appearance="outline">
             <mat-label>Additional comments or suggestion (optional)</mat-label>
             <input matInput autocomplete="off">
             <!-- <mat-error *ngIf="loginFormDialogA.invalid">{{ getErrorMessage() }}</mat-error> -->
         </mat-form-field>
-        <input type="file"
+        <input type="file" class="hidden"
             #file
-            style="display: none"
             (change)="onFilesAdded()"
             />
-        <div fxLayout="row">
-            <button mat-raised-button color="primary" (click)="addFiles()">ATTACH A FILE</button>
-            <!-- <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar> -->
-            <div fxFlex>
-                <div style="padding: 0 0 0 8px;line-height: 36px;">
-                    <div style="max-width: 250px;overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
-                    max-height: 36px;">
+        <div fxLayout="row" class="upload-container">
+            <div fxLayout="column">
+                <button mat-raised-button color="primary" (click)="addFiles()">ATTACH A FILE</button>
+                <span class="mat-caption">&nbsp;*Optional & max 2 MB</span>
+            </div>
+            <div fxFlex class="upload-text-container">
+                <div class="upload-text-box">
+                    <div class="upload-text">
                         <span class="mat-body-1" *ngFor="let file of files">{{file.name}}</span>
                     </div>
                 </div>
@@ -44,9 +40,20 @@
             
         </div>
     </div>
+    <div *ngIf="dialogStep == 3">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <p class="mat-title">STATUS</p>
+            <button mat-raised-button color="primary" (click)="onDone()">CLOSE</button>
+        </div>
+    </div>
+    <!-- <div>
+        {{ data | json }} <br />
+        {{ issueSelected }}
+    </div> -->
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onCancel()">CANCEL</button>
+    <button *ngIf="dialogStep == 1" mat-button (click)="onCancel()">CANCEL</button>
+    <button *ngIf="dialogStep == 2" mat-button (click)="onNext()">BACK</button>
     <span fxFlex></span>
     <button *ngIf="dialogStep == 1" mat-button (click)="onNext()">NEXT</button>
     <button *ngIf="dialogStep == 2" mat-button (click)="onSubmit()">SUBMIT</button>

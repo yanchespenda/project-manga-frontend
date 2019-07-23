@@ -25,12 +25,17 @@ export class ChapterReportDialogComponent{
   @ViewChild('file', { static: false }) file;
   public files: Set<File> = new Set();
   dialogStep = 1;
-  favoriteSeason: string;
   issues: any = [];
   currentUser: any;
   isLogged: boolean;
   issueSelected: number;
   baseUrl = environment.base_api_url +  environment.base_api_version + '/issue/';
+  progress: any;
+  canBeClosed = true;
+  primaryButtonText = 'Upload';
+  showCancelButton = true;
+  uploading = false;
+  uploadSuccessful = false;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterReportDialogComponent>,
@@ -43,6 +48,17 @@ export class ChapterReportDialogComponent{
       this.isLogged = true;
     }
     this.loadIssue();
+  }
+
+  getCurrentSelectedIssue() {
+    if (this.issueSelected) {
+      for (const data of this.issues) {
+        if (data.id.toString() === this.issueSelected.toString()) {
+          return data.name;
+        }
+      }
+    }
+    return 'unknown';
   }
 
   addFiles() {
@@ -80,7 +96,7 @@ export class ChapterReportDialogComponent{
     // }
   }
 
-  loadIssue() {
+  async loadIssue() {
     this.dataGet(this.baseUrl + 'types/' + this.data.issueRequest, null)
     .pipe(
       catchError(val => of(val))
@@ -121,6 +137,16 @@ export class ChapterReportDialogComponent{
     );
   }
 
+  async submitIssue() {
+    this.uploading = true;
+    // start the upload and save the progress map
+    // this.progress = this.uploadService.upload(this.files);
+    // console.log(this.progress);
+    // for (const key in this.progress) {
+    //   this.progress[key].progress.subscribe(val => console.log(val));
+    // }
+  }
+
   dataGet(theLink: string, header: any) {
     const httpOptions = {
       headers: header,
@@ -153,12 +179,17 @@ export class ChapterReportDialogComponent{
 
   }
 
+  onDone(): void {
+    this.dialogRef.close(true);
+  }
+
   onCancel(): void {
     this.dialogRef.close(false);
   }
 
   onSubmit(): void {
-    this.onNext();
+    this.dialogStep = 3;
+    // this.onNext();
     // this.dialogRef.close(this.loginFormDialogA.controls.email.value);
   }
 }

@@ -1,3 +1,21 @@
 .dialog-container{
     min-height: 250px;
 }
+
+.upload-container{
+    .upload-text-container{
+        .upload-text-box{
+            padding: 0 0 0 8px;
+            line-height: 36px;
+
+            .upload-text{
+                max-width: 250px;overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                max-height: 36px;
+            }
+        }
+    }
+}
