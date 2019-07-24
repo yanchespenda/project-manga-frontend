@@ -2,8 +2,8 @@ import { environment } from './../../../../environments/environment.prod';
 import { Component, Inject, ViewChild } from '@angular/core';
 import { AuthService } from './../../../services/auth/auth.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
+import { catchError, map, tap, last } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 export interface DialogData {
@@ -36,6 +36,7 @@ export class ChapterReportDialogComponent{
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
+  stats: any;
 
   constructor(
     public dialogRef: MatDialogRef<ChapterReportDialogComponent>,
@@ -137,8 +138,89 @@ export class ChapterReportDialogComponent{
     );
   }
 
-  async submitIssue() {
-    this.uploading = true;
+  showProgress(msg) {
+    this.stats = msg;
+  }
+
+  handleError(file){
+    console.log(file);
+  }
+
+  private getEventMessage(event: HttpEvent<any>, file: File) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        return `Uploading file "${file.name}" of size ${file.size}.`;
+
+      case HttpEventType.UploadProgress:
+        // Compute and show the % done:
+        const percentDone = Math.round(100 * event.loaded / event.total);
+        return `File "${file.name}" is ${percentDone}% uploaded.`;
+
+      case HttpEventType.Response:
+        return `File "${file.name}" was completely uploaded!`;
+
+      default:
+        return `File "${file.name}" surprising upload event: ${event.type}.`;
+    }
+  }
+
+  submitIssue() {
+    this.dialogStep = 3;
+    this.files.forEach(file => {
+      const req = new HttpRequest('POST', 'https://project-manga.oo/v1/issue/submit', file, {
+        reportProgress: true
+      });
+      this.http.request(req).pipe(
+        map(event => this.getEventMessage(event, file)),
+        tap(message => this.showProgress(message)),
+        last(), // return last (completed) message to caller
+        catchError(val => of(val))
+      );
+
+    });
+    /* this.uploading = true;
+
+    const LINK = 'https://project-manga.oo/v1/issue/submit';
+    const formData: FormData = new FormData();
+    let attachFile: any;
+    this.files.forEach(file => {
+      formData.append('attach', file, file.name);
+      attachFile = file;
+    });
+    // const data = new HttpParams()
+    //               .set('type', this.issueSelected.toString())
+    //               .set('attach', attachFile);
+    formData.append('type', this.issueSelected.toString());
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    this.http.post<any>(LINK, formData, httpOptions)
+      .pipe(
+        catchError(val => of(val))
+      )
+      .subscribe(
+        (jsonData) => {
+          this.dialogStep = 3;
+          console.log(jsonData);
+        },
+        (err) => {
+          // this.isErrorCards.x = true;
+          console.error(err);
+        },
+        () => {
+          // this.isLoading = false;
+        }
+      ); */
+    /* this.dataPost(LINK, )
+      .pipe(
+        catchError(val => of(val))
+      ); */
+    /*
+                  .set('password', password)
+                  .set('rtoken', rtoken) */
     // start the upload and save the progress map
     // this.progress = this.uploadService.upload(this.files);
     // console.log(this.progress);
@@ -168,6 +250,10 @@ export class ChapterReportDialogComponent{
     return this.http.post<any>(theLink, param, httpOptions);
   }
 
+  sendData(url: string, data: any, option: any) {
+    return this.http.post<any>(url, data, option);
+  }
+
   onNext(): void {
     if (this.dialogStep === 1) {
       this.dialogStep = 2;
@@ -188,7 +274,8 @@ export class ChapterReportDialogComponent{
   }
 
   onSubmit(): void {
-    this.dialogStep = 3;
+    this.submitIssue();
+    // this.dialogStep = 3;
     // this.onNext();
     // this.dialogRef.close(this.loginFormDialogA.controls.email.value);
   }

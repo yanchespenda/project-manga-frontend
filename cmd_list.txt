@@ -33,3 +33,24 @@ ng g @schematics/angular:component components/account/wm/setting --project=front
 ng g @schematics/angular:module modules/admin --project=frontend --flat
 
 
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB068c5gOp8Vx5unOf9AjtzfkvsHonOxa8",
+    authDomain: "projectf-mobile.firebaseapp.com",
+    databaseURL: "https://projectf-mobile.firebaseio.com",
+    projectId: "projectf-mobile",
+    storageBucket: "projectf-mobile.appspot.com",
+    messagingSenderId: "1030032108581",
+    appId: "1:1030032108581:web:fc190942858745a0"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
