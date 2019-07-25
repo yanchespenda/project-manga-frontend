@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieModule } from 'ngx-cookie';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { NgxUploadModule } from '@wkoza/ngx-upload';
 // import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 // Material design components
@@ -91,6 +92,7 @@ import { ChapterReportDialogComponent } from './components/main/dialog/dialog.re
     LazyLoadImageModule,
     RecaptchaV3Module,
     CookieModule.forRoot(),
+    NgxUploadModule.forRoot(),
     // ScrollingModule,
     // MatPasswordStrengthModule.forRoot(),
 
