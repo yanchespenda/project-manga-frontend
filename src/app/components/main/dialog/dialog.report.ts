@@ -4,7 +4,8 @@ import { AuthService } from './../../../services/auth/auth.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpEvent, HttpEventType } from '@angular/common/http';
 import { catchError, map, tap, last } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
+import { DialogService } from './dialog.service';
 
 export interface DialogData {
   issueRequest: number;
@@ -16,7 +17,7 @@ export interface DialogData {
   templateUrl: './dialog.report.html',
   styleUrls: ['./dialog.style.scss'],
 })
-export class ChapterReportDialogComponent{
+export class ChapterReportDialogComponent {
   /* loginFormDialogA: FormGroup = this.formBuilder.group({
       email: [
       '', [Validators.required, Validators.email]
@@ -42,14 +43,17 @@ export class ChapterReportDialogComponent{
     public dialogRef: MatDialogRef<ChapterReportDialogComponent>,
     private http: HttpClient,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dialogService: DialogService
   ) {
     this.currentUser = authService.currentUserValue;
     if (this.currentUser !== null) {
       this.isLogged = true;
     }
     this.loadIssue();
+
   }
+
 
   getCurrentSelectedIssue() {
     if (this.issueSelected) {
@@ -68,9 +72,9 @@ export class ChapterReportDialogComponent{
 
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
+    this.resetFiles();
     for (const data in files) {
       if (!isNaN(parseInt(data))) {
-        this.resetFiles();
         this.files.add(files[data]);
       }
     }
@@ -142,7 +146,7 @@ export class ChapterReportDialogComponent{
     this.stats = msg;
   }
 
-  handleError(file){
+  handleError(file) {
     console.log(file);
   }
 
@@ -166,67 +170,55 @@ export class ChapterReportDialogComponent{
 
   submitIssue() {
     this.dialogStep = 3;
-    this.files.forEach(file => {
-      const req = new HttpRequest('POST', 'https://project-manga.oo/v1/issue/submit', file, {
-        reportProgress: true
-      });
-      this.http.request(req).pipe(
-        map(event => this.getEventMessage(event, file)),
-        tap(message => this.showProgress(message)),
-        last(), // return last (completed) message to caller
-        catchError(val => of(val))
-      );
+    this.stats = 'Uploading';
+    this.uploading = true;
 
-    });
-    /* this.uploading = true;
+    this.progress = this.dialogService.upload(this.files);
 
-    const LINK = 'https://project-manga.oo/v1/issue/submit';
-    const formData: FormData = new FormData();
-    let attachFile: any;
-    this.files.forEach(file => {
-      formData.append('attach', file, file.name);
-      attachFile = file;
-    });
-    // const data = new HttpParams()
-    //               .set('type', this.issueSelected.toString())
-    //               .set('attach', attachFile);
-    formData.append('type', this.issueSelected.toString());
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded'
-      }),
-      withCredentials: environment.REQUEST_CREDENTIALS
-    };
-    this.http.post<any>(LINK, formData, httpOptions)
-      .pipe(
-        catchError(val => of(val))
-      )
-      .subscribe(
-        (jsonData) => {
-          this.dialogStep = 3;
-          console.log(jsonData);
-        },
-        (err) => {
-          // this.isErrorCards.x = true;
-          console.error(err);
-        },
-        () => {
-          // this.isLoading = false;
-        }
-      ); */
-    /* this.dataPost(LINK, )
-      .pipe(
-        catchError(val => of(val))
-      ); */
-    /*
-                  .set('password', password)
-                  .set('rtoken', rtoken) */
-    // start the upload and save the progress map
-    // this.progress = this.uploadService.upload(this.files);
+    let currentProgress: number[];
+    let currentProgressFix = 0;
     // console.log(this.progress);
-    // for (const key in this.progress) {
-    //   this.progress[key].progress.subscribe(val => console.log(val));
-    // }
+    // tslint:disable-next-line: forin
+    for (const key in this.progress) {
+      this.progress[key].progress.subscribe(val => {
+        console.log(val);
+        // this.stats = 'Uploading:;
+      });
+    }
+
+    // convert the progress map into an array
+    const allProgressObservables = [];
+    // tslint:disable-next-line: forin
+    for (const key in this.progress) {
+      allProgressObservables.push(this.progress[key].progress);
+    }
+
+    // Adjust the state variables
+
+    // The OK-button should have the text "Finish" now
+    this.primaryButtonText = 'Finish';
+
+    // The dialog should not be closed while uploading
+    this.canBeClosed = false;
+    this.dialogRef.disableClose = true;
+
+    // Hide the cancel-button
+    this.showCancelButton = false;
+
+    // When all progress-observables are completed...
+    forkJoin(allProgressObservables).subscribe(end => {
+      // ... the dialog can be closed again...
+      this.canBeClosed = true;
+      this.dialogRef.disableClose = false;
+
+      // ... the upload was successful...
+      this.uploadSuccessful = true;
+
+      // ... and the component is no longer uploading
+      this.uploading = false;
+
+      this.stats = 'Uploading: Finish';
+    });
   }
 
   dataGet(theLink: string, header: any) {
