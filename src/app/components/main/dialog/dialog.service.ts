@@ -1,9 +1,11 @@
+import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpRequest,
   HttpEventType,
-  HttpResponse
+  HttpResponse,
+  HttpHeaders
 } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 
@@ -15,7 +17,9 @@ export class DialogService {
   constructor(private http: HttpClient) { }
 
   public upload(
-    files: Set<File>
+    files: Set<File>,
+    suggest: any,
+    issueSelected: any
   ): { [key: string]: { progress: Observable<number> } } {
     // this will be the our resulting map
     const status: { [key: string]: { progress: Observable<number> } } = {};
@@ -24,11 +28,17 @@ export class DialogService {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
       formData.append('file', file, file.name);
+      formData.append('suggest', suggest);
+      formData.append('type', issueSelected);
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
       const req = new HttpRequest('POST', this.url, formData, {
-        reportProgress: true
+        headers: new HttpHeaders({
+          // 'Content-Type': 'multipart/form-data'
+        }),
+        reportProgress: true,
+        withCredentials: environment.REQUEST_CREDENTIALS
       });
 
       // create a new progress-subject for every file

@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpEvent, HttpEventT
 import { catchError, map, tap, last } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { DialogService } from './dialog.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 export interface DialogData {
   issueRequest: number;
@@ -18,11 +19,14 @@ export interface DialogData {
   styleUrls: ['./dialog.style.scss'],
 })
 export class ChapterReportDialogComponent {
-  /* loginFormDialogA: FormGroup = this.formBuilder.group({
-      email: [
-      '', [Validators.required, Validators.email]
+  formIssue: FormGroup = this.formBuilder.group({
+      suggest: [
+      '', []
+      ],
+      attach: [
+        '', []
       ]
-  }); */
+  });
   @ViewChild('file', { static: false }) file;
   public files: Set<File> = new Set();
   dialogStep = 1;
@@ -44,7 +48,8 @@ export class ChapterReportDialogComponent {
     private http: HttpClient,
     private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private formBuilder: FormBuilder
   ) {
     this.currentUser = authService.currentUserValue;
     if (this.currentUser !== null) {
@@ -173,10 +178,11 @@ export class ChapterReportDialogComponent {
     this.stats = 'Uploading';
     this.uploading = true;
 
-    this.progress = this.dialogService.upload(this.files);
+    const getSuggest = this.formIssue.controls.suggest.value;
+    this.progress = this.dialogService.upload(this.files, getSuggest, this.issueSelected);
 
-    let currentProgress: number[];
-    let currentProgressFix = 0;
+    // let currentProgress: number[];
+    // let currentProgressFix = 0;
     // console.log(this.progress);
     // tslint:disable-next-line: forin
     for (const key in this.progress) {
