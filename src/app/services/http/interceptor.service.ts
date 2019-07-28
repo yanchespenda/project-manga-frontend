@@ -22,9 +22,13 @@ export class InterceptorService implements HttpInterceptor {
   constructor(public errorHandler: ErrorHandlerService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    // const modifiedReq = request.clone({
+    //   headers: request.headers.set('X-Api-Key', environment.base_api_key),
+    // });
+    // console.log(environment.base_api_key);
+    // return next.handle(modifiedReq)
     return next.handle(request).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
-      console.log(err);
+      // console.log(err);
       if (err instanceof HttpErrorResponse) {
         this.errorHandler.handleError(err);
       }

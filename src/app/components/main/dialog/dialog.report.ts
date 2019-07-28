@@ -11,6 +11,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 export interface DialogData {
   issueRequest: number;
   dialogData: any;
+  issueID: any;
 }
 
 @Component({
@@ -155,32 +156,18 @@ export class ChapterReportDialogComponent {
     console.log(file);
   }
 
-  private getEventMessage(event: HttpEvent<any>, file: File) {
-    switch (event.type) {
-      case HttpEventType.Sent:
-        return `Uploading file "${file.name}" of size ${file.size}.`;
-
-      case HttpEventType.UploadProgress:
-        // Compute and show the % done:
-        const percentDone = Math.round(100 * event.loaded / event.total);
-        return `File "${file.name}" is ${percentDone}% uploaded.`;
-
-      case HttpEventType.Response:
-        return `File "${file.name}" was completely uploaded!`;
-
-      default:
-        return `File "${file.name}" surprising upload event: ${event.type}.`;
-    }
-  }
-
-  submitIssue() {
+  async submitIssue() {
     this.dialogStep = 3;
     this.stats = 'Uploading';
     this.uploading = true;
 
     const getSuggest = this.formIssue.controls.suggest.value;
-    this.progress = this.dialogService.upload(this.files, getSuggest, this.issueSelected);
+    this.progress = this.dialogService.upload(this.files, getSuggest, this.issueSelected, this.data.issueID);
 
+    let countFiles = 0;
+    this.files.forEach(file => {
+      countFiles++;
+    });
     // let currentProgress: number[];
     // let currentProgressFix = 0;
     // console.log(this.progress);
@@ -201,30 +188,35 @@ export class ChapterReportDialogComponent {
 
     // Adjust the state variables
 
-    // The OK-button should have the text "Finish" now
-    this.primaryButtonText = 'Finish';
+    if (countFiles > 0) {
+      // The OK-button should have the text "Finish" now
+      this.primaryButtonText = 'Finish';
 
-    // The dialog should not be closed while uploading
-    this.canBeClosed = false;
-    this.dialogRef.disableClose = true;
+      // The dialog should not be closed while uploading
+      this.canBeClosed = false;
+      this.dialogRef.disableClose = true;
 
-    // Hide the cancel-button
-    this.showCancelButton = false;
+      // Hide the cancel-button
+      this.showCancelButton = false;
 
-    // When all progress-observables are completed...
-    forkJoin(allProgressObservables).subscribe(end => {
-      // ... the dialog can be closed again...
-      this.canBeClosed = true;
-      this.dialogRef.disableClose = false;
+      // When all progress-observables are completed...
+      forkJoin(allProgressObservables).subscribe(end => {
+        // ... the dialog can be closed again...
+        /* this.canBeClosed = true;
+        this.dialogRef.disableClose = false;
 
-      // ... the upload was successful...
-      this.uploadSuccessful = true;
+        // ... the upload was successful...
+        this.uploadSuccessful = true;
 
-      // ... and the component is no longer uploading
-      this.uploading = false;
+        // ... and the component is no longer uploading
+        this.uploading = false;
 
-      this.stats = 'Uploading: Finish';
-    });
+        this.stats = 'Uploading: Finish'; */
+        this.onDone();
+      });
+    } else {
+      this.onDone();
+    }
   }
 
   dataGet(theLink: string, header: any) {

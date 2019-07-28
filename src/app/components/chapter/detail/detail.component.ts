@@ -60,7 +60,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
       width: '450px',
       data: {
         issueRequest: 2,
-        dialogData: this.dialogData
+        dialogData: this.dialogData,
+        issueID: this.CURRENT_CID
       }
     });
 

@@ -9,6 +9,6 @@ export class ErrorHandlerService {
   constructor(public snackbar: MatSnackBar) { }
 
   public handleError(err: any) {
-    this.snackbar.open(err.message, 'close');
+    this.snackbar.open(err.message, 'close', {duration: 5000});
   }
 }
