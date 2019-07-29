@@ -14,7 +14,7 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DialogService {
-  url = 'https://project-manga.oo/v1/issue/submit';
+  url = environment.base_api_url +  environment.base_api_version + '/issue/submit';
   constructor(
     private http: HttpClient,
     private snackBar: MatSnackBar
@@ -102,8 +102,8 @@ export class DialogService {
         } else if (event instanceof HttpResponse) {
           if (event.body !== undefined) {
             const jsonData: any = event.body;
-            if (jsonData.status) {
-              this.snackBar.open(jsonData.message, 'close', {duration: 5000});
+            if (jsonData.status !== undefined && jsonData.status) {
+              this.snackBar.open(jsonData.message, 'ok', {duration: 5000});
             }
           }
         }

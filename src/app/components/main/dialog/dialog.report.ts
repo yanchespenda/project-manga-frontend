@@ -124,14 +124,6 @@ export class ChapterReportDialogComponent {
             const chapterData = jsonData.data;
 
             this.issues = chapterData;
-            // this.isDone = true;
-
-            // setTimeout(() => {
-            //   this.chapterSelected = chapterData.chapter_selected;
-            //   // this.chapterSelected = 10;
-            //   this.setCanvasList();
-            //   this.canvasInit();
-            // }, 100);
             console.log(this.issues);
           } else {
             // this.isErrorCards.x = true;
