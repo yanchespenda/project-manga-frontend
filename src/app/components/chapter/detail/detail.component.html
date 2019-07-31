@@ -29,6 +29,11 @@
 			<div>
 				<div #renderContainer fxLayout="column" fxLayoutAlign="center center" class="reader-virtual-scroll">
 					<div #canvasParent [id]="genCanvasParentID(item.id)" class="reader-canvas-container" *ngFor="let item of chapterData; let last = last">
+						<div class="loading-container">
+							<div fxFlex>
+								<mat-progress-spinner diameter="36" mode="indeterminate"></mat-progress-spinner>
+							</div>
+						</div>
 						<figure>
 							<canvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0" width="1115"></canvas>
 						</figure>
@@ -40,8 +45,8 @@
 	<div class="bottom-container">
 		<div class="bottom-navigation-container" fxLayout="column" fxLayoutAlign="center center">
 			<div fxLayout="row">
-				<a target="_self" rel="noopener" href="https://elearning.oo/api/system/data/avatar" class="bottom-navigation prev"><span class="mat-title">Previous Chapter</span></a>
-				<a target="_self" rel="noopener" href="https://elearning.oo/api/system/data/avatar" class="bottom-navigation next"><span class="mat-title">Next Chapter</span></a>
+				<a *ngIf="chapterPrev.enabled" [routerLink]="chapterPrev.link" (click)="chapterNav(chapterPrev.id)" class="bottom-navigation prev"><span class="mat-title">Previous Chapter</span></a>
+				<a *ngIf="chapterNext.enabled" [routerLink]="chapterNext.link" (click)="chapterNav(chapterNext.id)" class="bottom-navigation next"><span class="mat-title">Next Chapter</span></a>
 			</div>
 		</div>
 		

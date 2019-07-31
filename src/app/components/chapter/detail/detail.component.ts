@@ -32,7 +32,17 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading = false;
   chapterSelect: any = [];
   chapterSelected: any = 0;
-  chapterNext: any;
+  chapterNext: any = {
+    enabled: false,
+    link: null,
+    id: 0
+  };
+  chapterPrev: any = {
+    enabled: false,
+    link: null,
+    id: 0
+  };
+  canvasLoader: any;
   dialogData: any;
 
   constructor(
@@ -141,9 +151,11 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   canvasInit() {
+    this.setCanvasList();
     this.curentActive = this.currentInterval;
     let indexCounter = 0;
     this.canvasDataList.forEach((element: any) => {
+      // this.canvasLoader.push();
       if (indexCounter <= this.curentActive) {
         this.renderer2.setAttribute(element, 'data-status', '1');
         const getID = element.getAttribute('id').replace('data-dwi-', '') || 0;
@@ -191,7 +203,15 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadInit();
   }
 
+  chapterNav(id) {
+    if (id) {
+      this.CURRENT_CID = id;
+      this.loadInit();
+    }
+  }
+
   async loadInit() {
+    this.chapterData = [];
     this.isLoading = true;
     this.detailService.initChapter(this.CURRENT_CID)
       .pipe(
@@ -212,6 +232,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
               this.setTabTitle(chapterData.manga_info.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
+              this.chapterNext = chapterData.chapter_next;
+              this.chapterPrev = chapterData.chapter_prev;
 
               this.meta.addTags([
                 { name: 'twitter:card', content: 'summary' },
@@ -227,10 +249,9 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.chapterSelected = chapterData.chapter_selected;
                 this.dialogData = this.getNameFromArray(this.chapterSelected);
                 // this.chapterSelected = 10;
-                this.setCanvasList();
                 this.canvasInit();
               }, 100);
-              console.log(this.chapterData);
+              // console.log(this.chapterData);
             } else {
               // this.isErrorCards.x = true;
             }
