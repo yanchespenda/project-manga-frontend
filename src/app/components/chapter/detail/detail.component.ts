@@ -99,6 +99,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   iconInit() {
     this.iconRegistry.addSvgIcon('flag',
       this.getImgResource('assets/icons-md/baseline-flag-24px.svg'));
+    this.iconRegistry.addSvgIcon('keyboard_arrow_up',
+      this.getImgResource('assets/icons-md/baseline-keyboard_arrow_up-24px.svg'));
   }
 
   getImgResource(image: string) {
@@ -168,6 +170,11 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   canvasInit() {
+    this.getLastIndex = 0;
+    this.curentActive = 0;
+    this.curentOnScroll = 0;
+    this.dataScroll = [];
+
     this.setCanvasList();
     this.curentActive = this.currentInterval;
     let indexCounter = 0;
@@ -252,6 +259,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
               this.setTabTitle(this.mangaInfo.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
+              this.chapterSelect.reverse();
               this.chapterNext = chapterData.chapter_next;
               this.chapterPrev = chapterData.chapter_prev;
 
@@ -290,19 +298,6 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.CURRENT_CID = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadInit();
-    // const getCanvasContainer = this.renderContainer.nativeElement;
-    // console.log(this.chapterData.length);
-    // console.log(getCanvasContainer.childNodes);
-    // getCanvasContainer.childNodes.forEach( (element, index) => {
-    //   console.log(getCanvasContainer.childNodes[index]);
-    //   element.oncontextmenu = (e) => e.preventDefault();
-    // });
-    // window.addEventListener('scroll', this.scroll, true);
-    // const element: any = this.document.getElementsByClassName('reader-mode');
-    // this.document.addEventListener('scroll', e => {
-    //   console.log(e);
-    //   // console.log(e.srcElement.scrollLeft, e.srcElement.scrollTop);
-    // });
   }
 
   ngOnDestroy() {
@@ -336,6 +331,14 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  gotoTop() {
+    this.window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // console.group( 'Scroll Report:' );
@@ -343,11 +346,15 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     const numberB = this.document.documentElement.scrollTop;
     const numberC = this.document.body.scrollTop;
     this.onScroll = numberB;
+    // console.log('Edge Scroll A: ', numberA);
+    // console.log('Edge Scroll B: ', numberB);
+    // console.log('Edge Scroll C: ', numberC);
 
     this.dataScroll.forEach((element, idx) => {
-      if (numberB > element.top && element.state === 0) {
+      if ((numberB > element.top || numberA > element.top) && element.state === 0) {
         element.state = 2;
         if (this.getLastIndex !== idx) {
+          // element.state = 3;
           this.dataScroll[this.getLastIndex].state = 3;
           this.changeStateCanvas(this.getLastIndex, this.dataScroll[this.getLastIndex].state);
         }
@@ -358,12 +365,17 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if ((this.curentActive - this.curentOnScroll) < this.currentInterval ) {
             const futureIndex = this.curentActive - 1;
-            /* console.group( 'Scroll Report:' );
+            console.group( 'Scroll Report:' );
+            console.group( 'Scroll Debug:' );
+            console.log('Element: ', element);
+            console.log('Idx: ', idx);
+            console.log('getLastIndex: ', this.getLastIndex);
+            console.groupEnd();
             console.log('Curent Active: ', this.curentActive);
             console.log('Curent On Scroll: ', this.curentOnScroll);
             console.log('Curent Interval: ', this.currentInterval);
             console.log('Run Load Canvas To: ', futureIndex);
-            console.groupEnd(); */
+            console.groupEnd();
             this.changeStateCanvas(futureIndex, 1);
           }
         }

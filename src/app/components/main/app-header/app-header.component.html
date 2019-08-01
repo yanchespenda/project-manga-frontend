@@ -4,7 +4,7 @@
         <!-- <button mat-button class="hamburger" title="Side menu"> -->
             <mat-icon svgIcon="menu-24px"></mat-icon>
         </button>
-        <a class="nav-link home" routerLink="/" [ngSwitch]="isSideBySide">
+        <a class="nav-link home" [routerLink]="'/'" [ngSwitch]="isSideBySide">
         <!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
             <!-- <img *ngSwitchCase="true" src="assets/images/angular-white-transparent@2x.svg" width="150" height="40" title="Home" alt="Home"> -->
             <!-- <img *ngSwitchDefault src="assets/images/angular-white-transparent.svg" width="37" height="40" title="Home" alt="Home"> -->
@@ -14,10 +14,10 @@
         <span fxFlex></span>
         <!-- <span>{{ isStarting }}</span> -->
         <!-- <button mat-button routerLink="/oauth/signin" *ngIf="!isLogin">Login</button> -->
-        <a mat-button [href]="'/oauth/signin'" *ngIf="!isLogin">Login</a>
+        <a mat-button [href]="'/oauth/signin'" *ngIf="!isLogin" class="nav-link action"><span class="mat-title">Login</span></a>
         <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLogin">Menu</button> -->
-        <a class="nav-link" [matMenuTriggerFor]="menu" *ngIf="isLogin">
-            <img src="assets/images/angular-white-transparent@2x.svg" width="150" height="40" title="Home" alt="Home">
+        <a class="nav-link avatar" [matMenuTriggerFor]="menu" *ngIf="isLogin">
+            <img src="assets/images/angular-white-transparent.svg" title="Avatar" alt="Avatar">
         </a>
         <mat-menu #menu="matMenu">
             <div class="popup-container-base popup-container" aria-label="Informasi Akun" aria-hidden="false" img-loaded="1">

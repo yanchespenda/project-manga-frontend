@@ -11,8 +11,6 @@
 				</mat-select>
 			</mat-form-field>
 		</div>
-		{{ onScroll }}
-		<!-- <span style="color: white;">{{ chapterSelected }}</span> -->
 		<span fxFlex></span>
 		<button mat-button title="Report" style="color: white;" (click)="openDialog()">
 			<mat-icon svgIcon="flag"></mat-icon>
@@ -35,8 +33,9 @@
 								<mat-progress-spinner diameter="36" mode="indeterminate"></mat-progress-spinner>
 							</div>
 						</div>
+						<div></div>
 						<figure>
-							<canvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0" width="1115"></canvas>
+							<canvas [id]="genCanvasID(item.id)" class="dataMainCanvas" data-status="0"></canvas>
 						</figure>
 					</div>
 				</div>
@@ -50,7 +49,10 @@
 				<a matRipple [matRippleColor]="rippleColor" *ngIf="chapterNext.enabled" [routerLink]="chapterNext.link" (click)="chapterNav(chapterNext.id)" class="bottom-navigation next"><span class="mat-title">Next Chapter</span></a>
 				<a matRipple [matRippleColor]="rippleColor" *ngIf="!chapterNext.enabled" [routerLink]="mangaInfo.parent" class="bottom-navigation next"><span class="mat-title">Close viwer</span></a>
 			</div>
+			<button mat-button (click)="gotoTop()">
+				<mat-icon svgIcon="keyboard_arrow_up"></mat-icon>
+				<span>SCROLL TO TOP</span>
+			</button>
 		</div>
-		
 	</div>
 </section>
