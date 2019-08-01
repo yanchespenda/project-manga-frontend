@@ -107,7 +107,7 @@ export class AppHeaderComponent implements OnInit {
         } else {
           this.isUseChapterNav = false;
         }
-        console.log(event);
+        // console.log(event);
       });
     this.getIsLogin();
   }

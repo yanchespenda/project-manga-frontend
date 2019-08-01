@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          console.log('route start');
+          // console.log('route start');
           this.isLoading = true;
           break;
         }
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
-          console.log('route finish');
+          // console.log('route finish');
           this.isLoading = false;
           break;
         }
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
         // } else {
         //   this.appHeaderService.changeIsMenuHidde(false);
         // }
-        console.log(event);
+        // console.log(event);
         this.titleService.setTitle(event.title);
       });
   }

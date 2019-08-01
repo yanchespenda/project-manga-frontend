@@ -42,8 +42,16 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     link: null,
     id: 0
   };
-  canvasLoader: any;
+  canvasLoader: any = [];
   dialogData: any;
+  mangaInfo: any = {
+    name: '',
+    title: '',
+    chapter: '',
+    parent: ''
+  };
+  rippleColor = '';
+  onScroll = 0;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -150,15 +158,24 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.canvasDataList = Array.from(this.document.getElementsByClassName('dataMainCanvas'));
   }
 
+  getCanvasLoaderStatus(id) {
+    if (id) {
+      if (this.canvasLoader && this.canvasLoader[parseInt(id, 10)] !== undefined) {
+        return this.canvasLoader[parseInt(id, 10)];
+      }
+    }
+    return true;
+  }
+
   canvasInit() {
     this.setCanvasList();
     this.curentActive = this.currentInterval;
     let indexCounter = 0;
     this.canvasDataList.forEach((element: any) => {
-      // this.canvasLoader.push();
+      const getID = element.getAttribute('id').replace('data-dwi-', '') || 0;
+      this.canvasLoader[getID] = true;
       if (indexCounter <= this.curentActive) {
         this.renderer2.setAttribute(element, 'data-status', '1');
-        const getID = element.getAttribute('id').replace('data-dwi-', '') || 0;
         const getCTX = element.getContext('2d') || null;
         const GetIMGData = this.getImgFromArray(getID);
         const tempImg = new Image();
@@ -166,18 +183,20 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
           element.width = tempImg.width;
           element.height = tempImg.height;
           getCTX.drawImage(tempImg, 0, 0);
+          this.canvasLoader[getID] = false;
         };
         tempImg.src = GetIMGData;
         indexCounter++;
       }
       element.oncontextmenu = (e) => e.preventDefault();
     });
+    // console.log(this.canvasLoader);
 
     setTimeout(() => {
       this.dataCanvasScroll();
     }, 500);
     // this.renderContainers.changes.subscribe((r) => this.dataCanvasScroll());
-    console.log(this.renderContainers);
+    // console.log(this.renderContainers);
   }
 
   dataCanvasScroll() {
@@ -229,7 +248,8 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
             if (jsonData.status !== undefined && jsonData.status) {
               const chapterData = jsonData.data;
               // this.isDone = true;
-              this.setTabTitle(chapterData.manga_info.title);
+              this.mangaInfo = chapterData.manga_info;
+              this.setTabTitle(this.mangaInfo.title);
               this.chapterData = chapterData.list;
               this.chapterSelect = chapterData.chapter;
               this.chapterNext = chapterData.chapter_next;
@@ -303,6 +323,11 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
             element.height = tempImg.height;
             getCTX.drawImage(tempImg, 0, 0);
             this.dataCanvasScroll();
+            this.canvasLoader[getID] = false;
+
+            setTimeout(() => {
+              this.dataCanvasScroll();
+            }, 10);
           };
           tempImg.src = GetIMGData;
           this.curentActive++;
@@ -317,6 +342,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     const numberA = this.window.pageYOffset;
     const numberB = this.document.documentElement.scrollTop;
     const numberC = this.document.body.scrollTop;
+    this.onScroll = numberB;
 
     this.dataScroll.forEach((element, idx) => {
       if (numberB > element.top && element.state === 0) {

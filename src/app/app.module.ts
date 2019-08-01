@@ -30,6 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatRippleModule } from '@angular/material/core';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -111,7 +112,8 @@ import { ChapterReportDialogComponent } from './components/main/dialog/dialog.re
     MatSelectModule,
     MatGridListModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatRippleModule
   ],
   providers: [
     WINDOW_PROVIDERS,

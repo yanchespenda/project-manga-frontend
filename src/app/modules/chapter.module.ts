@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatRippleModule } from '@angular/material/core';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
     MatToolbarModule,
     MatIconModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatRippleModule
   ]
 })
 export class ChapterModule { }

@@ -26,7 +26,7 @@ export class AppHeaderMenuComponent implements OnInit {
 
   ngOnInit() {
     const test = this.appHeaderMenuService.requestHeadMenu();
-    console.log(test);
+    // console.log(test);
     this.menus = test;
   }
 

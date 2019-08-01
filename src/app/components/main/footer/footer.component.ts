@@ -69,7 +69,7 @@ export class FooterComponent implements OnInit {
         } else {
           this.isUseChapterNav = false;
         }
-        console.log(event);
+        // console.log(event);
       });
   }
 
