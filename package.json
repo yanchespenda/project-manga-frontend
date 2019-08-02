@@ -4,11 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve frontend --open --sourceMap",
-    "build": "ng build",
+    "build": "npm run build:ssr",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "npm run build:ssr",
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
