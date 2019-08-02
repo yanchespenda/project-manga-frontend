@@ -71,24 +71,36 @@
             &.next {
                 margin-left: 8px;
             }
+
+            &:hover{
+                color: #fff;
+                background-color: #414141;
+            }
         }
 
         @media (min-width: 1024px) {
             .bottom-navigation {
                 color: rgba(0,0,0,0.87);
                 border: 1px solid rgba(0,0,0,0.87);
-    
-                &:hover{
-                    color: #fff;
-                    background-color: #414141;
-                }
+
             }
         }
     }
 
 }
 
+.seksi-reader {
+
+}
+
+.devider-reader{
+    height: 64px;
+}
+
 .app-tollbar{
+    position: fixed;
+    top: 0;
+    z-index: 1;
 
     &.reader-toolbar{
         background-color: #202124;

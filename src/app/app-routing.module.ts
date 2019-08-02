@@ -16,35 +16,40 @@ const routes: Routes = [
   },
   {
     path: 'manga',
-    loadChildren: './modules/manga.module#MangaModule',
+    // loadChildren: './modules/manga.module#MangaModule',
+    loadChildren: () => import('./modules/manga.module').then(mod => mod.MangaModule),
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Manga', id: 2 }
   },
   {
     path: 'genre',
-    loadChildren: './modules/genre.module#GenreModule',
+    // loadChildren: './modules/genre.module#GenreModule',
+    loadChildren: () => import('./modules/genre.module').then(mod => mod.GenreModule),
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Gemre', id: 3 }
   },
   {
     path: 'blog',
-    loadChildren: './modules/blog.module#BlogModule',
+    // loadChildren: './modules/blog.module#BlogModule',
+    loadChildren: () => import('./modules/blog.module').then(mod => mod.BlogModule),
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Blog', id: 4 }
   },
   {
     path: 'chapter',
-    loadChildren: './modules/chapter.module#ChapterModule',
+    // loadChildren: './modules/chapter.module#ChapterModule',
+    loadChildren: () => import('./modules/chapter.module').then(mod => mod.ChapterModule),
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Chapter', id: 5 }
   },
   {
     path: 'author',
-    loadChildren: './modules/author.module#AuthorModule',
+    // loadChildren: './modules/author.module#AuthorModule',
+    loadChildren: () => import('./modules/author.module').then(mod => mod.AuthorModule),
     // component: HomeComponent,
     // canActivate: [AuthGuardService],
     data: { title: 'Author', id: 6 }
