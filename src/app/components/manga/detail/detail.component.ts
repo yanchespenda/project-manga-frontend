@@ -100,6 +100,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     subscribe: false
   };
 
+  dataRecom: any = [];
+
   isFavoriteRun = false;
   isSubscribeRun = false;
 
@@ -277,7 +279,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           this.isErrorCards.x = true;
           if (jsonData.error === 404) {
@@ -289,11 +290,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
             this.isDone = true;
             this.dataMangaA = jsonData.data;
             this.setTabTitle(this.dataMangaA.title);
-            // console.log(this.dataMangaA);
             this.runTabs();
             if (this.isLogin) {
               this.initUserData();
             }
+            this.initRecom();
           } else {
             this.isErrorCards.x = true;
           }
@@ -306,6 +307,37 @@ export class DetailComponent implements OnInit, AfterViewInit {
       () => {
         // console.log('observable complete');
         this.isLoad = false;
+      }
+    );
+  }
+
+  initRecom() {
+    // requestMangaRecom
+    // this.isErrorCards.x = false;
+    this.detailService.requestMangaRecom(this.CURRENT_ID)
+    .pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        if (jsonData.error !== undefined) {
+          // this.isErrorCards.x = true;
+        } else {
+          if (jsonData.status !== undefined && jsonData.status) {
+            // this.isDone = true;
+            console.log(jsonData);
+            this.dataRecom = jsonData.data.recom;
+          } else {
+            // this.isErrorCards.x = true;
+          }
+        }
+      },
+      (err) => {
+        // this.isErrorCards.x = true;
+        // console.error(err);
+      },
+      () => {
+        // console.log('observable complete');
+        // this.isLoad = false;
       }
     );
   }

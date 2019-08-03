@@ -24,11 +24,10 @@
 		<div class="bg-default" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
 	</div>
 	<div class="universal-container">
-    	<div fxLayout="column" fxLayout.gt-sm="row">
+		<div fxLayout="column" fxLayout.gt-sm="row">
 			<div fxFlex="100" fxFlex.gt-sm="70">
-        		<div class="layout-padding">
+				<div class="layout-padding">
 					<mat-card class="universal-loading-container">
-						<!-- [style.background-image]="bg_data" [style.background-image]="getBackground(dataMangaA.img_bg.link)" [style.background-image]="'linear-gradient(transparent, rgba(0, 0, 0, 0.7)), url(' + get_bg() + ')'" <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar> -->
 						<mat-card-content class="manga-detail-cover" fxLayout="row">
 
 							<div class="_3Aef5">
@@ -212,11 +211,19 @@
 			<div fxFlex="30" class="layout-padding" fxHide fxShow.gt-sm>
 				<mat-card>
 					<mat-card-content>
-						<span class="mat-title">SIMILAR MANGA</span>
+						<div class="manga-card-container">
+							<div *ngFor="let item of dataRecom; let isLast=last">
+								<span class="mat-title">{{ item.by }}</span>
+								<div class="manga-card-container-child">
+
+								</div>
+							</div>
+						</div>
+						
 					</mat-card-content>
 				</mat-card>
 			</div>
-    	</div>
+		</div>
 	</div>
 
 </section>

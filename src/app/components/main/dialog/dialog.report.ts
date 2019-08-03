@@ -80,7 +80,7 @@ export class ChapterReportDialogComponent {
     const files: { [key: string]: File } = this.file.nativeElement.files;
     this.resetFiles();
     for (const data in files) {
-      if (!isNaN(parseInt(data))) {
+      if (!isNaN(parseInt(data, 10))) {
         this.files.add(files[data]);
       }
     }

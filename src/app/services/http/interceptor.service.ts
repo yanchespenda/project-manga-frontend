@@ -8,26 +8,41 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { ErrorHandlerService } from './error-handler.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
+  isLogin = false;
+  currentUser: any;
 
-  constructor(public errorHandler: ErrorHandlerService) { }
+  constructor(
+    public errorHandler: ErrorHandlerService,
+    public authService: AuthService
+  ) {
+    this.getIsLogin();
+  }
+
+  getIsLogin() {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser !== null) {
+      this.isLogin = true;
+    }
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const modifiedReq = request.clone({
-    //   headers: request.headers.set('X-Api-Key', environment.base_api_key),
-    // });
-    // console.log(environment.base_api_key);
-    // return next.handle(modifiedReq)
-    return next.handle(request).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
+    let modifiedReq = request;
+    if (this.isLogin) {
+      modifiedReq = request.clone({
+        headers: request.headers.set('Authorization', 'Bearer ' + this.currentUser.token),
+      });
+    }
+    return next.handle(modifiedReq).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
       // console.log(err);
       if (err instanceof HttpErrorResponse) {
         this.errorHandler.handleError(err);
