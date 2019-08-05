@@ -443,8 +443,84 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  resetData() {
+    this.tabLoadTimes = [];
+    this.tabActiveIndex = 0;
+    this.isNotFound = false;
+    this.isLoad = false;
+    this.isDone = false;
+    this.isLoadCards = {
+      a: false,
+      b: false
+    };
+    this.isLogin = false;
+    this.isErrorCards = {
+      x: false,
+      a1: false,
+      a2: false,
+      b: false
+    };
+    this.chapterFirstLoad = false;
+
+    this.dataMangaA = {
+      id: 0,
+      title: 'loading...',
+      chapter: 0,
+      status: 'unknown',
+      type: 'unknown',
+      author: [],
+      img_cvr: {
+        enabled: false,
+        thumb: '',
+        full: ''
+      },
+      img_bg: {
+        enabled: false,
+        link: ''
+      }
+    };
+
+    this.dataTabA = {
+      genre: [],
+      summary: 'loading...',
+      type: '',
+      releasedate: '',
+      othername: '',
+      latest: ''
+    };
+
+    this.dataTabB = {
+      views_total: 0,
+      views_day: 0,
+      user_subscribes: 0,
+      user_favorites: 0
+    };
+
+    this.dataChapters = {
+      list: []
+    };
+
+    this.dataUser = {
+      favorite: false,
+      subscribe: false
+    };
+
+    this.dataRecom = [];
+
+    this.isFavoriteRun = false;
+    this.isSubscribeRun = false;
+  }
+
+  reloadManga(id) {
+    this.CURRENT_ID = id;
+    this.resetData();
+    this.isLoad = true;
+    this.getIsLogin();
+    this.initManga();
+  }
+
   ngAfterViewInit() {
-    console.log(this.tabGroup.selectedIndex);
+    // console.log(this.tabGroup.selectedIndex);
   }
 
   ngOnInit() {
@@ -452,6 +528,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     this.CURRENT_ID = this.activatedRoute.snapshot.paramMap.get('id');
     this.getIsLogin();
     this.initManga();
+
+    // this.activatedRoute.snapshot.
   }
 
 }

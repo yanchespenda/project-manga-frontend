@@ -21,7 +21,8 @@
 </section>
 <section class="universal-seksi seksi-cover" *ngIf="!isNotFound && !isErrorCards.x">
 	<div class="manga-detail-bg">
-		<div class="bg-default" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
+		<div class="bg-default" *ngIf="dataMangaA.img_bg.link!=null" [style.background-image]="getBackground(dataMangaA.img_bg.link)"></div>
+		<div class="bg-default" *ngIf="dataMangaA.img_bg.link==null"></div>
 	</div>
 	<div class="universal-container">
 		<div fxLayout="column" fxLayout.gt-sm="row">
@@ -214,13 +215,39 @@
 						<div class="manga-card-container">
 							<div *ngFor="let item of dataRecom; let isLast=last">
 								<span class="mat-title">{{ item.by }}</span>
-								<div class="manga-card-container-child">
-									<div class="feed-artikel-specific">
-										<a class="no-decor layout-column" layout="column" href="https://project-04.oo/blog/iso-37001-2016-sistem-manajemen-anti-suap-5c78ac000bd5b">
-											<figure class="feed-artikel__specific__image" style="background-image: url(https://project-04.oo/assets/images/post/fcceeb95-3f25-4078-bf91-0052eb11dff1.png);"></figure>
-											<h3 class="md-title feed-artikel_specific__title feed-artikel-spesifik__title">ISO 37001:2016 (SISTEM MANAJEMEN ANTI SUAP)</h3>
+								<div class="manga-card-container-child" fxLayout="column">
+									<div class="manga-card-list" *ngFor="let itemc of item.list; let isLastc=last">
+										<a [routerLink]="itemc.manga_link" (click)="reloadManga(itemc.manga_id)" alt="itemc.manga_name" class="transisi gambar-container">
+											<div class="gambar">
+												<img [lazyLoad]="itemc.manga_cover.full" [defaultImage]="itemc.manga_cover.thumb">
+											</div>
 										</a>
-									</div>
+										<div class="content-container">
+											<a [routerLink]="itemc.manga_link" (click)="reloadManga(itemc.manga_id)" class="title">{{ itemc.manga_name }}</a>
+											<div class="author-container">
+												<a href="/author/mrs-author-309872" class="author">
+													<span>BUNBUN (Takahiro)</span>
+												</a>
+												<!-- <span>, </span>
+												<a href="/author/mrs-author-100018812" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
+													<span itemprop="name">D.K</span>
+												</a>
+												<span>, </span>
+												<a href="/author/mrs-author-100018813" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
+													<span itemprop="name">JWWORKS</span>
+												</a>
+												<span>, </span>
+												<a href="/author/mrs-author-100018814" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
+													<span itemprop="name">Takino Daisuke</span>
+												</a> -->
+											</div>
+											<div class="status">{{ itemc.manga_status }}, x chapters</div>
+										</div>
+										<!-- <a class="no-decor layout-column" layout="column" href="https://project-04.oo/blog/iso-37001-2016-sistem-manajemen-anti-suap-5c78ac000bd5b">
+											<figure class="feed-artikel__specific__image" style="background-image: url(https://project-04.oo/assets/images/post/fcceeb95-3f25-4078-bf91-0052eb11dff1.png);"></figure>
+											<h3 class="md-title feed-artikel_specific__title feed-artikel-spesifik__title">{{ itemc.manga_name }}</h3>
+										</a> -->
+									</div> 
 								</div>
 							</div>
 						</div>
