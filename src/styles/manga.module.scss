@@ -1,0 +1,238 @@
+// Detail Component
+.mat-card-content {
+    &.manga-detail-cover > :first-child {
+        margin-top: -175px;
+        margin-left: -16px;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+    }
+
+    .manga-title-container {
+        height: 64px;
+    }
+}
+
+.universal-seksi {
+    .manga-detail-bg{
+        width: 100%;
+        height: 450px;
+
+        .bg-default{
+            background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.manga-cover-container {
+    padding: 16px 16px 0;
+    width: 400px;
+    height: 395px;
+    background-color: #fff;
+
+    .manga-cover-set {
+        width: 100%!important;
+        height: 100%!important;
+    }
+
+    .manga-overlay, .manga-cover {
+        display: block;
+        width: 100%;
+    }
+
+    .manga-cover {
+        background-color: #eee;
+        position: relative;
+        height: 0;
+        padding-bottom: Infinity;
+        border-radius: 0;
+        overflow: hidden;
+
+        .manga-overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+            z-index: 2;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .manga-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .manga-image {
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+    }
+}
+
+.manga-card-container{
+    .title-area{
+        padding-bottom: 8px;
+    }
+
+    .manga-card-container-child{
+        .manga-card-list{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 100%;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding-left: 20px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            border-radius: 2px;
+            -webkit-transition: background-color .15s ease;
+            -o-transition: background-color .15s ease;
+            transition: background-color .15s ease;
+
+            &:first-child{
+                margin-top: -12px;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .transisi, .transisi *{
+                color: #177fdb;
+                -webkit-transition: color .15s ease;
+                -o-transition: color .15s ease;
+                transition: color .15s ease;
+            }
+
+            .gambar-container{
+                margin-right: 16px;
+                width: 20%;
+                max-width: 80px;
+                display: block;
+                -webkit-box-flex: 0;
+                -ms-flex: 0 0 20%;
+                flex: 0 0 20%;
+
+                .gambar{
+                    display: block;
+                    background-color: #eee;
+                    position: relative;
+                    width: 100%;
+                    height: 0;
+                    padding-bottom: 150%;
+
+                    img{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+
+                        width: 100%;
+                        height: 100%;
+                        -o-object-fit: cover;
+                        object-fit: cover;
+                    }
+
+                    &:after {
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+                        box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+                        content: "";
+                    }
+                }
+            }
+
+            .content-container{
+                display: -webkit-inline-box;
+                display: -ms-inline-flexbox;
+                display: inline-flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                flex-direction: column;
+                width: calc(80% - 50px);
+
+                .title{
+                    color: rgba(0,0,0,.87);
+                    font-size: 16px;
+                    font-size: 1rem;
+                    font-weight: 500;
+                    line-height: 19px;
+                    display: inline-block;
+                    display: -webkit-box;
+                    max-height: 38px;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    margin-bottom: 2px;
+
+                    &:hover{
+                        color: #2196f3!important;
+                    }
+                }
+
+                .author-container{
+                    color: rgba(0,0,0,.54);
+                    font-size: 14px;
+                    font-size: .875rem;
+                    font-weight: 400;
+                    line-height: 16px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    float: left;
+
+                    .author{
+                        color: rgba(0,0,0,.54);
+                        font-size: 14px;
+                        font-size: .875rem;
+                        font-weight: 400;
+                        line-height: 16px;
+                    }
+                }
+
+                .status{
+                    color: rgba(0,0,0,.54);
+                    font-size: 14px;
+                    font-size: .875rem;
+                    font-weight: 400;
+                    line-height: 16px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+}
+

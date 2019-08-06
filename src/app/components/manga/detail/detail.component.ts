@@ -1,4 +1,3 @@
-import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -7,7 +6,7 @@ import { Title } from '@angular/platform-browser';
 import { DetailService } from './detail.service';
 import { throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { AuthService } from './../../../services/auth/auth.service';
 import { CookieService } from 'ngx-cookie';
 import { MatSnackBar } from '@angular/material';
 
@@ -156,6 +155,10 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
+  debugData(data) {
+    console.log(data);
+  }
+
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.tabActiveIndex = tabChangeEvent.index;
     this.runTabs();
@@ -204,7 +207,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         this.isErrorCards.a1 = true;
-        console.error(err);
+        // console.error(err);
       },
       () => {
         // console.log('observable complete');
@@ -233,7 +236,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         this.isErrorCards.a2 = true;
-        console.error(err);
+        // console.error(err);
       },
       () => {
         // console.log('observable complete');
@@ -263,7 +266,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         this.isErrorCards.b = true;
-        console.error(err);
+        // console.error(err);
       },
       () => {
         // console.log('observable complete');
@@ -302,7 +305,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         this.isErrorCards.x = true;
-        console.error(err);
+        // console.error(err);
       },
       () => {
         // console.log('observable complete');
@@ -324,7 +327,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
             // this.isDone = true;
-            console.log(jsonData);
+            // console.log(jsonData);
             this.dataRecom = jsonData.data.recom;
           } else {
             // this.isErrorCards.x = true;
@@ -349,7 +352,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         catchError(val => of(val))
       ).subscribe(
         (jsonData) => {
-          console.log(jsonData);
+          // console.log(jsonData);
           if (jsonData.error !== undefined) {
             // this.isErrorCards.b = true;
           } else {
@@ -365,7 +368,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         },
         (err) => {
           this.isFavoriteRun = false;
-          console.error(err);
+          // console.error(err);
         },
         () => {
           this.isFavoriteRun = false;
@@ -411,7 +414,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.error !== undefined) {
           // this.isErrorCards.b = true;
         } else {
@@ -425,7 +428,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         // this.isErrorCards.b = true;
-        console.error(err);
+        // console.error(err);
       },
       () => {
         // console.log('observable complete');

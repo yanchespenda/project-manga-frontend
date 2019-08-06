@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import './styles/variable.scss';
 @import './styles/default-theme.scss';
 
 body{
@@ -38,7 +39,16 @@ a {
     color: #29b6f6;
     text-decoration: none;
     background-color: transparent;
+
+    &.hoverable {
+        color: rgba(0, 0, 0, 0.87);
+
+        &:hover{
+            color: #2196f3!important;
+        }
+    }
 }
+
 
 .full-size{
     width: 100%;
@@ -157,89 +167,6 @@ body.reader-mode{
     z-index: 11;
 }
 
-$accentblue: #1E88E5;
-$white: #FFFFFF;
-
-manga-app-header-menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 80%;
-
-    a {
-        font-size: 16px;
-        font-weight: 400;
-        color: $white;
-        font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-        text-transform: uppercase;
-        padding: 21px 0;
-        text-decoration: none;
-    }
-
-    ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        list-style-position: inside;
-        padding: 0px;
-        margin: 0px;
-
-        li {
-            padding-bottom: 2px;
-            list-style-type: none;
-            cursor: pointer;
-
-            &:hover {
-                opacity: 0.7;
-            }
-
-            &:focus {
-                background-color: $accentblue;
-                outline: none;
-            }
-        }
-    }
-
-    a.nav-link {
-        margin: 0;
-        padding: 24px 16px;
-        cursor: pointer;
-
-        &:focus {
-            background: rgba($white, 0.15);
-            border-radius: 4px;
-            outline: none;
-            padding: 8px 16px;
-        }
-    }
-
-}
-
-manga-app-header{
-    .mat-toolbar{
-
-        -moz-transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
-        -moz-transition-duration: 0.4s;
-        -moz-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-        -webkit-transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
-        -webkit-transition-duration: 0.4s;
-        -webkit-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-        transition-property: background-color, fill, color, transform, -webkit-transform, -moz-transform !important;
-        transition-duration: 0.4s;
-        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-
-        transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-    }
-
-    .mat-toolbar.notActive{
-        transform: translateY(-100%);
-        -webkit-transform: translateY(-100%);
-        -moz-transform: translateY(-100%);
-    }
-}
-
 .mat-card-title-1{
     color: rgba(0,0,0,.87);
     font-size: 16px;
@@ -258,29 +185,6 @@ manga-app-header{
     margin-top: 10px;
     // margin-bottom: 20px;
     text-transform: uppercase;
-}
-
-.universal-loading-container{
-    position: relative;
-}
-
-.universal-loading-container .universal-loading{
-    z-index: 4;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-}
-
-.universal-loading-container .universal-loading.is-top{
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-}
-
-.universal-loading-container .universal-loading.is-bottom{
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
 }
 
 .parent-paragrap{
@@ -306,27 +210,6 @@ manga-app-header{
     line-height: 2!important;
     display: inline-block;
     width: 50%;
-}
-
-.componen-error-container {
-    width: 100%;
-    position: relative;
-}
-
-.componen-error-container.is-c-topchapter {
-    height: 300px;
-}
-
-.componen-error-container .componen-error{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.componen-error-container .componen-error .componen-error-text {
-    color: $warn;
 }
 
 .universal-pad-top-bot {
@@ -359,72 +242,10 @@ manga-app-header{
     width: 100%;
 }
 
-.manga-detail-bg{
-    width: 100%;
-    height: 450px;
-}
-
-.manga-detail-bg .bg-default{
-    background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-}
-
 .manga-tabel td.manga-tabel-td {
     padding-right: 10px;
     width: 30%;
     white-space: nowrap;
-}
-
-.page-notice{
-    height: 500px;
-}
-
-.page-notice-child{
-    height: 100%;
-}
-
-
-.layout, .layout-column, .layout-row {
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex; 
-}
-
-.layout-column {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-            flex-direction: column; 
-}
-
-.layout-row {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-            flex-direction: row; 
-}
-
-.layout-align-start-center, .layout-align-center-center, .layout-align-end-center, .layout-align-space-between-center, .layout-align-space-around-center {
-    align-items: center;
-    align-content: center;
-    max-width: 100%;
-}
-
-.layout-align-center, .layout-align-center-start, .layout-align-center-center, .layout-align-center-end, .layout-align-center-stretch {
-    justify-content: center;
-}
-
-.layout-row > .flex {
-    min-width: 0;
-}
-
-.flex {
-    flex: 1;
-    box-sizing: border-box;
 }
 
 /* .rainbow-spinner {
@@ -465,5 +286,16 @@ manga-app-header{
 }
 
 /* .mat-progress-spinner circle, .mat-spinner circle */
-
+@import './styles/universal.scss';
 @import './styles/account.scss';
+
+// Main Component
+@import './styles/app.toolbar.scss';
+@import './styles/app.footer.scss';
+
+// Per Module
+@import './styles/author.module.scss';
+@import './styles/blog.module.scss';
+@import './styles/manga.module.scss';
+@import './styles/chapter.module.scss';
+@import './styles/genre.module.scss';

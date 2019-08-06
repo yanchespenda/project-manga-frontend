@@ -1,0 +1,36 @@
+.login-footer{
+    // position: fixed;
+    position: relative !important;;
+    bottom: 0;
+    width: 100%;
+
+    .login-footer-content {
+        -webkit-align-self: flex-end;
+        align-self: flex-end;
+        padding: 16px 32px;
+        text-align: center;
+        font-size: small;
+        border-top: 1px solid #ddd;
+    }
+}
+
+@media only screen and (max-height: 585px){
+    .login-footer{
+        position: relative !important;
+
+        .login-footer-content{
+            border-top: none !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .login-footer{
+        position: relative !important;;
+        // position: fixed;
+
+        .login-footer-content{
+            border-top: none !important;
+        }
+    }
+}

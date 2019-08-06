@@ -1,5 +1,7 @@
-<ul role="navigation">
-  <li *ngFor="let menu of menus | async">
-    <a class="nav-link" [routerLink]="menu.url" [title]="menu.title">{{ menu.title }}</a>
-  </li>
-</ul>
+<div class="nav-link-container">
+    <ul role="navigation">
+        <li *ngFor="let menu of menus | async">
+			<a class="nav-link" [routerLink]="menu.url" [title]="menu.title">{{ menu.title }}</a>
+        </li>
+	</ul>
+</div>
