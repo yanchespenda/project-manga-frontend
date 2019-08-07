@@ -17,6 +17,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'manga-detail',
@@ -38,12 +39,15 @@ export class DetailComponent implements OnInit, AfterViewInit {
   @ViewChild('tabGroupManga', {static: false}) tabGroup;
   tabLoadTimes: Date[] = [];
   tabActiveIndex = 0;
+  tabSelectedIndex = new FormControl(0);
   isNotFound = false;
   isLoad = false;
   isDone = false;
   isLoadCards = {
+    x: false,
     a: false,
-    b: false
+    b: false,
+    c: false
   };
   isLogin = false;
   isErrorCards = {
@@ -155,10 +159,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  debugData(data) {
-    console.log(data);
-  }
-
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     this.tabActiveIndex = tabChangeEvent.index;
     this.runTabs();
@@ -187,7 +187,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     return this.sanitizer.bypassSecurityTrustStyle(`linear-gradient(transparent, rgba(0, 0, 0, 0.7)), url(${ image })`);
   }
 
-  initInfo() {
+  async initInfo() {
     this.isLoadCards.a = true;
     this.isErrorCards.a1 = false;
     this.detailService.requestMangaInfo(this.CURRENT_ID).pipe(
@@ -216,7 +216,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  initStats() {
+  async initStats() {
     this.isLoadCards.a = true;
     this.isErrorCards.a2 = false;
     this.detailService.requestMangaStats(this.CURRENT_ID).pipe(
@@ -245,7 +245,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  initChapters() {
+  async initChapters() {
     this.isLoadCards.b = true;
     this.isErrorCards.b = false;
     this.detailService.requestMangaChapters(this.CURRENT_ID).pipe(
@@ -275,7 +275,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
     );
   }
 
-  initManga() {
+  async initManga() {
+    this.isLoadCards.x = true;
     this.isErrorCards.x = false;
     this.detailService.requestMangaA(this.CURRENT_ID)
     .pipe(
@@ -310,13 +311,15 @@ export class DetailComponent implements OnInit, AfterViewInit {
       () => {
         // console.log('observable complete');
         this.isLoad = false;
+        this.isLoadCards.x = false;
       }
     );
   }
 
-  initRecom() {
+  async initRecom() {
     // requestMangaRecom
     // this.isErrorCards.x = false;
+    this.isLoadCards.c = true;
     this.detailService.requestMangaRecom(this.CURRENT_ID)
     .pipe(
       catchError(val => of(val))
@@ -339,13 +342,14 @@ export class DetailComponent implements OnInit, AfterViewInit {
         // console.error(err);
       },
       () => {
+        this.isLoadCards.c = false;
         // console.log('observable complete');
         // this.isLoad = false;
       }
     );
   }
 
-  toggleFavorite() {
+  async toggleFavorite() {
     if (!this.isFavoriteRun) {
       this.isFavoriteRun = true;
       this.detailService.sendFavorite(this.CURRENT_ID, this.dataUser.favorite).pipe(
@@ -377,7 +381,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  toggleSubscribe() {
+  async toggleSubscribe() {
     if (!this.isSubscribeRun) {
       this.isFavoriteRun = true;
       this.detailService.sendSubscribe(this.CURRENT_ID, this.dataUser.subscribe).pipe(
@@ -400,7 +404,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
         },
         (err) => {
           this.isSubscribeRun = false;
-          console.error(err);
+          // console.error(err);
         },
         () => {
           this.isSubscribeRun = false;
@@ -409,7 +413,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  initUserData() {
+  async initUserData() {
     this.detailService.requestDataUsers(this.CURRENT_ID).pipe(
       catchError(val => of(val))
     ).subscribe(
@@ -449,12 +453,15 @@ export class DetailComponent implements OnInit, AfterViewInit {
   resetData() {
     this.tabLoadTimes = [];
     this.tabActiveIndex = 0;
+    this.tabSelectedIndex.setValue(0);
     this.isNotFound = false;
     this.isLoad = false;
     this.isDone = false;
     this.isLoadCards = {
+      x: false,
       a: false,
-      b: false
+      b: false,
+      c: false
     };
     this.isLogin = false;
     this.isErrorCards = {

@@ -10,10 +10,10 @@ import {join} from 'path';
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 // Express server
-const app = express();
+// const app = express();
 
 // Firebase functions server
-// export const app = express();
+export const app = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
@@ -57,6 +57,6 @@ app.get('*', (req, res) => {
 });
 
 // Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node Express server listening on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Node Express server listening on http://localhost:${PORT}`);
+// });

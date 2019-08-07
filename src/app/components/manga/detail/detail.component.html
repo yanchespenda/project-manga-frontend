@@ -33,8 +33,9 @@
 
 							<div class="manga-cover-container">
 								<div class="manga-cover manga-cover-set">
-									<div class="manga-overlay"></div>
-									<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="manga-image manga-image-overlay">
+									<div class="manga-overlay is-load" *ngIf="isLoad"></div>
+									<div class="manga-overlay" *ngIf="!isLoad"></div>
+									<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="manga-image manga-image-overlay" *ngIf="!isLoad">
 								</div>
 							</div>
 
@@ -88,14 +89,14 @@
 					<mat-card class="universal-loading-container">
 						<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoadCards.a" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
 						<mat-card-content fxLayout="row">
-							<mat-tab-group #tabGroupManga fxFlex="100" (focusChange)="tabChanged($event)">
+							<mat-tab-group #tabGroupManga fxFlex="100" (focusChange)="tabChanged($event)" [selectedIndex]="tabSelectedIndex.value" (selectedIndexChange)="tabSelectedIndex.setValue($event)">
 								<mat-tab label="INFORMATION" class="full-size">
 									<ng-template matTabContent>
 										<div class="universal-pad-top-bot">
 											<div fxLayout="column" *ngIf="!isErrorCards.a1">
 												<span class="mat-title">GENRES</span>
 												<mat-chip-list aria-label="Categories">
-													<mat-chip *ngFor="let item of dataTabA.genre; let isLast=last" routerLink="{{ item.link }}" title="{{ item.name }}">{{ item.name }}</mat-chip>
+													<mat-chip *ngFor="let item of dataTabA.genre; let isLast=last" [routerLink]="item.link" title="{{ item.name }}">{{ item.name }}</mat-chip>
 													<!-- <mat-chip>Two fish</mat-chip>
 													<mat-chip color="primary" selected>Primary fish</mat-chip>
 													<mat-chip color="accent" selected>Accent fish</mat-chip> -->
@@ -211,54 +212,75 @@
 				<mat-card>
 					<mat-card-content>
 						<div class="manga-card-container">
-							<div *ngFor="let item of dataRecom; let isLast=last">
-								<div class="title-area">
-									<span class="mat-title">{{ item.by }}</span>
+							<div class="title-area is-load" *ngIf="isLoadCards.c"></div>
+							<div class="manga-card-container-child" fxLayout="column" *ngIf="isLoadCards.c">
+								<div class="manga-card-list is-load">
+									<a alt="itemc.manga_name" class="transisi gambar-container">
+										<div class="gambar">
+											<div class="img"></div>
+										</div>
+									</a>
+									<div class="content-container">
+										<a class="title"></a>
+										<div class="author-container"></div>
+										<div class="status"></div>
+									</div>
 								</div>
-								<div class="manga-card-container-child" fxLayout="column">
-									<div class="manga-card-list" *ngFor="let itemc of item.list; let isLastc=last">
-										<a [routerLink]="itemc.manga_link" *ngIf="itemc.manga_cover.enabled" (click)="reloadManga(itemc.manga_id)" alt="itemc.manga_name" class="transisi gambar-container">
-											<div class="gambar">
-												<img [lazyLoad]="itemc.manga_cover.full" [defaultImage]="itemc.manga_cover.thumb">
-											</div>
-										</a>
-										<div class="content-container">
-											<a [routerLink]="itemc.manga_link" (click)="reloadManga(itemc.manga_id)" class="title">{{ itemc.manga_name }}</a>
-											<div class="author-container" *ngIf="itemc.manga_author.length > 0">
-												<!-- <figure *ngFor="let itemx of itemc.manga_author; let isLastx=last"> -->
+								<div class="manga-card-list is-load">
+									<a alt="itemc.manga_name" class="transisi gambar-container">
+										<div class="gambar">
+											<div class="img"></div>
+										</div>
+									</a>
+									<div class="content-container">
+										<a class="title"></a>
+										<div class="author-container"></div>
+										<div class="status"></div>
+									</div>
+								</div>
+								<div class="manga-card-list is-load">
+									<a alt="itemc.manga_name" class="transisi gambar-container">
+										<div class="gambar">
+											<div class="img"></div>
+										</div>
+									</a>
+									<div class="content-container">
+										<a class="title"></a>
+										<div class="author-container"></div>
+										<div class="status"></div>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="!isLoadCards.c">
+								<div *ngFor="let item of dataRecom; let isLast=last">
+									<div class="title-area">
+										<span class="mat-title">{{ item.by }}</span>
+									</div>
+									<div class="manga-card-container-child" fxLayout="column">
+										<div class="manga-card-list" *ngFor="let itemc of item.list; let isLastc=last">
+											<a [routerLink]="itemc.manga_link" *ngIf="itemc.manga_cover.enabled" (click)="reloadManga(itemc.manga_id)" alt="itemc.manga_name" class="transisi gambar-container">
+												<div class="gambar">
+													<img class="img" [lazyLoad]="itemc.manga_cover.full" [defaultImage]="itemc.manga_cover.thumb">
+												</div>
+											</a>
+											<div class="content-container">
+												<a [routerLink]="itemc.manga_link" (click)="reloadManga(itemc.manga_id)" class="title">{{ itemc.manga_name }}</a>
+												<div class="author-container" *ngIf="itemc.manga_author.length > 0">
 													<a [routerLink]="itemx.link" class="author hoverable" *ngFor="let itemx of itemc.manga_author; let isLastx=last">
 														<span>{{ itemx.text }}&nbsp;</span>
 													</a>
-												<!-- </figure> -->
-													
-												<!-- <ng-template *ngFor="let itemx of itemc.manga_author; let isLastx=last">
-													<a href="/author/mrs-author-309872" class="author">
-														<span>{{ itemx.text }}</span>
-													</a>
-												</ng-template> -->
-												
-												<!-- <span>, </span> 
-												<a href="/author/mrs-author-100018812" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
-													<span itemprop="name">D.K</span>
-												</a>
-												<span>, </span>
-												<a href="/author/mrs-author-100018813" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
-													<span itemprop="name">JWWORKS</span>
-												</a>
-												<span>, </span>
-												<a href="/author/mrs-author-100018814" itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="author">
-													<span itemprop="name">Takino Daisuke</span>
-												</a> -->
+												</div>
+												<div class="status"><span>{{ itemc.manga_status }}</span><span>, </span><span>{{ itemc.manga_chapters }} chapter{{ (itemc.manga_chapters==1)?'':'s' }}</span></div>
 											</div>
-											<div class="status"><span>{{ itemc.manga_status }}</span><span>, </span><span>{{ itemc.manga_chapters }} chapter{{ (itemc.manga_chapters==1)?'':'s' }}</span></div>
-										</div>
-										<!-- <a class="no-decor layout-column" layout="column" href="https://project-04.oo/blog/iso-37001-2016-sistem-manajemen-anti-suap-5c78ac000bd5b">
-											<figure class="feed-artikel__specific__image" style="background-image: url(https://project-04.oo/assets/images/post/fcceeb95-3f25-4078-bf91-0052eb11dff1.png);"></figure>
-											<h3 class="md-title feed-artikel_specific__title feed-artikel-spesifik__title">{{ itemc.manga_name }}</h3>
-										</a> -->
-									</div> 
+											<!-- <a class="no-decor layout-column" layout="column" href="https://project-04.oo/blog/iso-37001-2016-sistem-manajemen-anti-suap-5c78ac000bd5b">
+												<figure class="feed-artikel__specific__image" style="background-image: url(https://project-04.oo/assets/images/post/fcceeb95-3f25-4078-bf91-0052eb11dff1.png);"></figure>
+												<h3 class="md-title feed-artikel_specific__title feed-artikel-spesifik__title">{{ itemc.manga_name }}</h3>
+											</a> -->
+										</div> 
+									</div>
 								</div>
 							</div>
+							
 						</div>
 
 					</mat-card-content>

@@ -1,7 +1,7 @@
 import { AuthService } from './../../../services/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import { Component, OnInit, SecurityContext } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 import { filter, map, mergeMap  } from 'rxjs/operators';
 
 import {
@@ -27,6 +27,7 @@ export class AppHeaderComponent implements OnInit {
   isLogin = false;
   isUseChapterNav = false;
   currentUser: any;
+  navbarLogo: string;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -41,6 +42,12 @@ export class AppHeaderComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'setting-24px',
       this.getImgResource('assets/icons-md/baseline-settings-24px.svg'));
+      // this.navbarLogo = this.getImgResource('assets/icons-md/baseline-settings-24px.svg');
+  }
+
+  navBarSet(url) {
+    // this.navbarLogo = this.getImgResource('assets/images/angular-white-transparent.svg');
+    this.navbarLogo = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.sanitizer.bypassSecurityTrustResourceUrl(url));
   }
 
   getImgResource(image: string) {
@@ -66,6 +73,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.navBarSet('assets/images/angular-white-transparent.svg');
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

@@ -7,8 +7,8 @@
         <a class="nav-link home" [routerLink]="'/'" [ngSwitch]="isSideBySide">
         <!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
             <!-- <img *ngSwitchCase="true" src="assets/images/angular-white-transparent@2x.svg" width="150" height="40" title="Home" alt="Home"> -->
-            <!-- <img *ngSwitchDefault src="assets/images/angular-white-transparent.svg" width="37" height="40" title="Home" alt="Home"> -->
-            <img src="https://lh3.googleusercontent.com/-tCPI85B7dig/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rc4-GIxZjEQYvlMqHm0eh3pS6fgmQ.CMID/s32-c/photo.jpg" width="37" height="40" title="Home" alt="Home">
+            <img [src]="navbarLogo" width="37" height="40" title="Home" alt="Home">
+            <!-- <img src="https://lh3.googleusercontent.com/-tCPI85B7dig/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rc4-GIxZjEQYvlMqHm0eh3pS6fgmQ.CMID/s32-c/photo.jpg" width="37" height="40" title="Home" alt="Home"> -->
         </a>
         <manga-app-header-menu></manga-app-header-menu>
         <span fxFlex></span>
