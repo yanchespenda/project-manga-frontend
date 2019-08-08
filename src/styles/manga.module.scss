@@ -8,7 +8,47 @@
     }
 
     .manga-title-container {
-        height: 64px;
+        min-height: 64px;
+
+        .manga-title, .title-loader {
+            margin-bottom: 18px;
+        }
+
+        .title-loader {
+            min-height: 64px;
+            @extend .shimmer-animated-background;
+        }
+    }
+
+    .manga-author-container, .manga-status-container {
+        .author-loader, .status-loader {
+            height: 28px;
+            @extend .shimmer-animated-background;
+        }
+    }
+
+    .manga-basic-container {
+        .genre-loader {
+            height: 32px;
+            @extend .shimmer-animated-background;
+        }
+
+        .paragrap-loader {
+            height: 20px;
+            @extend .shimmer-animated-background;
+        }
+
+        .tabel-loader {
+            height: 16px;
+            @extend .shimmer-animated-background;
+        }
+    }
+}
+
+.manga-chapter-container {
+    .chapter-loader {
+        height: 16px;
+        @extend .shimmer-animated-background;
     }
 }
 

@@ -1,4 +1,4 @@
-
+import { AuthService } from './services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {
   Router,
@@ -9,9 +9,7 @@ import {
   NavigationError,
   NavigationStart,
 } from '@angular/router';
-
 import { Title } from '@angular/platform-browser';
-
 import { filter, map, mergeMap  } from 'rxjs/operators';
 
 @Component({
@@ -26,7 +24,8 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private authService: AuthService
   ) {
     this.router.events.subscribe((event: Event) => {
       switch (true) {
@@ -51,6 +50,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.loginCheckValidation();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

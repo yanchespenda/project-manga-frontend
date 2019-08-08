@@ -1,8 +1,11 @@
 <mat-toolbar class="app-tollbar reader-toolbar chapter-toolbar">
 	<mat-toolbar-row>
+		<button mat-button class="hamburger is-close">
+			<mat-icon svgIcon="menu-24px"></mat-icon>
+		</button>
 		<a class="nav-link home chapternav" routerLink="/">
 		<!-- <a class="nav-link home" (click)="toogle_humbeger()" [ngSwitch]="isSideBySide"> -->
-			<img src="https://lh3.googleusercontent.com/-tCPI85B7dig/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rc4-GIxZjEQYvlMqHm0eh3pS6fgmQ.CMID/s32-c/photo.jpg" width="37" height="40" title="Home" alt="Home">
+				<img [src]="navbarLogo" width="37" height="40" title="Home" alt="Home">
 		</a>
 		<div class="cahpter-selector-container">
 			<mat-form-field class="cahpter-selector">

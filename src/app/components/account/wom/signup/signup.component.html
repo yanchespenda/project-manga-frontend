@@ -1,3 +1,128 @@
-<p>
-  signup works!
-</p>
+<section class="universal-seksi seksi-cover">
+	<div class="custom-md-card-login login-top">
+		<mat-card class="md-card-login nmd-br loading-parent">
+			<div *ngIf="isLoading" class="mpl-cover"></div>
+			<mat-progress-bar [@loadingAnimation]="'in'" (@loadingAnimation.done)="animationDone()" *ngIf="isLoading" class="mpl-div nmdrc-t" color="primary" mode="indeterminate"></mat-progress-bar>
+			<mat-card-content class="custom-md-card-content-login">
+				<div class="login-logo-area">
+					<div class="layout-align-center-center layout-row">
+						<div class="login-logo" title="logo">
+							<img src="/assets/images/angular-black-transparent.svg" width="24" height="24" alt="{{ webData.name }}">
+						</div>
+						<span class="login-logo-text">{{ webData.name }}</span>
+					</div>
+				</div>
+				<div class="login-parent">
+					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel login-parent">
+						<div #mceCarouselItems class="mce-carousel-content-wrapper">
+
+							<!-- 0. USERNAME & PASSWORD -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="regFormA">
+										<div>
+											<div class="login-info-box-parent">
+												<h1 class="md-headline"><span>Create new account</span></h1>
+											</div>
+										</div>
+										<div class="login-form-padding">
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>Username</mat-label>
+												<input #inputUsername formControlName="username" matInput value="" autocomplete="off">
+												<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageUsername() }}</mat-error>
+											</mat-form-field>
+											<mat-form-field class="full-size" appearance="outline">
+												<mat-label>Email</mat-label>
+												<input #inputEmail formControlName="email" matInput value="" autocomplete="off">
+												<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageEmail() }}</mat-error>
+											</mat-form-field>
+											<div fxLayout="row" class="signup-password-container">
+												<div fxLayout="row" fxFlex="90" fxLayoutAlign="space-around center">
+													<mat-form-field appearance="outline" fxFlex="50" class="signup-pass1">
+														<mat-label>Password</mat-label>
+														<input #inputPassword1 [type]="pswdHide ? 'password' : 'text'" formControlName="password1" matInput value="" autocomplete="off">
+														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessagePassword1() }}</mat-error>
+													</mat-form-field>
+													<mat-form-field appearance="outline" fxFlex="50" class="signup-pass2">
+														<mat-label>Confirm</mat-label>
+														<input #inputPassword2 [type]="pswdHide ? 'password' : 'text'" formControlName="password2" matInput value="" autocomplete="off">
+														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessagePassword2() }}</mat-error>
+													</mat-form-field>
+												</div>
+												<div fxFlex="10" fxLayout="column" fxLayoutAlign="center center" class="signup-pass-button">
+													<button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
+														<mat-icon svgIcon="{{ pswdHide ? 'visibility_off' : 'visibility' }}"></mat-icon>
+													</button>
+												</div>
+											</div>
+											
+											<div class="form_action_area signup-page">
+												<div class="login-action-parent layout-align-center-center layout-row">
+													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
+													<mat-menu #menu="matMenu">
+														<a mat-menu-item [href]="'/oauth/signin'">Already have a account</a>
+														<a mat-menu-item [href]="'/'">Go to homepage</a>
+														<button mat-menu-item>Need help?</button>
+													</mat-menu>
+													<div class="flex"></div>
+													<button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; NEXT &nbsp;</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<!-- 1. USERNAME & PASSWORD -->
+							<div class="mce-carousel-content carousel-content">
+								<div>
+									<form class="" [formGroup]="regFormB">
+										<div>
+											<div class="login-info-box-parent">
+												<h1 class="md-headline"><span>Create new account</span></h1>
+												<!-- <div>
+													<h6 *ngIf="!isErrorPrimary" class="md-subhead subtitle-text">Use your Project Manga account</h6>
+													<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
+												</div> -->
+											</div>
+										</div>
+										<div class="login-form-padding">
+											<div fxLayout="row" class="signup-password-container">
+												<div fxLayout="row" fxFlex fxLayoutAlign="space-around center">
+													<mat-form-field fxFlex="50" class="full-size" appearance="outline">
+														<mat-label>First Name</mat-label>
+														<input #inputNameA formControlName="username" matInput value="" autocomplete="off">
+														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageUsername() }}</mat-error>
+													</mat-form-field>
+													<mat-form-field fxFlex="50" class="full-size" appearance="outline">
+														<mat-label>Last Name</mat-label>
+														<input #inputNameB formControlName="username" matInput value="" autocomplete="off">
+														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageUsername() }}</mat-error>
+													</mat-form-field>
+												</div>
+											</div>
+											
+											<div class="form_action_area signup-page">
+												<div class="login-action-parent layout-align-center-center layout-row">
+													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
+													<mat-menu #menu="matMenu">
+														<a mat-menu-item [href]="'/oauth/signin'">Already have a account</a>
+														<a mat-menu-item [href]="'/'">Go to homepage</a>
+														<button mat-menu-item>Need help?</button>
+													</mat-menu>
+													<div class="flex"></div>
+													<button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; NEXT &nbsp;</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</section>

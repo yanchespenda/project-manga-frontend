@@ -74,6 +74,41 @@ export class AuthService {
       secure: environment.COOKIES_SECURED });
   }
 
+  loginCheckValidation() {
+    const getLogin = this.currentUserValue;
+    if (getLogin === null) {
+      return true;
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('e', null);
+    this.sendData(this.baseUrlAccount + 'do/vw', data, httpOptions).pipe(
+      catchError(val => of(val))
+    ).subscribe(
+      (jsonData) => {
+        console.log(jsonData);
+        if (jsonData.status) {
+          return true;
+        } else {
+          this.cookieService.remove('currentUser', {path: '/'});
+          this.currentUserSubject.next(null);
+          return false;
+        }
+      },
+      (err) => {
+        return false;
+      },
+      () => {
+      }
+    );
+    return false;
+  }
+
   // Login
   login_1(username: string, password: string, rtoken: string) {
     const httpOptions = {

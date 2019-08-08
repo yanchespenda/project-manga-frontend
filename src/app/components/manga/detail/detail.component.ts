@@ -1,14 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry, MatTabChangeEvent } from '@angular/material';
+import { MatIconRegistry, MatTabChangeEvent, MatSnackBar, MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
 import { DetailService } from './detail.service';
 import { throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './../../../services/auth/auth.service';
-import { CookieService } from 'ngx-cookie';
-import { MatSnackBar } from '@angular/material';
+import { ChapterReportDialogComponent } from './../../main/dialog/dialog.report';
 
 import {
   trigger,
@@ -49,17 +48,23 @@ export class DetailComponent implements OnInit, AfterViewInit {
     b: false,
     c: false
   };
+  isPreloadCards = {
+    x: true,
+    a: true,
+    b: true,
+    c: true
+  };
   isLogin = false;
   isErrorCards = {
     x: false,
     a1: false,
     a2: false,
-    b: false
+    b: false,
+    c: false
   };
   chapterFirstLoad = false;
   CURRENT_ID: any;
   currentUser: any;
-
   dataMangaA: any = {
     id: 0,
     title: 'loading...',
@@ -77,7 +82,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
       link: ''
     }
   };
-
   dataTabA: any = {
     genre: [],
     summary: 'loading...',
@@ -86,25 +90,21 @@ export class DetailComponent implements OnInit, AfterViewInit {
     othername: '',
     latest: ''
   };
-
   dataTabB: any = {
     views_total: 0,
     views_day: 0,
     user_subscribes: 0,
     user_favorites: 0
   };
-
   dataChapters: any = {
     list: []
   };
-
   dataUser: any = {
     favorite: false,
     subscribe: false
   };
-
+  dialogData: any;
   dataRecom: any = [];
-
   isFavoriteRun = false;
   isSubscribeRun = false;
 
@@ -114,9 +114,9 @@ export class DetailComponent implements OnInit, AfterViewInit {
     private sanitizer: DomSanitizer,
     private detailService: DetailService,
     private titleTab: Title,
-    private cookieService: CookieService,
     private authService: AuthService,
-    private matSnackBar: MatSnackBar
+    private matSnackBar: MatSnackBar,
+    private matDialog: MatDialog,
   ) {
 
     iconRegistry.addSvgIcon('more_vert',
@@ -133,6 +133,29 @@ export class DetailComponent implements OnInit, AfterViewInit {
       this.getImgResource('assets/icons-md/baseline-favorite_border-24px.svg'));
     iconRegistry.addSvgIcon('share',
       this.getImgResource('assets/icons-md/baseline-share-24px.svg'));
+  }
+
+  openDialog(): void {
+    const dialogRef = this.matDialog.open(ChapterReportDialogComponent, {
+      width: '450px',
+      data: {
+        issueRequest: 1,
+        dialogData: this.dialogData,
+        issueID: this.CURRENT_ID
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      // this.messageData.txt = result;
+      if (result === null) {
+        this.openDialog();
+      } else if (result === false) {
+        // this.temporaryData.username = result;
+        // this.SubmitE();
+      }
+
+    });
   }
 
   getTimeLoaded(index: number) {
@@ -212,6 +235,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       () => {
         // console.log('observable complete');
         this.isLoadCards.a = false;
+        this.isPreloadCards.a = false;
       }
     );
   }
@@ -241,6 +265,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
       () => {
         // console.log('observable complete');
         this.isLoadCards.a = false;
+        this.isPreloadCards.a = false;
       }
     );
   }
@@ -271,12 +296,18 @@ export class DetailComponent implements OnInit, AfterViewInit {
       () => {
         // console.log('observable complete');
         this.isLoadCards.b = false;
+        this.isPreloadCards.b = false;
       }
     );
   }
 
   async initManga() {
-    this.isLoadCards.x = true;
+    this.isPreloadCards = {
+      x: true,
+      a: true,
+      b: true,
+      c: true
+    };
     this.isErrorCards.x = false;
     this.detailService.requestMangaA(this.CURRENT_ID)
     .pipe(
@@ -294,6 +325,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
             this.isDone = true;
             this.dataMangaA = jsonData.data;
             this.setTabTitle(this.dataMangaA.title);
+            this.dialogData = this.dataMangaA.title;
             this.runTabs();
             if (this.isLogin) {
               this.initUserData();
@@ -312,13 +344,14 @@ export class DetailComponent implements OnInit, AfterViewInit {
         // console.log('observable complete');
         this.isLoad = false;
         this.isLoadCards.x = false;
+        this.isPreloadCards.x = false;
       }
     );
   }
 
   async initRecom() {
     // requestMangaRecom
-    // this.isErrorCards.x = false;
+    this.isErrorCards.c = false;
     this.isLoadCards.c = true;
     this.detailService.requestMangaRecom(this.CURRENT_ID)
     .pipe(
@@ -338,11 +371,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
         }
       },
       (err) => {
-        // this.isErrorCards.x = true;
+        this.isErrorCards.c = true;
         // console.error(err);
       },
       () => {
         this.isLoadCards.c = false;
+        this.isPreloadCards.c = false;
         // console.log('observable complete');
         // this.isLoad = false;
       }
@@ -468,7 +502,8 @@ export class DetailComponent implements OnInit, AfterViewInit {
       x: false,
       a1: false,
       a2: false,
-      b: false
+      b: false,
+      c: false
     };
     this.chapterFirstLoad = false;
 

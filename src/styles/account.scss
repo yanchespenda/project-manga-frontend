@@ -257,6 +257,24 @@
 
 .form_action_area {
     margin-top: 25px;
+
+    &.signup-page {
+        margin-top: 4px;
+    }
+}
+
+.signup-password-container {
+    .signup-pass1 {
+        padding-right: 4px;
+    }
+
+    .signup-pass2 {
+        padding-left: 4px;
+    }
+
+    .signup-pass-button {
+        height: 58px;
+    }
 }
 
 @-webkit-keyframes mce-carousel-content-hide {

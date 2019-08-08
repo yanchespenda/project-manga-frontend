@@ -282,7 +282,10 @@ body.reader-mode{
     circle {
         animation: colors 5.6s ease-in-out infinite;
     }
+}
 
+.selectable-cursor {
+    cursor: pointer !important;
 }
 
 /* .mat-progress-spinner circle, .mat-spinner circle */

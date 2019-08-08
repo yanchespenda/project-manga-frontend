@@ -16,11 +16,11 @@ export class AuthGuardService implements CanActivate {
     if (currentUser) {
         return true;
     }
-    const curent_url = state.url;
-    if (curent_url === '/') {
-      this.router.navigate(['/login']);
+    const curentUrl = state.url;
+    if (curentUrl === '/') {
+      this.router.navigate(['oauth/signin']);
     } else {
-      this.router.navigate(['/login'], { queryParams: { next: state.url }});
+      this.router.navigate(['oauth/signin'], { queryParams: { next: state.url }});
     }
     return false;
   }

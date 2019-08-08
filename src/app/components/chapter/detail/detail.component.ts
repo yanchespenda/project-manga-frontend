@@ -2,7 +2,7 @@ import { ChapterReportDialogComponent } from './../../main/dialog/dialog.report'
 import { environment } from './../../../../environments/environment';
 import { WINDOW } from './../../../services/window/window.service';
 import { Component, OnInit, OnDestroy, Renderer2, Inject,
-  Input, ElementRef, AfterViewInit, ViewChild, ViewChildren, QueryList, HostListener } from '@angular/core';
+  Input, ElementRef, AfterViewInit, ViewChild, ViewChildren, QueryList, HostListener, SecurityContext } from '@angular/core';
 import { DOCUMENT, ViewportScroller } from '@angular/common';
 import { Title, DomSanitizer, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -52,6 +52,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   };
   rippleColor = '';
   onScroll = 0;
+  navbarLogo: any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -65,7 +66,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private router: Router,
-    public matDialog: MatDialog,
+    private matDialog: MatDialog,
     private meta: Meta
   ) {
     this.renderer2.addClass(this.document.body, 'reader-mode');
@@ -94,6 +95,11 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     });
+  }
+
+  navBarSet(url) {
+    // this.navbarLogo = this.getImgResource('assets/images/angular-white-transparent.svg');
+    this.navbarLogo = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.sanitizer.bypassSecurityTrustResourceUrl(url));
   }
 
   iconInit() {
@@ -296,6 +302,7 @@ export class DetailComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.navBarSet('assets/images/angular-white-transparent.svg');
     this.CURRENT_CID = this.activatedRoute.snapshot.paramMap.get('id');
     this.loadInit();
   }
