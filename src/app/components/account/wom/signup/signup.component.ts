@@ -25,31 +25,25 @@ export class SignupComponent implements OnInit {
   pswdHide = true;
   regFormA: FormGroup = this.formBuilder.group({
     username: [
-      '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]
+      '', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]
     ],
     email: [
       '', [Validators.required, Validators.email]
     ],
     password1: [
-      '', [Validators.required, Validators.minLength(2)]
+      '', [Validators.required, Validators.minLength(8)]
     ],
     password2: [
-      '', [Validators.required, Validators.minLength(2)]
+      '', [Validators.required, Validators.minLength(8)]
     ]
   });
   regFormB: FormGroup = this.formBuilder.group({
     namea: [
-      '', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]
+      '', [Validators.required]
     ],
     nameb: [
-      '', [Validators.required, Validators.email]
+      '', [Validators.required]
     ],
-    password1: [
-      '', [Validators.required, Validators.minLength(2)]
-    ],
-    password2: [
-      '', [Validators.required, Validators.minLength(2)]
-    ]
   });
   errorMSGA = {
     a: '',
@@ -134,6 +128,8 @@ export class SignupComponent implements OnInit {
       this.errorMSGA.a = 'Please input username';
     } else if (this.valA.username.hasError('minlength')) {
       this.errorMSGA.a = 'Username to short';
+    } else if (this.valA.username.hasError('maxlength')) {
+      this.errorMSGA.a = 'Username to long';
     }
     return this.errorMSGA.a;
   }
@@ -141,6 +137,8 @@ export class SignupComponent implements OnInit {
   getErrorMessageEmail() {
     if (this.valA.email.hasError('required')) {
       this.errorMSGA.b = 'Please input email';
+    } else if (this.valA.email.hasError('email')) {
+      this.errorMSGA.b = 'Email does not valid';
     } else if (this.valA.email.hasError('minlength')) {
       this.errorMSGA.b = 'Email to short';
     }
@@ -171,6 +169,10 @@ export class SignupComponent implements OnInit {
 
   get valA() {
     return this.regFormA.controls;
+  }
+
+  SubmitA() {
+    
   }
 
   ngOnInit() {
