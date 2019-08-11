@@ -5,10 +5,29 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
+
 @Component({
   selector: 'manga-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
+  animations: [
+    trigger('loadingAnimation', [
+      state('in', style({opacity: 1})),
+      transition(':enter', [
+        style({opacity: 0}),
+        animate( 150 )
+      ]),
+      transition(':leave',
+        animate( 150, style({opacity: 0})))
+    ])
+  ]
 })
 export class SignupComponent implements OnInit {
   @ViewChild('mceCarousel', {static: true}) mceCarousel: ElementRef;
@@ -24,6 +43,12 @@ export class SignupComponent implements OnInit {
   };
   pswdHide = true;
   regFormA: FormGroup = this.formBuilder.group({
+    namea: [
+      '', [Validators.required]
+    ],
+    nameb: [
+      '', [Validators.required]
+    ],
     username: [
       '', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]
     ],
@@ -37,19 +62,14 @@ export class SignupComponent implements OnInit {
       '', [Validators.required, Validators.minLength(8)]
     ]
   });
-  regFormB: FormGroup = this.formBuilder.group({
-    namea: [
-      '', [Validators.required]
-    ],
-    nameb: [
-      '', [Validators.required]
-    ],
-  });
+  errorMSG: string;
   errorMSGA = {
     a: '',
     b: '',
     c: '',
-    d: ''
+    d: '',
+    e: '',
+    f: ''
   };
 
   constructor(
@@ -163,8 +183,22 @@ export class SignupComponent implements OnInit {
     return this.errorMSGA.d;
   }
 
+  getErrorMessageName1() {
+    if (this.valA.namea.hasError('required')) {
+      this.errorMSGA.e = 'Please input your first name';
+    }
+    return this.errorMSGA.e;
+  }
+
+  getErrorMessageName2() {
+    if (this.valA.nameb.hasError('required')) {
+      this.errorMSGA.f = 'Please input your last name';
+    }
+    return this.errorMSGA.f;
+  }
+
   getErrorMessagePrimary() {
-    return '';
+    return this.errorMSG;
   }
 
   get valA() {

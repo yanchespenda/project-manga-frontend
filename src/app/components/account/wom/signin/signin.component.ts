@@ -4,7 +4,7 @@ import { Component, OnInit,
   ViewChild, ElementRef, Renderer2, OnDestroy, Inject } from '@angular/core';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { catchError } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
+import { of, Subscription, throwError } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatSnackBar, MatIconRegistry } from '@angular/material';
@@ -389,6 +389,30 @@ export class SigninComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleEmittedResponse(response) {
+    console.log(response);
+    console.log(this.currentIndex);
+    /* if(response === null) {
+        // Response is null due to what? Expiration? reset?
+        if(this.subscription){ // Cancel subscription
+            this.subscription.unsubscribe();
+        }
+        return;
+    }
+    else{
+        this.subscription = this.http.post(url).subscribe((data) => {
+            if(data.error) { // Server validation failed
+                // Print Error
+                this.iRecaptcha.reset(); // This will un-necessarrily send null to handleEmittedResponse() now
+            }
+            else {
+               // Rejoice! Print success
+                this.iRecaptcha.reset(); // Enable user to re-send another request. Will send null in this case too
+            }
+        })
+    } */
+}
+
   SubmitA() {
     if (this.loginFormA.invalid) {
       if (this.valA.username.invalid) {
@@ -402,10 +426,21 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isErrorPrimary = false;
     this.isLoading = true;
 
+    console.log(this.recaptchaV3Service);
+
     this.recaptchaUnsubscribe();
     this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a1')
+      .pipe(
+        catchError(err => of(err))
+      )
       .subscribe((token) => {
-        this.authService.login_1(this.valA.username.value, this.valA.password.value, token).pipe(
+        if (token === null) {
+          // Response is null due to what? Expiration? reset?
+          this.recaptchaUnsubscribe();
+          return;
+        }
+        console.log(token);
+        /* this.authService.login_1(this.valA.username.value, this.valA.password.value, token).pipe(
           catchError(val => of(val))
         ).subscribe(
           (jsonData) => {
@@ -483,7 +518,13 @@ export class SigninComponent implements OnInit, OnDestroy {
             // console.log('observable complete');
             // this.isLoadCards.b = false;
           }
-        );
+        ); */
+      },
+      err => {
+        console.error('Oops:', err.message);
+      },
+      () => {
+        console.log(`We're done here!`);
       });
   }
 
@@ -496,9 +537,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isErrorPrimary = false;
     this.isLoading = true;
 
-    this.recaptchaUnsubscribe();
-    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a2')
-      .subscribe((token) => {
+    const token = '';
+
+    // this.recaptchaUnsubscribe();
+    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a2')
+      // .subscribe((token) => {
         this.authService.login_2x3(
           this.valA.username.value,
           this.valA.password.value,
@@ -555,7 +598,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      });
+      // });
   }
 
   SubmitC() {
@@ -567,9 +610,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isErrorPrimary = false;
     this.isLoading = true;
 
-    this.recaptchaUnsubscribe();
-    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a3')
-      .subscribe((token) => {
+    const token = '';
+
+    // this.recaptchaUnsubscribe();
+    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a3')
+    //   .subscribe((token) => {
         this.authService.login_2x3(
           this.valA.username.value,
           this.valA.password.value,
@@ -629,7 +674,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      });
+      // });
   }
 
   SubmitD() {
@@ -641,9 +686,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.isErrorPrimary = false;
     this.isLoading = true;
 
-    this.recaptchaUnsubscribe();
-    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a4')
-      .subscribe((token) => {
+    const token = '';
+
+    // this.recaptchaUnsubscribe();
+    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a4')
+    //   .subscribe((token) => {
         let isCurrent = 0;
         if (this.nextIndex === this.dataPageIndex.default) {
           isCurrent = 1;
@@ -701,7 +748,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      });
+      // });
   }
 
   SubmitE() {
@@ -716,9 +763,11 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.isErrorPrimary = false;
       this.isLoading = true;
 
-      this.recaptchaUnsubscribe();
-      this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a5')
-        .subscribe((token) => {
+      const token = '';
+
+      // this.recaptchaUnsubscribe();
+      // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a5')
+      //   .subscribe((token) => {
           this.authService.login_request_confirm(
             this.temporaryData.username,
             this.valE.emailConfirm.value,
@@ -779,7 +828,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
             }
           );
-        });
+        // });
     }
 
 

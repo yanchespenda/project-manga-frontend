@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieModule } from 'ngx-cookie';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 // import { NgxUploadModule } from '@wkoza/ngx-upload';
 // import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
@@ -92,6 +93,9 @@ import { ChapterReportDialogComponent } from './components/main/dialog/dialog.re
     FlexLayoutModule,
     LazyLoadImageModule,
     RecaptchaV3Module,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+
     CookieModule.forRoot(),
     // NgxUploadModule.forRoot(),
     // ScrollingModule,
@@ -127,6 +131,12 @@ import { ChapterReportDialogComponent } from './components/main/dialog/dialog.re
       provide: RECAPTCHA_V3_SITE_KEY,
       useValue: environment.RECAPTCHA_SITE_KEY
     },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.RECAPTCHA_SITE_KEY,
+      } as RecaptchaSettings,
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

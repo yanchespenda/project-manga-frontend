@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1565297490290,
+  "timestamp": 1565385973814,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,7 +15,7 @@
         "/9.2e6cdf982b98cd301848.js",
         "/favicon.ico",
         "/index.html",
-        "/main.4e605c3fb55a4ff791f0.js",
+        "/main.dd198ee4e8c275d4763d.js",
         "/polyfills-es5.ad0cd9ec34ac503f8b75.js",
         "/polyfills.64c91c4c7adf211a1aa4.js",
         "/runtime.0f8b2fb62144da68bf23.js",
@@ -609,8 +609,8 @@
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "f667e17e201d855debd1742374c417f60fe825a1",
-    "/main.4e605c3fb55a4ff791f0.js": "4ed65fc9326ab7c3b9803a6c99dd4fd13a67d31f",
+    "/index.html": "391f8c8d2f62fa8c50aa2425d77900676269bba0",
+    "/main.dd198ee4e8c275d4763d.js": "54059e00fb79662487a4fc85fb0f1bf1d7c2cf08",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
     "/polyfills-es5.ad0cd9ec34ac503f8b75.js": "7b6872891aaf8fcb6987dfd987900f0be4f1a956",
     "/polyfills.64c91c4c7adf211a1aa4.js": "2377fcd1fa4e7ebe49ccc91b5d69d07f77cc7642",

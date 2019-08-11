@@ -43,6 +43,7 @@ export class InterceptorService implements HttpInterceptor {
       });
     }
     return next.handle(modifiedReq).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
+      console.log(err);
       const getErrorCode = err.status || 0;
       if (getErrorCode === 401) {
         console.log('Run 401');
