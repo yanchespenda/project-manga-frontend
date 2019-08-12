@@ -13,6 +13,7 @@
 					</div>
 				</div>
 				<div class="register-parent">
+					<re-captcha size="invisible" #iRecaptcha (resolved)="handleEmittedResponse($event)"></re-captcha>
 					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel register-parent">
 						<div #mceCarouselItems class="mce-carousel-content-wrapper">
 

@@ -5,6 +5,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { catchError } from 'rxjs/operators';
+import { of, Subscription, throwError } from 'rxjs';
+
 import {
   trigger,
   state,
@@ -203,6 +206,29 @@ export class SignupComponent implements OnInit {
 
   get valA() {
     return this.regFormA.controls;
+  }
+
+  handleEmittedResponse(response) {
+    console.log(response);
+    /* if(response === null) {
+        // Response is null due to what? Expiration? reset?
+        if(this.subscription){ // Cancel subscription
+            this.subscription.unsubscribe();
+        }
+        return;
+    }
+    else{
+        this.subscription = this.http.post(url).subscribe((data) => {
+            if(data.error) { // Server validation failed
+                // Print Error
+                this.iRecaptcha.reset(); // This will un-necessarrily send null to handleEmittedResponse() now
+            }
+            else {
+               // Rejoice! Print success
+                this.iRecaptcha.reset(); // Enable user to re-send another request. Will send null in this case too
+            }
+        })
+    } */
   }
 
   SubmitA() {

@@ -411,7 +411,7 @@ export class SigninComponent implements OnInit, OnDestroy {
             }
         })
     } */
-}
+  }
 
   SubmitA() {
     if (this.loginFormA.invalid) {
