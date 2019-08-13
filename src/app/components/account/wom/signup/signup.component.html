@@ -13,7 +13,7 @@
 					</div>
 				</div>
 				<div class="register-parent">
-					<re-captcha size="invisible" #iRecaptcha (resolved)="handleEmittedResponse($event)"></re-captcha>
+					<!-- <re-captcha size="invisible" #iRecaptcha></re-captcha> -->
 					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel register-parent">
 						<div #mceCarouselItems class="mce-carousel-content-wrapper">
 
@@ -30,12 +30,12 @@
 											<div fxLayout="row" class="signup-password-container">
 												<mat-form-field appearance="outline" fxFlex="50" class="signup-pass1">
 													<mat-label>First Name</mat-label>
-													<input #inputNameA formControlName="namea" matInput value="" autocomplete="off">
+													<input #inputName1 formControlName="name1" matInput value="" autocomplete="off">
 													<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageName1() }}</mat-error>
 												</mat-form-field>
 												<mat-form-field appearance="outline" fxFlex="50" class="signup-pass2">
 													<mat-label>Last Name</mat-label>
-													<input #inputNameB formControlName="nameb" matInput value="" autocomplete="off">
+													<input #inputName2 formControlName="name2" matInput value="" autocomplete="off">
 													<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageName2() }}</mat-error>
 												</mat-form-field>
 											</div>
@@ -43,6 +43,9 @@
 												<mat-label>Username</mat-label>
 												<input #inputUsername formControlName="username" matInput value="" autocomplete="off">
 												<mat-error *ngIf="regFormA.invalid">{{ getErrorMessageUsername() }}</mat-error>
+												<mat-hint align="end" aria-live="polite">
+													{{ valA.username.value.length }} / 25
+												</mat-hint>
 											</mat-form-field>
 											<mat-form-field class="full-size" appearance="outline">
 												<mat-label>Email</mat-label>
@@ -53,12 +56,18 @@
 												<div fxLayout="row" fxFlex="90" fxLayoutAlign="space-around center">
 													<mat-form-field appearance="outline" fxFlex="50" class="signup-pass1">
 														<mat-label>Password</mat-label>
-														<input #inputPassword1 [type]="pswdHide ? 'password' : 'text'" formControlName="password1" matInput value="" autocomplete="off">
+														<input #inputPassword1 [type]="pswdHide ? 'password' : 'text'" formControlName="password1" matInput value="" autocomplete="off" (keyup)="onPassStr($event)">
 														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessagePassword1() }}</mat-error>
+														<mat-hint align="start" aria-live="polite">
+															{{ getStrenghtMessage() }}
+														</mat-hint>
+														<mat-hint align="end" aria-live="polite">
+															{{ valA.password1.value.length }} / 25
+														</mat-hint>
 													</mat-form-field>
 													<mat-form-field appearance="outline" fxFlex="50" class="signup-pass2">
 														<mat-label>Confirm</mat-label>
-														<input #inputPassword2 [type]="pswdHide ? 'password' : 'text'" formControlName="password2" matInput value="" autocomplete="off">
+														<input #inputPassword2 [type]="pswdHide ? 'password' : 'text'" formControlName="password2" matInput value="" autocomplete="off" (keyup)="onSamePassValue($event)">
 														<mat-error *ngIf="regFormA.invalid">{{ getErrorMessagePassword2() }}</mat-error>
 													</mat-form-field>
 												</div>
@@ -68,7 +77,7 @@
 													</button>
 												</div>
 											</div>
-											
+
 											<div class="form_action_area signup-page">
 												<div class="login-action-parent layout-align-center-center layout-row">
 													<button class="link-color" mat-button [matMenuTriggerFor]="menu" type="button">More options</button>
@@ -92,4 +101,5 @@
 			</mat-card-content>
 		</mat-card>
 	</div>
+	{{ recentToken }}
 </section>

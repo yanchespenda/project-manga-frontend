@@ -183,7 +183,7 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'request/v1', data, httpOptions);
   }
 
-  // Do
+  // Do Verify
   do(e: string, t: string, n: string, d: string, rtoken: string) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -199,7 +199,8 @@ export class AuthService {
                   .set('rtoken', rtoken);
     return this.sendData(this.baseUrlAccount + 'do/v0', data, httpOptions);
   }
-  // Do
+
+  // Do Action
   doA(e: string, t: string, n: string, d: string, rtoken: string, ps1: string, ps2: string) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -216,6 +217,25 @@ export class AuthService {
                   .set('p2', ps2)
                   .set('rtoken', rtoken);
     return this.sendData(this.baseUrlAccount + 'do/v1', data, httpOptions);
+  }
+
+  // Register Step A
+  registerA(namea: string, nameb: string, username: string, email: string, pass1: string, pass2: string, rtoken: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('nameA', namea)
+                  .set('nameB', nameb)
+                  .set('username', username)
+                  .set('email', email)
+                  .set('passwordA', pass1)
+                  .set('passwordB', pass2)
+                  .set('rtoken', rtoken);
+    return this.sendData(this.baseUrlAccount + 'register/v0', data, httpOptions);
   }
 
   sendData(url: string, data: any, option: any) {
@@ -235,7 +255,7 @@ export class AuthService {
       withCredentials: environment.REQUEST_CREDENTIALS
     };
     const  data = new HttpParams()
-                  .set('e', null);
+                  .set('e', new Date().toString());
     this.sendData(this.baseUrlAccount + 'do/vx', data, httpOptions).pipe(
       catchError(val => of(val))
     ).subscribe(

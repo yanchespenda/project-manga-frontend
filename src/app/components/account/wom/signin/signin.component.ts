@@ -422,25 +422,28 @@ export class SigninComponent implements OnInit, OnDestroy {
       }
       return;
     }
+    if (this.isLoading) {
+      return;
+    }
 
     this.isErrorPrimary = false;
-    this.isLoading = true;
-
-    console.log(this.recaptchaV3Service);
 
     this.recaptchaUnsubscribe();
     this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a1')
-      .pipe(
-        catchError(err => of(err))
-      )
       .subscribe((token) => {
         if (token === null) {
           // Response is null due to what? Expiration? reset?
           this.recaptchaUnsubscribe();
           return;
         }
-        console.log(token);
-        /* this.authService.login_1(this.valA.username.value, this.valA.password.value, token).pipe(
+        if (this.isLoading) {
+          return;
+        }
+        this.isLoading = true;
+        this.authService.login_1(
+          this.valA.username.value,
+          this.valA.password.value, token)
+        .pipe(
           catchError(val => of(val))
         ).subscribe(
           (jsonData) => {
@@ -518,7 +521,7 @@ export class SigninComponent implements OnInit, OnDestroy {
             // console.log('observable complete');
             // this.isLoadCards.b = false;
           }
-        ); */
+        );
       },
       err => {
         console.error('Oops:', err.message);
@@ -533,15 +536,19 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.inputGC.nativeElement.focus();
       return;
     }
+    if (this.isLoading) {
+      return;
+    }
 
     this.isErrorPrimary = false;
-    this.isLoading = true;
 
-    const token = '';
-
-    // this.recaptchaUnsubscribe();
-    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a2')
-      // .subscribe((token) => {
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a2')
+      .subscribe((token) => {
+        if (this.isLoading) {
+          return;
+        }
+        this.isLoading = true;
         this.authService.login_2x3(
           this.valA.username.value,
           this.valA.password.value,
@@ -598,7 +605,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      // });
+      });
   }
 
   SubmitC() {
@@ -606,15 +613,19 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.inputRC.nativeElement.focus();
       return;
     }
+    if (this.isLoading) {
+      return;
+    }
 
     this.isErrorPrimary = false;
-    this.isLoading = true;
 
-    const token = '';
-
-    // this.recaptchaUnsubscribe();
-    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a3')
-    //   .subscribe((token) => {
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a3')
+      .subscribe((token) => {
+        if (this.isLoading) {
+          return;
+        }
+        this.isLoading = true;
         this.authService.login_2x3(
           this.valA.username.value,
           this.valA.password.value,
@@ -674,7 +685,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      // });
+      });
   }
 
   SubmitD() {
@@ -682,15 +693,19 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.inputEmail.nativeElement.focus();
       return;
     }
+    if (this.isLoading) {
+      return;
+    }
 
     this.isErrorPrimary = false;
-    this.isLoading = true;
 
-    const token = '';
-
-    // this.recaptchaUnsubscribe();
-    // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a4')
-    //   .subscribe((token) => {
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a4')
+      .subscribe((token) => {
+        if (this.isLoading) {
+          return;
+        }
+        this.isLoading = true;
         let isCurrent = 0;
         if (this.nextIndex === this.dataPageIndex.default) {
           isCurrent = 1;
@@ -748,7 +763,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
           }
         );
-      // });
+      });
   }
 
   SubmitE() {
@@ -756,18 +771,22 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.inputEmailConfirm.nativeElement.focus();
       return;
     }
+    if (this.isLoading) {
+      return;
+    }
 
     if (this.temporaryData.username === null) {
       this.openDialog();
     } else {
       this.isErrorPrimary = false;
-      this.isLoading = true;
 
-      const token = '';
-
-      // this.recaptchaUnsubscribe();
-      // this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a5')
-      //   .subscribe((token) => {
+      this.recaptchaUnsubscribe();
+      this.recaptchaSubscriber = this.recaptchaV3Service.execute('login_a5')
+        .subscribe((token) => {
+          if (this.isLoading) {
+            return;
+          }
+          this.isLoading = true;
           this.authService.login_request_confirm(
             this.temporaryData.username,
             this.valE.emailConfirm.value,
@@ -828,7 +847,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
             }
           );
-        // });
+        });
     }
 
 

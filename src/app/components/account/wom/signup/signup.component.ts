@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { environment } from './../../../../../environments/environment';
 import { AuthService } from './../../../../services/auth/auth.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { catchError } from 'rxjs/operators';
-import { of, Subscription, throwError } from 'rxjs';
+import { catchError, mergeMap, finalize } from 'rxjs/operators';
+import { of, Subscription, throwError, from } from 'rxjs';
+
+import { OnExecuteData, ReCaptchaV3Service } from 'ng-recaptcha';
 
 import {
   trigger,
@@ -32,9 +34,11 @@ import {
     ])
   ]
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
   @ViewChild('mceCarousel', {static: true}) mceCarousel: ElementRef;
   @ViewChild('mceCarouselItems', {static: true}) mceCarouselItems: ElementRef;
+  @ViewChild('inputName1', {static: true}) inputName1: ElementRef;
+  @ViewChild('inputName2', {static: true}) inputName2: ElementRef;
   @ViewChild('inputUsername', {static: true}) inputUsername: ElementRef;
   @ViewChild('inputEmail', {static: true}) inputEmail: ElementRef;
   @ViewChild('inputPassword1', {static: true}) inputPassword1: ElementRef;
@@ -46,23 +50,23 @@ export class SignupComponent implements OnInit {
   };
   pswdHide = true;
   regFormA: FormGroup = this.formBuilder.group({
-    namea: [
+    name1: [
       '', [Validators.required]
     ],
-    nameb: [
-      '', [Validators.required]
+    name2: [
+      '', []
     ],
     username: [
-      '', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]
+      '', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]
     ],
     email: [
       '', [Validators.required, Validators.email]
     ],
     password1: [
-      '', [Validators.required, Validators.minLength(8)]
+      '', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
     ],
     password2: [
-      '', [Validators.required, Validators.minLength(8)]
+      '', [Validators.required]
     ]
   });
   errorMSG: string;
@@ -74,12 +78,18 @@ export class SignupComponent implements OnInit {
     e: '',
     f: ''
   };
+  strenghtMSG: string;
+  strenghtPoint: number;
+  recentToken: any;
+  recaptchaSubscription: Subscription;
 
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private renderer2: Renderer2,
     private formBuilder: FormBuilder,
+    private recaptchaV3Service: ReCaptchaV3Service,
+    private authService: AuthService
   ) {
     iconRegistry.addSvgIcon('visibility',
       this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
@@ -173,6 +183,8 @@ export class SignupComponent implements OnInit {
       this.errorMSGA.c = 'Please input password';
     } else if (this.valA.password1.hasError('minlength')) {
       this.errorMSGA.c = 'Password to short';
+    } else if (this.valA.password1.hasError('maxlength')) {
+      this.errorMSGA.c = 'Password to long';
     }
     return this.errorMSGA.c;
   }
@@ -180,21 +192,21 @@ export class SignupComponent implements OnInit {
   getErrorMessagePassword2() {
     if (this.valA.password2.hasError('required')) {
       this.errorMSGA.d = 'Please input password';
-    } else if (this.valA.password2.hasError('minlength')) {
-      this.errorMSGA.d = 'Password to short';
+    } else if (this.valA.password2.hasError('notmatch')) {
+      this.errorMSGA.d = 'Password does not match';
     }
     return this.errorMSGA.d;
   }
 
   getErrorMessageName1() {
-    if (this.valA.namea.hasError('required')) {
+    if (this.valA.name1.hasError('required')) {
       this.errorMSGA.e = 'Please input your first name';
     }
     return this.errorMSGA.e;
   }
 
   getErrorMessageName2() {
-    if (this.valA.nameb.hasError('required')) {
+    if (this.valA.name2.hasError('required')) {
       this.errorMSGA.f = 'Please input your last name';
     }
     return this.errorMSGA.f;
@@ -202,6 +214,46 @@ export class SignupComponent implements OnInit {
 
   getErrorMessagePrimary() {
     return this.errorMSG;
+  }
+
+  getStrenghtMessage() {
+    return this.strenghtMSG;
+  }
+
+  validateStrength(input: string) {
+    let counter = 0;
+    if (/[a-z]/.test(input)) {
+        counter++;
+    }
+    if (/[A-Z]/.test(input)) {
+        counter++;
+    }
+    if (/[0-9]/.test(input)) {
+        counter++;
+    }
+    if (/[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(input)) {
+        counter++;
+    }
+    return counter;
+  }
+
+  onPassStr(event: any) {
+    this.strenghtPoint = this.validateStrength(event.target.value);
+    if (this.strenghtPoint === 2) {
+      this.strenghtMSG = 'Moderete';
+    } else if (this.strenghtPoint === 3) {
+      this.strenghtMSG = 'Strong';
+    } else {
+      this.strenghtMSG = 'Weak';
+    }
+  }
+
+  onSamePassValue(event: any) {
+    const curentPass1 = this.valA.password1.value || '';
+    const curentPass2 = event.target.value || '';
+    if (curentPass1 !== curentPass2) {
+      this.valA.password2.setErrors({notmatch: true});
+    }
   }
 
   get valA() {
@@ -232,11 +284,49 @@ export class SignupComponent implements OnInit {
   }
 
   SubmitA() {
-    
+    if (this.regFormA.invalid) {
+      if (this.valA.name1.invalid) {
+        this.inputName1.nativeElement.focus();
+      } else if (this.valA.name2.invalid) {
+        this.inputName2.nativeElement.focus();
+      } else if (this.valA.username.invalid) {
+        this.inputUsername.nativeElement.focus();
+      } else if (this.valA.email.invalid) {
+        this.inputEmail.nativeElement.focus();
+      } else if (this.valA.password1.invalid) {
+        this.inputPassword1.nativeElement.focus();
+      } else if (this.valA.password2.invalid) {
+        this.inputPassword2.nativeElement.focus();
+      }
+      return;
+    }
+    if (this.isLoading) {
+      return;
+    }
+
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscription = this.recaptchaV3Service.execute('test')
+      .subscribe(
+        (token) => {
+          this.recentToken = token;
+        },
+        err => console.log('Something went wrong', err),
+        () => console.log('Recaptcha completed.')
+      );
+  }
+
+  recaptchaUnsubscribe() {
+    if (this.recaptchaSubscription) {
+      this.recaptchaSubscription.unsubscribe();
+    }
   }
 
   ngOnInit() {
     this.mce_carousel_init();
+  }
+
+  ngOnDestroy() {
+    this.recaptchaUnsubscribe();
   }
 
 }

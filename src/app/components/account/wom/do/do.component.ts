@@ -278,13 +278,17 @@ export class DoComponent implements OnInit {
       return;
     }
 
+    if (this.isLoading) {
+      return;
+    }
+
     // console.log(this.loginFormA);
     this.isErrorPrimary = false;
-    this.isLoading = true;
 
     this.recaptchaUnsubscribe();
     this.recaptchaSubscriber = this.recaptchaV3Service.execute('do_x2')
       .subscribe((token) => {
+        this.isLoading = true;
         this.authService.doA(this.dataInit.E, this.dataInit.T, this.dataInit.N, this.dataInit.D, token,
           this.valA.pass1.value, this.valA.pass2.value).pipe(
           catchError(val => of(val))
@@ -436,12 +440,12 @@ export class DoComponent implements OnInit {
       this.initToken();
     }
 
-    console.group('Do Init:');
-    console.log('dataE:', dataE);
-    console.log('dataT:', dataT);
-    console.log('dataN:', dataN);
-    console.log('dataD:', dataD);
-    console.groupEnd();
+    // console.group('Do Init:');
+    // console.log('dataE:', dataE);
+    // console.log('dataT:', dataT);
+    // console.log('dataN:', dataN);
+    // console.log('dataD:', dataD);
+    // console.groupEnd();
   }
 
 }
