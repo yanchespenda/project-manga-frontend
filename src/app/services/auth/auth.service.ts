@@ -238,6 +238,20 @@ export class AuthService {
     return this.sendData(this.baseUrlAccount + 'register/v0', data, httpOptions);
   }
 
+  // Register Step B
+  registerB(token: string, rtoken: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded'
+      }),
+      withCredentials: environment.REQUEST_CREDENTIALS
+    };
+    const  data = new HttpParams()
+                  .set('data', token)
+                  .set('rtoken', rtoken);
+    return this.sendData(this.baseUrlAccount + 'register/v1', data, httpOptions);
+  }
+
   sendData(url: string, data: any, option: any) {
     return this.http.post<any>(url, data, option);
   }

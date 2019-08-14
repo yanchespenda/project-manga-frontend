@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '
 import { environment } from './../../../../../environments/environment';
 import { AuthService } from './../../../../services/auth/auth.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MatIconRegistry } from '@angular/material';
+import { MatIconRegistry, MatSnackBar } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { catchError, mergeMap, finalize } from 'rxjs/operators';
 import { of, Subscription, throwError, from } from 'rxjs';
@@ -78,10 +79,18 @@ export class SignupComponent implements OnInit, OnDestroy {
     e: '',
     f: ''
   };
+  dataPageIndex = {
+    default: 0,
+    term: 1,
+    message: 2,
+  };
   strenghtMSG: string;
   strenghtPoint: number;
   recentToken: any;
   recaptchaSubscription: Subscription;
+  currentIndex: number;
+  nextIndex: number;
+  termData: any;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -89,7 +98,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     private renderer2: Renderer2,
     private formBuilder: FormBuilder,
     private recaptchaV3Service: ReCaptchaV3Service,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient,
+    private matSnackBar: MatSnackBar
   ) {
     iconRegistry.addSvgIcon('visibility',
       this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
@@ -154,6 +165,33 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.renderer2.removeClass(element, 'mce-left');
       }
     });
+  }
+
+  stepper(idx: number) {
+    // console.log(idx);
+    this.currentIndex = this.nextIndex;
+    this.nextIndex = idx;
+
+    this.renderer2.setAttribute(this.mceCarousel.nativeElement, 'mce-carousel-selected', idx.toString());
+    this.mce_carousel_update();
+    if (idx === this.dataPageIndex.default) {
+    //   this.pswdHide = true;
+    //   if (this.currentIndex === this.dataPageIndex.message || this.currentIndex === this.dataPageIndex.resetAccount) {
+    //     this.loginFormA.reset();
+    //   } else {
+    //     this.valA.password.reset();
+    //   }
+    //   this.loginFormA.markAsPristine();
+    //   this.loginFormA.markAsUntouched();
+    } else if (idx === this.dataPageIndex.term) {
+
+    }
+    setTimeout(() => {
+      if (idx === this.dataPageIndex.default) {
+        // this.inputEmailConfirm.nativeElement.focus();
+      }
+      this.isLoading = false;
+    }, 600);
   }
 
   getErrorMessageUsername() {
@@ -260,30 +298,8 @@ export class SignupComponent implements OnInit, OnDestroy {
     return this.regFormA.controls;
   }
 
-  handleEmittedResponse(response) {
-    console.log(response);
-    /* if(response === null) {
-        // Response is null due to what? Expiration? reset?
-        if(this.subscription){ // Cancel subscription
-            this.subscription.unsubscribe();
-        }
-        return;
-    }
-    else{
-        this.subscription = this.http.post(url).subscribe((data) => {
-            if(data.error) { // Server validation failed
-                // Print Error
-                this.iRecaptcha.reset(); // This will un-necessarrily send null to handleEmittedResponse() now
-            }
-            else {
-               // Rejoice! Print success
-                this.iRecaptcha.reset(); // Enable user to re-send another request. Will send null in this case too
-            }
-        })
-    } */
-  }
-
   SubmitA() {
+
     if (this.regFormA.invalid) {
       if (this.valA.name1.invalid) {
         this.inputName1.nativeElement.focus();
@@ -305,14 +321,75 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
 
     this.recaptchaUnsubscribe();
-    this.recaptchaSubscription = this.recaptchaV3Service.execute('test')
+    this.recaptchaSubscription = this.recaptchaV3Service.execute('registera')
       .subscribe(
         (token) => {
-          this.recentToken = token;
-        },
-        err => console.log('Something went wrong', err),
-        () => console.log('Recaptcha completed.')
+          this.isLoading = true;
+
+          this.authService.registerA(
+            this.valA.name1.value,
+            this.valA.name2.value,
+            this.valA.username.value,
+            this.valA.email.value,
+            this.valA.password1.value,
+            this.valA.password2.value,
+            token
+          ).pipe(
+            catchError(err => of(err))
+          ).subscribe(
+            (jsonData) => {
+              console.log(jsonData);
+              if (jsonData.status) {
+                if (jsonData.data.code === 1) {
+                  const getCore = jsonData.data.core;
+                  this.recentToken = getCore.token;
+                  this.loadTerm(getCore.term);
+                  // this.matSnackBar.open('Loggin in...', 'close', {
+                  //   duration: 3000
+                  // });
+                  this.stepper(1);
+                } else if (jsonData.data.code === 2) {
+
+                }
+              } else {
+                const getDataError = jsonData.data.code;
+                if (getDataError.length !== undefined && getDataError.length > 0) {
+                  for (const row of getDataError) {
+
+                  }
+                }
+                this.isLoading = false;
+              }
+            },
+            (err) => {
+              this.isLoading = false;
+              console.error(err);
+            },
+            () => {
+              // this.isLoading = false;
+              // console.log('observable complete');
+              // this.isLoadCards.b = false;
+            }
+          );
+        }
       );
+  }
+
+  loadTerm(urlTerm) {
+    this.http.get(urlTerm).subscribe(
+      data => {
+        // this.arrBirds = data as string [];	 // FILL THE ARRAY WITH DATA.
+        //  console.log(this.arrBirds[1]);
+      },
+      (err) => {
+        console.log(err);
+      },
+      () => console.log('Term completed.')
+    );
+  }
+
+  goBack() {
+    this.stepper(0);
   }
 
   recaptchaUnsubscribe() {
@@ -323,6 +400,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.mce_carousel_init();
+    // this.stepper(1);
   }
 
   ngOnDestroy() {

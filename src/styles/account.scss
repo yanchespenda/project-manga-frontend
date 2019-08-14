@@ -61,28 +61,35 @@
     float: left;
 }
 
-.login-info-box-parent {
+.login-info-box-parent, .reg-info-box-parent {
     text-align: center;
+
+    h1 {
+        &.login-info-box-title, .reg-info-box-title {
+            padding-bottom: 0;
+            padding-top: 16px;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3333;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+    }
 }
-.login-info-box-parent h1.login-info-box-title {
-    padding-bottom: 0;
-    padding-top: 16px;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.3333;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.login-info-box {
+
+.login-info-box, .reg-info-box {
     /* height: 32px; */
     margin-top: 8px;
 }
-.login-info-box-subtext {
+
+.login-info-box-subtext, .reg-info-box-subtext {
     margin-top: 8px;
+
+    h6{
+        margin: 0;
+    }
 }
-.login-info-box-subtext h6{
-    margin: 0;
-}
+
 .login-info-box-round {
     -webkit-align-items: center;
     align-items: center;
