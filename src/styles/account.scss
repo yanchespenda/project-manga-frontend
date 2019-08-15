@@ -8,7 +8,7 @@
 }
 
 .custom-md-card-login.margin-top, .custom-md-card-register.margin-top {
-    margin-top: 1.0%;
+    margin-top: 0;
 }
 
 .nmdrc-t{
@@ -21,7 +21,7 @@
 }
 
 .register-parent {
-    min-height: 440px;
+    min-height: 460px;
 }
 
 .login-title-text-parent {
@@ -171,33 +171,43 @@
 .login-info-box-round-backbtn svg {
     display: block;
 }
-.login-form-padding{
+.login-form-padding, .reg-form-padding{
     margin: 0;
     padding: 24px 0 0;
 }
 .input-custom-container:not(.md-input-invalid) .label-text-abu{
     color: rgba(0,0,0,0.54);
 }
+
+.term-container {
+    overflow-x: auto;
+    max-height: 300px;
+}
+
 @media only screen and (max-width: 600px){
     .md-card-login, .md-card-register{
-        box-shadow: none;
-        border-radius: 0;
-        margin: 0;
-        flex: 1;
-        box-sizing: border-box;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        flex: 1 !important;
+        box-sizing: border-box !important;
+    }
+    .md-card-register .nmdrc-t {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
     }
     .md-card-login .mat-card-content, .md-card-register .mat-card-content {
         padding: 0;
     }
-    .md-card-login md-progress-linear div, .md-card-register md-progress-linear div {
+    /* .md-card-login md-progress-linear div, .md-card-register md-progress-linear div {
         border-radius: 0;
-    }
+    } */
     .md-content-is-log-reg{
         padding: 0 0 8px 0;
     }
     .form-logo-area, .carousel-content{
-        padding-left: 40px;
-        padding-right: 40px;
+        padding-left: 32px;
+        padding-right: 32px;
     }
     /* .login-footer{
         position: fixed;
@@ -205,9 +215,9 @@
     .login-footer .login-footer-content{
         border-top: none !important;
     } */
-    .login-body-background, .login-body-background md-content{
+    /* .login-body-background, .login-body-background md-content{
         background-color: rgb(255,255,255);
-    }
+    } */
 }
 @media only screen and (max-height: 700px){
     /* .login-footer{

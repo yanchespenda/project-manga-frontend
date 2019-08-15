@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1565385973814,
+  "timestamp": 1565818719404,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,18 +8,18 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/5.6d6790c33449fd3a9254.js",
-        "/6.8ba40b9e0c2063a7aadb.js",
-        "/7.ea34773819c83994f2eb.js",
-        "/8.a4b3a1a0d76a77ec35c7.js",
-        "/9.2e6cdf982b98cd301848.js",
+        "/5.1a48cec6b473b4c79469.js",
+        "/6.3dae7facb9d9b5b211d9.js",
+        "/7.53518e7bd1daefe50429.js",
+        "/8.3b854fed40c03fbad1fd.js",
+        "/9.b45e4ac23dd414c2ac0b.js",
         "/favicon.ico",
         "/index.html",
-        "/main.dd198ee4e8c275d4763d.js",
+        "/main.ba0fde0598948bf3a037.js",
         "/polyfills-es5.ad0cd9ec34ac503f8b75.js",
         "/polyfills.64c91c4c7adf211a1aa4.js",
-        "/runtime.0f8b2fb62144da68bf23.js",
-        "/styles.dd4e99462d0e37bf2efe.css"
+        "/runtime.90dc5653206d3e9c4531.js",
+        "/styles.59dc43b22dbaa79690cf.css"
       ],
       "patterns": []
     },
@@ -319,11 +319,11 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/5.6d6790c33449fd3a9254.js": "812163e8d3ce4a13133e8b124d32a5c07bd0c35b",
-    "/6.8ba40b9e0c2063a7aadb.js": "81daec2dbb49f33b5a62cf97792a206d60ae9704",
-    "/7.ea34773819c83994f2eb.js": "8fb4b968e97141230a7f0fd7d12b43479b7ccaf8",
-    "/8.a4b3a1a0d76a77ec35c7.js": "77465e7b9dae1929797a8efa579303b0fb0aac4e",
-    "/9.2e6cdf982b98cd301848.js": "6a754516d06b268fb419d1d40db3e96e1ac650a7",
+    "/5.1a48cec6b473b4c79469.js": "e4f134751d69588a3de5fa171318817b621a5370",
+    "/6.3dae7facb9d9b5b211d9.js": "2459d65070ff008da9351864b3af7b581fbbcf23",
+    "/7.53518e7bd1daefe50429.js": "254626f887c76ab60b1fd5c26ac50fa9d5343415",
+    "/8.3b854fed40c03fbad1fd.js": "1bf45cad6f68c66000768805b3f3f52f9b93d93b",
+    "/9.b45e4ac23dd414c2ac0b.js": "6d4d90b2c3e6e3621a7f41b1ee280ec49ad9c452",
     "/assets/icons-md/baseline-access_alarm-24px.svg": "ea776fee4f08938eace14ce54c2b36730b08bb69",
     "/assets/icons-md/baseline-access_alarms-24px.svg": "a72761eaaef376d54163e03779a71d9c709394fe",
     "/assets/icons-md/baseline-access_time-24px.svg": "a9679e98f7f4d7a0339a5296d2c76083217e1c06",
@@ -609,13 +609,13 @@
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "391f8c8d2f62fa8c50aa2425d77900676269bba0",
-    "/main.dd198ee4e8c275d4763d.js": "54059e00fb79662487a4fc85fb0f1bf1d7c2cf08",
+    "/index.html": "ae93c615f39fb0aa5e6c4b2a6f7fb127ba76904a",
+    "/main.ba0fde0598948bf3a037.js": "0a28682bb7d6e6ee95600248f1fa635410c00ed1",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
     "/polyfills-es5.ad0cd9ec34ac503f8b75.js": "7b6872891aaf8fcb6987dfd987900f0be4f1a956",
     "/polyfills.64c91c4c7adf211a1aa4.js": "2377fcd1fa4e7ebe49ccc91b5d69d07f77cc7642",
-    "/runtime.0f8b2fb62144da68bf23.js": "3063bafc4415cc4ffc1dab338e1d068558c9403d",
-    "/styles.dd4e99462d0e37bf2efe.css": "34e61e196cc8a2907e321a7f19c456e41f6be8ff"
+    "/runtime.90dc5653206d3e9c4531.js": "b6059e7e507fbcbbcdb5ee77a2055e589bbe68d2",
+    "/styles.59dc43b22dbaa79690cf.css": "13a8e3f33a704cde7360357c5a60cad09ff02213"
   },
   "navigationUrls": [
     {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, Renderer2, Inject } from '@angular/core';
 import { environment } from './../../../../../environments/environment';
 import { AuthService } from './../../../../services/auth/auth.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -18,6 +18,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'manga-signup',
@@ -91,8 +92,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   currentIndex: number;
   nextIndex: number;
   termData: any;
+  isErrorPrimary = false;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private renderer2: Renderer2,
@@ -102,13 +105,18 @@ export class SignupComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private matSnackBar: MatSnackBar
   ) {
-    iconRegistry.addSvgIcon('visibility',
+    this.renderer2.addClass(this.document.body, 'oauth-mode');
+    this.iconSetup();
+  }
+
+  iconSetup() {
+    this.iconRegistry.addSvgIcon('visibility',
       this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
-    iconRegistry.addSvgIcon('visibility_off',
+    this.iconRegistry.addSvgIcon('visibility_off',
       this.getImgResource('assets/icons-md/baseline-visibility_off-24px.svg'));
-    iconRegistry.addSvgIcon('perm_identity',
+    this.iconRegistry.addSvgIcon('perm_identity',
       this.getImgResource('assets/icons-md/baseline-perm_identity-24px.svg'));
-    iconRegistry.addSvgIcon('keyboard_arrow_down',
+    this.iconRegistry.addSvgIcon('keyboard_arrow_down',
       this.getImgResource('assets/icons-md/baseline-keyboard_arrow_down-24px.svg'));
   }
 
@@ -201,6 +209,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.errorMSGA.a = 'Username to short';
     } else if (this.valA.username.hasError('maxlength')) {
       this.errorMSGA.a = 'Username to long';
+    } else if (this.valA.username.hasError('taken')) {
+      this.errorMSGA.a = 'Username is taken';
     }
     return this.errorMSGA.a;
   }
@@ -210,8 +220,10 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.errorMSGA.b = 'Please input email';
     } else if (this.valA.email.hasError('email')) {
       this.errorMSGA.b = 'Email does not valid';
-    } else if (this.valA.email.hasError('minlength')) {
-      this.errorMSGA.b = 'Email to short';
+    } else if (this.valA.email.hasError('maxlength')) {
+      this.errorMSGA.b = 'Email to long';
+    } else if (this.valA.email.hasError('taken')) {
+      this.errorMSGA.b = 'Email is taken';
     }
     return this.errorMSGA.b;
   }
@@ -230,6 +242,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   getErrorMessagePassword2() {
     if (this.valA.password2.hasError('required')) {
       this.errorMSGA.d = 'Please input password';
+    } else if (this.valA.password2.hasError('minlength')) {
+      this.errorMSGA.d = 'Password to short';
+    } else if (this.valA.password2.hasError('maxlength')) {
+      this.errorMSGA.d = 'Password to long';
     } else if (this.valA.password2.hasError('notmatch')) {
       this.errorMSGA.d = 'Password does not match';
     }
@@ -239,6 +255,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   getErrorMessageName1() {
     if (this.valA.name1.hasError('required')) {
       this.errorMSGA.e = 'Please input your first name';
+    } else if (this.valA.name1.hasError('minlength')) {
+      this.errorMSGA.e = 'First name to short';
+    } else if (this.valA.name1.hasError('maxlength')) {
+      this.errorMSGA.e = 'First name to long';
     }
     return this.errorMSGA.e;
   }
@@ -246,6 +266,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   getErrorMessageName2() {
     if (this.valA.name2.hasError('required')) {
       this.errorMSGA.f = 'Please input your last name';
+    } else if (this.valA.name2.hasError('minlength')) {
+      this.errorMSGA.f = 'Last name to short';
+    } else if (this.valA.name2.hasError('maxlength')) {
+      this.errorMSGA.f = 'Last name to long';
     }
     return this.errorMSGA.f;
   }
@@ -287,9 +311,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSamePassValue(event: any) {
-    const curentPass1 = this.valA.password1.value || '';
+    const curentPass1 = this.valA.password1.value || null;
     const curentPass2 = event.target.value || '';
-    if (curentPass1 !== curentPass2) {
+    if (curentPass1 !== null && curentPass1 !== curentPass2) {
       this.valA.password2.setErrors({notmatch: true});
     }
   }
@@ -299,7 +323,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   SubmitA() {
-
     if (this.regFormA.invalid) {
       if (this.valA.name1.invalid) {
         this.inputName1.nativeElement.focus();
@@ -319,13 +342,17 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.isLoading) {
       return;
     }
+    this.isErrorPrimary = false;
 
-    this.recaptchaUnsubscribe();
-    this.recaptchaSubscription = this.recaptchaV3Service.execute('registera')
-      .subscribe(
-        (token) => {
+    const token = '1';
+    // this.recaptchaUnsubscribe();
+    // this.recaptchaSubscription = this.recaptchaV3Service.execute('registera')
+      // .subscribe(
+        // (token) => {
+          // tslint:disable-next-line: align
           this.isLoading = true;
 
+          // tslint:disable-next-line: align
           this.authService.registerA(
             this.valA.name1.value,
             this.valA.name2.value,
@@ -338,12 +365,13 @@ export class SignupComponent implements OnInit, OnDestroy {
             catchError(err => of(err))
           ).subscribe(
             (jsonData) => {
-              console.log(jsonData);
+              // console.log(jsonData);
               if (jsonData.status) {
                 if (jsonData.data.code === 1) {
                   const getCore = jsonData.data.core;
                   this.recentToken = getCore.token;
                   this.loadTerm(getCore.term);
+                  // this.loadTerm('https://res.cloudinary.com/dslncjjz1/raw/upload/v1565858504/storage/json/terms-conditions.json');
                   // this.matSnackBar.open('Loggin in...', 'close', {
                   //   duration: 3000
                   // });
@@ -355,7 +383,66 @@ export class SignupComponent implements OnInit, OnDestroy {
                 const getDataError = jsonData.data.code;
                 if (getDataError.length !== undefined && getDataError.length > 0) {
                   for (const row of getDataError) {
+                    if (row === 10) {
+                      this.valA.name1.setErrors({required: true});
+                    } else if (row === 11) {
+                      this.valA.name1.setErrors({maxlength: true});
+                    } else if (row === 12) {
+                      this.valA.name1.setErrors({minlength: true});
+                    } else if (row === 20) {
+                      this.valA.name2.setErrors({required: true});
+                    } else if (row === 21) {
+                      this.valA.name2.setErrors({maxlength: true});
+                    } else if (row === 22) {
+                      this.valA.name2.setErrors({minlength: true});
+                    } else if (row === 30) {
+                      this.valA.username.setErrors({required: true});
+                    } else if (row === 31) {
+                      this.valA.username.setErrors({maxlength: true});
+                    } else if (row === 32) {
+                      this.valA.username.setErrors({minlength: true});
+                    } else if (row === 33) {
+                      this.valA.username.setErrors({taken: true});
+                    } else if (row === 40) {
+                      this.valA.email.setErrors({required: true});
+                    } else if (row === 41) {
+                      this.valA.email.setErrors({email: true});
+                    } else if (row === 42) {
+                      this.valA.email.setErrors({maxlength: true});
+                    } else if (row === 43) {
+                      this.valA.email.setErrors({taken: true});
+                    } else if (row === 50) {
+                      this.valA.password1.setErrors({required: true});
+                    } else if (row === 51) {
+                      this.valA.password1.setErrors({maxlength: true});
+                    } else if (row === 52) {
+                      this.valA.password1.setErrors({minlength: true});
+                    } else if (row === 60) {
+                      this.valA.password2.setErrors({required: true});
+                    } else if (row === 61) {
+                      this.valA.password2.setErrors({maxlength: true});
+                    } else if (row === 62) {
+                      this.valA.password2.setErrors({minlength: true});
+                    } else if (row === 63) {
+                      this.valA.password2.setErrors({notmatch: true});
+                    } else if (row === 3 || row === 90) {
+                      this.errorMSG = jsonData.message;
+                      this.isErrorPrimary = true;
+                    }
 
+                    if (row >= 0 && row < 20) {
+                      this.inputName1.nativeElement.focus();
+                    } else if (row >= 20 && row < 30) {
+                      this.inputName2.nativeElement.focus();
+                    } else if (row >= 30 && row < 40) {
+                      this.inputUsername.nativeElement.focus();
+                    } else if (row >= 40 && row < 50) {
+                      this.inputEmail.nativeElement.focus();
+                    } else if (row >= 50 && row < 60) {
+                      this.inputPassword1.nativeElement.focus();
+                    } else if (row >= 60 && row < 70) {
+                      this.inputPassword2.nativeElement.focus();
+                    }
                   }
                 }
                 this.isLoading = false;
@@ -371,13 +458,18 @@ export class SignupComponent implements OnInit, OnDestroy {
               // this.isLoadCards.b = false;
             }
           );
-        }
-      );
+        // }
+      // );
+  }
+
+  SubmitB() {
+
   }
 
   loadTerm(urlTerm) {
     this.http.get(urlTerm).subscribe(
-      data => {
+      (data: any) => {
+        this.termData = data.content;
         // this.arrBirds = data as string [];	 // FILL THE ARRAY WITH DATA.
         //  console.log(this.arrBirds[1]);
       },
@@ -400,11 +492,14 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.mce_carousel_init();
-    // this.stepper(1);
+    setTimeout(() => {
+      this.inputName1.nativeElement.focus();
+    }, 100);
   }
 
   ngOnDestroy() {
     this.recaptchaUnsubscribe();
+    this.renderer2.removeClass(this.document.body, 'oauth-mode');
   }
 
 }

@@ -13,7 +13,7 @@
 					</div>
 				</div>
 				<div class="register-parent">
-					<span>SampleDataNya</span>
+					<!-- <span>SampleDataNya</span> -->
 					<!-- <re-captcha size="invisible" #iRecaptcha></re-captcha> -->
 					<div #mceCarousel mce-carousel-selected="0" class="mce-carousel register-parent">
 						<div #mceCarouselItems class="mce-carousel-content-wrapper">
@@ -25,6 +25,7 @@
 										<div>
 											<div class="reg-info-box-parent">
 												<h1 class="md-headline"><span>Create new account</span></h1>
+												<h6 *ngIf="isErrorPrimary" class="md-subhead subtitle-text mat-error">{{ getErrorMessagePrimary() }}</h6>
 											</div>
 										</div>
 										<div class="reg-form-padding">
@@ -101,19 +102,19 @@
 								<div>
 									<form class="" [formGroup]="regFormA">
 										<div>
-											<div class="login-info-box-parent">
+											<div class="reg-info-box-parent">
 												<h1 class="md-headline"><span>Terms and Conditions</span></h1>
 											</div>
 										</div>
-										<div class="login-form-padding">
-											<div [innerHtml]="termData"></div>
+										<div class="reg-form-padding">
+											<div class="term-container">
+												<div [innerHtml]="termData"></div>
+											</div>
 											<div class="form_action_area signup-page">
-												<div class="layout-row">
-													<a class="login-a-link-text" (click)="goBack()">Back</a>
-												</div>
 												<div class="login-action-parent layout-align-center-center layout-row">
+													<a class="login-a-link-text" (click)="goBack()">DECLINE</a>
 													<div class="flex"></div>
-													<button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; NEXT &nbsp;</button>
+													<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; ACCEPT &nbsp;</button>
 												</div>
 											</div>
 										</div>

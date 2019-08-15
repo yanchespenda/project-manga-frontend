@@ -17,6 +17,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { DOCUMENT } from '@angular/common';
 
 export interface DialogData {
   dialogEmail: string;
@@ -155,6 +156,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private matSnackBar: MatSnackBar,
@@ -164,13 +166,18 @@ export class SigninComponent implements OnInit, OnDestroy {
     private recaptchaV3Service: ReCaptchaV3Service,
     private matDialog: MatDialog,
   ) {
-    iconRegistry.addSvgIcon('visibility',
-      this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
-    iconRegistry.addSvgIcon('visibility_off',
+    this.renderer2.addClass(this.document.body, 'oauth-mode');
+    this.iconSetup();
+  }
+
+  iconSetup() {
+    this.iconRegistry.addSvgIcon('visibility',
+    this.getImgResource('assets/icons-md/baseline-visibility-24px.svg'));
+    this.iconRegistry.addSvgIcon('visibility_off',
       this.getImgResource('assets/icons-md/baseline-visibility_off-24px.svg'));
-    iconRegistry.addSvgIcon('perm_identity',
+    this.iconRegistry.addSvgIcon('perm_identity',
       this.getImgResource('assets/icons-md/baseline-perm_identity-24px.svg'));
-    iconRegistry.addSvgIcon('keyboard_arrow_down',
+    this.iconRegistry.addSvgIcon('keyboard_arrow_down',
       this.getImgResource('assets/icons-md/baseline-keyboard_arrow_down-24px.svg'));
   }
 
@@ -898,18 +905,11 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.mce_carousel_init();
 
     this.inputUsername.nativeElement.focus();
-    // this.loginFormA = this.formBuilder.group({
-    //   username: [
-    //     '', [Validators.required]
-    //   ],
-    //   password: [
-    //     '', [Validators.required]
-    //   ]
-    // });
   }
 
   ngOnDestroy() {
     this.recaptchaUnsubscribe();
+    this.renderer2.removeClass(this.document.body, 'oauth-mode');
   }
 
 }
