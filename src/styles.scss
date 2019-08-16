@@ -155,18 +155,20 @@ body.oauth-mode {
         background-color: #fafafa;
     }
 
-    @media (max-width: 600px) {
-        manga-root {
-            div {
-                manga-app-header {
-                    mat-toolbar {
+    /* @media (max-width: 600px) {
+        
+    } */
+
+    manga-root {
+        div {
+            manga-app-header {
+                mat-toolbar {
+                    min-height: 0 !important;
+                    height: 0 !important;
+
+                    mat-toolbar-row {
                         min-height: 0 !important;
                         height: 0 !important;
-
-                        mat-toolbar-row {
-                            min-height: 0 !important;
-                            height: 0 !important;
-                        }
                     }
                 }
             }

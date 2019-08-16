@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1565818719404,
+  "timestamp": 1565908015248,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,11 +15,11 @@
         "/9.b45e4ac23dd414c2ac0b.js",
         "/favicon.ico",
         "/index.html",
-        "/main.ba0fde0598948bf3a037.js",
+        "/main.6ff7b51bc59bdbb58220.js",
         "/polyfills-es5.ad0cd9ec34ac503f8b75.js",
         "/polyfills.64c91c4c7adf211a1aa4.js",
         "/runtime.90dc5653206d3e9c4531.js",
-        "/styles.59dc43b22dbaa79690cf.css"
+        "/styles.6d23c5dd6424bd327880.css"
       ],
       "patterns": []
     },
@@ -312,6 +312,7 @@
         "/assets/images/angular-white-transparent.svg",
         "/assets/images/manga-100.png",
         "/assets/images/manga-50.png",
+        "/assets/json/terms-conditions.json",
         "/manifest.json"
       ],
       "patterns": []
@@ -608,14 +609,15 @@
     "/assets/images/angular-white-transparent.svg": "3d3538c3683d6937a39c92d17a27d2637fba70f5",
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
+    "/assets/json/terms-conditions.json": "eded7b61eb9d791fde248e74f0dfaf22ac08970b",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "ae93c615f39fb0aa5e6c4b2a6f7fb127ba76904a",
-    "/main.ba0fde0598948bf3a037.js": "0a28682bb7d6e6ee95600248f1fa635410c00ed1",
+    "/index.html": "aea3d61ec1fd357a8c148008b63133659abcb32f",
+    "/main.6ff7b51bc59bdbb58220.js": "373f62da9f4066e0388b0d3da0b7fdd6fd8c8ffd",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
     "/polyfills-es5.ad0cd9ec34ac503f8b75.js": "7b6872891aaf8fcb6987dfd987900f0be4f1a956",
     "/polyfills.64c91c4c7adf211a1aa4.js": "2377fcd1fa4e7ebe49ccc91b5d69d07f77cc7642",
     "/runtime.90dc5653206d3e9c4531.js": "b6059e7e507fbcbbcdb5ee77a2055e589bbe68d2",
-    "/styles.59dc43b22dbaa79690cf.css": "13a8e3f33a704cde7360357c5a60cad09ff02213"
+    "/styles.6d23c5dd6424bd327880.css": "d7ef7f83aae5be09ebaf1c44d80daf45d6e988c5"
   },
   "navigationUrls": [
     {

@@ -47,6 +47,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   @ViewChild('inputPassword2', {static: true}) inputPassword2: ElementRef;
 
   isLoading = false;
+  isHttpLoading = false;
   webData = {
     name: environment.nameWeb
   };
@@ -59,7 +60,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       '', []
     ],
     username: [
-      '', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]
+      '', [Validators.required, Validators.minLength(2), Validators.maxLength(25), Validators.pattern(/^\w+$/)]
     ],
     email: [
       '', [Validators.required, Validators.email]
@@ -93,6 +94,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   nextIndex: number;
   termData: any;
   isErrorPrimary = false;
+  messageData = {
+    complete: false,
+    txt: null
+  };
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -211,6 +216,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.errorMSGA.a = 'Username to long';
     } else if (this.valA.username.hasError('taken')) {
       this.errorMSGA.a = 'Username is taken';
+    } else if (this.valA.username.hasError('pattern')) {
+      this.errorMSGA.a = 'Username not valid';
     }
     return this.errorMSGA.a;
   }
@@ -318,6 +325,16 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
   }
 
+  recaptchaTimeout() {
+    setTimeout(() => {
+      if (this.isLoading && !this.isHttpLoading) {
+        this.isLoading = false;
+        this.errorMSG = 'Recaptcha Error, please check your internet connection';
+        this.isErrorPrimary = true;
+      }
+    }, 5500);
+  }
+
   get valA() {
     return this.regFormA.controls;
   }
@@ -342,17 +359,16 @@ export class SignupComponent implements OnInit, OnDestroy {
     if (this.isLoading) {
       return;
     }
+    // const token = '1';
     this.isErrorPrimary = false;
-
-    const token = '1';
-    // this.recaptchaUnsubscribe();
-    // this.recaptchaSubscription = this.recaptchaV3Service.execute('registera')
-      // .subscribe(
-        // (token) => {
+    this.isLoading = true;
+    this.recaptchaTimeout();
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscription = this.recaptchaV3Service.execute('registera')
+      .subscribe(
+        (token) => {
           // tslint:disable-next-line: align
-          this.isLoading = true;
-
-          // tslint:disable-next-line: align
+          this.isHttpLoading = true;
           this.authService.registerA(
             this.valA.name1.value,
             this.valA.name2.value,
@@ -365,19 +381,15 @@ export class SignupComponent implements OnInit, OnDestroy {
             catchError(err => of(err))
           ).subscribe(
             (jsonData) => {
-              // console.log(jsonData);
               if (jsonData.status) {
                 if (jsonData.data.code === 1) {
                   const getCore = jsonData.data.core;
                   this.recentToken = getCore.token;
                   this.loadTerm(getCore.term);
-                  // this.loadTerm('https://res.cloudinary.com/dslncjjz1/raw/upload/v1565858504/storage/json/terms-conditions.json');
-                  // this.matSnackBar.open('Loggin in...', 'close', {
-                  //   duration: 3000
-                  // });
-                  this.stepper(1);
-                } else if (jsonData.data.code === 2) {
-
+                } else {
+                  this.matSnackBar.open('Something went wrong', '', {
+                    duration: 3000
+                  });
                 }
               } else {
                 const getDataError = jsonData.data.code;
@@ -453,30 +465,84 @@ export class SignupComponent implements OnInit, OnDestroy {
               console.error(err);
             },
             () => {
-              // this.isLoading = false;
-              // console.log('observable complete');
-              // this.isLoadCards.b = false;
+              this.isHttpLoading = false;
             }
           );
-        // }
-      // );
+        }
+      );
   }
 
   SubmitB() {
-
+    if (this.isLoading) {
+      return;
+    }
+    // const token = '1';
+    this.isErrorPrimary = false;
+    this.isLoading = true;
+    this.recaptchaTimeout();
+    this.recaptchaUnsubscribe();
+    this.recaptchaSubscription = this.recaptchaV3Service.execute('registerb')
+      .subscribe(
+        (token) => {
+          this.isHttpLoading = true;
+          this.authService.registerB(
+            this.recentToken,
+            token
+          ).pipe(
+            catchError(err => of(err))
+          ).subscribe(
+            (jsonData) => {
+              if (jsonData.status) {
+                this.messageData.complete = true;
+                this.messageData.txt = jsonData.message;
+                this.stepper(2);
+                /* if (jsonData.data.code === 1) {
+                  this.stepper(2);
+                } else {
+                  this.matSnackBar.open('Something went wrong', '', {
+                    duration: 3000
+                  });
+                } */
+              } else {
+                const getDataError = jsonData.data.code;
+                if (getDataError.length !== undefined && getDataError.length > 0) {
+                  for (const row of getDataError) {
+                    if (row === 3 || row === 90) {
+                      this.errorMSG = jsonData.message;
+                      this.isErrorPrimary = true;
+                    }
+                  }
+                }
+                this.matSnackBar.open('Something went wrong', '', {
+                  duration: 3000
+                });
+                this.isLoading = false;
+              }
+            },
+            (err) => {
+              this.isLoading = false;
+              console.error(err);
+            },
+            () => {
+              this.isHttpLoading = false;
+            }
+          );
+        }
+      );
   }
 
   loadTerm(urlTerm) {
     this.http.get(urlTerm).subscribe(
       (data: any) => {
         this.termData = data.content;
-        // this.arrBirds = data as string [];	 // FILL THE ARRAY WITH DATA.
-        //  console.log(this.arrBirds[1]);
+        this.stepper(1);
       },
       (err) => {
         console.log(err);
       },
-      () => console.log('Term completed.')
+      () => {
+
+      }
     );
   }
 

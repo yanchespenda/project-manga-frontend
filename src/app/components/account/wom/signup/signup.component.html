@@ -112,7 +112,7 @@
 											</div>
 											<div class="form_action_area signup-page">
 												<div class="login-action-parent layout-align-center-center layout-row">
-													<a class="login-a-link-text" (click)="goBack()">DECLINE</a>
+													<a class="login-a-link-text" (click)="goBack()">REJECT</a>
 													<div class="flex"></div>
 													<button mat-flat-button color="primary" (click)="SubmitB()" [disabled]="isLoading">&nbsp; ACCEPT &nbsp;</button>
 												</div>
@@ -122,18 +122,19 @@
 								</div>
 							</div>
 
-							<!-- 5. MESSAGES -->
+							<!-- 2. MESSAGES -->
 							<div class="mce-carousel-content carousel-content">
 								<div class="login-info-box-parent">
 									<h1 class="md-headline">
 										<span></span>
 									</h1>
 									<div class="login-info-box-subtext">
-										<!-- <h6 class="md-subhead">{{ messageData.txt }}</h6> -->
+										<h6 class="md-subhead">{{ messageData.txt }}</h6>
 									</div>
 									<div class="form_action_area">
 										<div class="login-action-parent layout-align-center-center layout-row">
-											<button mat-flat-button color="primary" (click)="goBack()">&nbsp; OK &nbsp;</button>
+											<a *ngIf="messageData.complete" mat-menu-item [href]="'/oauth/signin'">&nbsp; LOGIN &nbsp;</a>
+											<button *ngIf="!messageData.complete" mat-flat-button color="primary" (click)="goBack()">&nbsp; OK &nbsp;</button>
 										</div>
 									</div>
 								</div>
