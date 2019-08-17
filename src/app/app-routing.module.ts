@@ -74,16 +74,10 @@ const routes: Routes = [
     data: { title: 'Do', id: 9, isMenuHidden: true, hideTopNav: true }
   },
   {
-    path: 'oauth/do/activation',
-    component: DoComponent,
-    // canActivate: [AuthGuardService],
-    data: { title: 'Do', id: 10, isMenuHidden: true, hideTopNav: true }
-  },
-  {
     path: 'oauth/do/logout',
     component: LogoutComponent,
     // canActivate: [AuthGuardService],
-    data: { title: 'Logout', id: 11, isMenuHidden: true, hideTopNav: true }
+    data: { title: 'Logout', id: 10, isMenuHidden: true, hideTopNav: true }
   },
   { path: '**', redirectTo: '', data: { title: 'Not found', id: 0 } }
 ];

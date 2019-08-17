@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1565908015248,
+  "timestamp": 1565990225053,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,11 +15,11 @@
         "/9.b45e4ac23dd414c2ac0b.js",
         "/favicon.ico",
         "/index.html",
-        "/main.6ff7b51bc59bdbb58220.js",
+        "/main.f1320eda479a10eaa0e1.js",
         "/polyfills-es5.ad0cd9ec34ac503f8b75.js",
         "/polyfills.64c91c4c7adf211a1aa4.js",
         "/runtime.90dc5653206d3e9c4531.js",
-        "/styles.6d23c5dd6424bd327880.css"
+        "/styles.e989de1277f8c20ec66b.css"
       ],
       "patterns": []
     },
@@ -609,15 +609,15 @@
     "/assets/images/angular-white-transparent.svg": "3d3538c3683d6937a39c92d17a27d2637fba70f5",
     "/assets/images/manga-100.png": "235aa771fc2152f7ba30ebcd4eabf93d14df86e8",
     "/assets/images/manga-50.png": "ad5360f685e4f9480eea18ffe2bc56e0dfbefbc3",
-    "/assets/json/terms-conditions.json": "eded7b61eb9d791fde248e74f0dfaf22ac08970b",
+    "/assets/json/terms-conditions.json": "a5c43ec3f1aeaa69c6532abc8879bfc20330f4a1",
     "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "/index.html": "aea3d61ec1fd357a8c148008b63133659abcb32f",
-    "/main.6ff7b51bc59bdbb58220.js": "373f62da9f4066e0388b0d3da0b7fdd6fd8c8ffd",
+    "/index.html": "af54adb4c4409bf70b0d59dc5fd5c55dd272308e",
+    "/main.f1320eda479a10eaa0e1.js": "0bb25dbb34bfd703264f44a076d9419eeedef886",
     "/manifest.json": "4ed39a87598e6c71c6921f433220a6bb9adf333c",
     "/polyfills-es5.ad0cd9ec34ac503f8b75.js": "7b6872891aaf8fcb6987dfd987900f0be4f1a956",
     "/polyfills.64c91c4c7adf211a1aa4.js": "2377fcd1fa4e7ebe49ccc91b5d69d07f77cc7642",
     "/runtime.90dc5653206d3e9c4531.js": "b6059e7e507fbcbbcdb5ee77a2055e589bbe68d2",
-    "/styles.6d23c5dd6424bd327880.css": "d7ef7f83aae5be09ebaf1c44d80daf45d6e988c5"
+    "/styles.e989de1277f8c20ec66b.css": "44948c718cd816ad198cf6502820cf23d0978cec"
   },
   "navigationUrls": [
     {

@@ -69,7 +69,7 @@ export class AuthService {
       username,
       token
     };
-    this.logout();
+    this.logout(undefined);
     this.cookieService.put( 'currentUser', JSON.stringify(setUser), {path: '/', expires: new Date(xp),
       secure: environment.COOKIES_SECURED });
   }
@@ -91,7 +91,7 @@ export class AuthService {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.status) {
           return true;
         } else {
@@ -257,7 +257,7 @@ export class AuthService {
   }
 
 
-  logout() {
+  logout(callback) {
     const getLogin = this.currentUserValue;
     if (getLogin === null) {
       return true;
@@ -274,12 +274,12 @@ export class AuthService {
       catchError(val => of(val))
     ).subscribe(
       (jsonData) => {
+        if (callback !== undefined && typeof callback === 'function') {
+          callback(jsonData.status);
+        }
         if (jsonData.status) {
           this.cookieService.remove('currentUser', {path: '/'});
           this.currentUserSubject.next(null);
-          return true;
-        } else {
-          return false;
         }
       },
       (err) => {

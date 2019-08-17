@@ -504,19 +504,26 @@ export class SignupComponent implements OnInit, OnDestroy {
                   });
                 } */
               } else {
+                this.isLoading = false;
                 const getDataError = jsonData.data.code;
                 if (getDataError.length !== undefined && getDataError.length > 0) {
                   for (const row of getDataError) {
                     if (row === 3 || row === 90) {
-                      this.errorMSG = jsonData.message;
-                      this.isErrorPrimary = true;
+                      if (jsonData.data.next) {
+                        this.isLoading = true;
+                        this.messageData.complete = false;
+                        this.messageData.txt = jsonData.message;
+                        this.stepper(2);
+                      } else {
+                        this.errorMSG = jsonData.message;
+                        this.isErrorPrimary = true;
+                      }
                     }
                   }
                 }
                 this.matSnackBar.open('Something went wrong', '', {
                   duration: 3000
                 });
-                this.isLoading = false;
               }
             },
             (err) => {

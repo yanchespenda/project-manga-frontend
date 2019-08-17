@@ -162,6 +162,7 @@ body.oauth-mode {
     manga-root {
         div {
             manga-app-header {
+                display: none;
                 mat-toolbar {
                     min-height: 0 !important;
                     height: 0 !important;
@@ -171,6 +172,16 @@ body.oauth-mode {
                         height: 0 !important;
                     }
                 }
+            }
+        }
+    }
+}
+
+body.oauth-logout-mode {
+    manga-root {
+        div {
+            manga-footer {
+                display: none;
             }
         }
     }
