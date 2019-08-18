@@ -12,7 +12,74 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <mat-grid-list *ngIf="!isError" class="trending_tiles" cols="4" rowHeight="300px" gutterSize="8px">
+      <!-- <ngx-hm-carousel
+        [(ngModel)]="currentIndex"
+        [show-num]="4"
+        [autoplay-speed]="speed"
+        [infinite]="infinite"
+        [drag-many]="true"
+        [aniTime]="200"
+        [data]="tiles"
+        [align]="'left'"
+        class="carousel c-accent"> -->
+      <ngx-hm-carousel
+        [show-num]="4"
+        [drag-many]="true"
+        [aniTime]="200"
+        [data]="tiles"
+        [align]="'left'"
+        class="carousel c-accent">
+      
+        <section ngx-hm-carousel-container class="content">
+          <article class="item cursor-pointer"
+            ngx-hm-carousel-item
+            *ngFor="let tile of tiles; let i = index"
+              [ngClass]="{'visible': currentIndex===i}">
+            <div class="img" [routerLink]="tile.chapter_link"
+              [style.backgroundImage]="getBackground(tile.img_cvr.enabled, tile.img_cvr.link)">
+              {{tile.chapter_name}}
+            </div>
+          </article>
+          <ng-template #infiniteContainer></ng-template>
+        </section>
+      
+        <!-- only using in infinite mode or autoplay mode, that will render with-->
+        <ng-template #carouselContent let-tile let-i="index">
+          <article class="item cursor-pointer"
+            [ngClass]="{'visible': currentIndex===i}">
+            <div class="img" [routerLink]="tile.chapter_link"
+              [style.backgroundImage]="getBackground(tile.img_cvr.enabled, tile.img_cvr.link)">
+              {{tile.chapter_name}}
+            </div>
+          </article>
+        </ng-template>
+      
+        <ng-template #carouselPrev>
+          <div class="click-area">
+              <button type="button" mat-icon-button>
+                  <mat-icon svgIcon="keyboard_arrow_left"></mat-icon>
+              </button>
+          </div>
+        </ng-template>
+        <ng-template #carouselNext>
+          <div class="click-area">
+              <button type="button" mat-icon-button>
+                  <mat-icon svgIcon="keyboard_arrow_right"></mat-icon>
+              </button>
+          </div>
+        </ng-template>
+      
+        <ng-template #carouselDot let-model>
+          <div class="ball bg-accent"
+            [class.visible]="model.index === model.currentIndex"></div>
+        </ng-template>
+      
+        <ng-template #carouselProgress let-progress>
+          <div class="progress"></div>
+        </ng-template>
+      
+      </ngx-hm-carousel>
+      <!-- <mat-grid-list *ngIf="!isError" class="trending_tiles" cols="4" rowHeight="300px" gutterSize="8px">
         <mat-grid-tile
             class="trending_tile"
             *ngFor="let tile of tiles"
@@ -24,7 +91,7 @@
               {{tile.chapter_name}}
           </mat-grid-tile-footer>
         </mat-grid-tile>
-      </mat-grid-list>
+      </mat-grid-list> -->
       <div *ngIf="isError" class="componen-error-container is-c-topchapter">
         <div class="componen-error" fxLayout="column" fxLayoutAlign="center center">
           <div class="componen-error-text mat-title">

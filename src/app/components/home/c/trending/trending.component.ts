@@ -14,6 +14,7 @@ import {
   query,
   stagger
 } from '@angular/animations';
+import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'manga-trending',
@@ -52,12 +53,38 @@ export class TrendingComponent implements OnInit {
   isError = false;
   tiles: any[];
 
+  /* currentIndex;
+  speed = 5000;
+  infinite = true;
+  direction = 'right';
+  directionToggle = true;
+  autoplay = true; */
+
   constructor(
       private sanitizer: DomSanitizer,
-      private trendingService: TrendingService
-    ) {
+      private trendingService: TrendingService,
+      private iconRegistry: MatIconRegistry,
+  ) {
+    this.iconSetup();
+  }
 
+  iconSetup() {
+    this.iconRegistry.addSvgIcon('keyboard_arrow_left',
+      this.getImgResource('assets/icons-md/baseline-keyboard_arrow_left-24px.svg'));
+    this.iconRegistry.addSvgIcon('keyboard_arrow_right',
+      this.getImgResource('assets/icons-md/baseline-keyboard_arrow_right-24px.svg'));
+  }
+
+  getImgResource(image: string) {
+    if (image) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(image);
     }
+    return '';
+  }
+
+  click(i) {
+    alert(`${i}`);
+  }
 
   getBackground(bool: any, image: string) {
     if (bool) {

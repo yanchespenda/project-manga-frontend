@@ -8,6 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxHmCarouselModule } from 'ngx-hm-carousel';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { CookieModule } from 'ngx-cookie';
 import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
@@ -95,7 +96,7 @@ import { ChapterReportDialogComponent } from './components/main/dialog/dialog.re
     RecaptchaV3Module,
     RecaptchaModule,
     RecaptchaFormsModule,
-
+    NgxHmCarouselModule,
     CookieModule.forRoot(),
     // NgxUploadModule.forRoot(),
     // ScrollingModule,

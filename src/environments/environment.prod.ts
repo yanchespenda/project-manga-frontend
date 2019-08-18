@@ -3,12 +3,12 @@ export const environment = {
 
   // LOCALHOST
   // base_api_url: '//project-manga.oo/',
-  // base_api_version: 'v1',
+  // base_api_version: 'api/v1',
   // base_api_key: '',
 
   // HEROKU
   base_api_url: '//api-manga-arp.herokuapp.com/',
-  base_api_version: 'v1',
+  base_api_version: 'api/v1',
   base_api_key: '',
 
   // API UMBRELLA

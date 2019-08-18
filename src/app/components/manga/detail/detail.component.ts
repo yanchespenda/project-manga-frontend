@@ -350,7 +350,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   async initRecom() {
-    // requestMangaRecom
     this.isErrorCards.c = false;
     this.isLoadCards.c = true;
     this.detailService.requestMangaRecom(this.CURRENT_ID)
@@ -359,26 +358,21 @@ export class DetailComponent implements OnInit, AfterViewInit {
     ).subscribe(
       (jsonData) => {
         if (jsonData.error !== undefined) {
-          // this.isErrorCards.x = true;
+          this.isErrorCards.c = true;
         } else {
           if (jsonData.status !== undefined && jsonData.status) {
-            // this.isDone = true;
-            // console.log(jsonData);
             this.dataRecom = jsonData.data.recom;
           } else {
-            // this.isErrorCards.x = true;
+            this.isErrorCards.c = true;
           }
         }
       },
       (err) => {
         this.isErrorCards.c = true;
-        // console.error(err);
       },
       () => {
         this.isLoadCards.c = false;
         this.isPreloadCards.c = false;
-        // console.log('observable complete');
-        // this.isLoad = false;
       }
     );
   }
@@ -390,7 +384,6 @@ export class DetailComponent implements OnInit, AfterViewInit {
         catchError(val => of(val))
       ).subscribe(
         (jsonData) => {
-          // console.log(jsonData);
           if (jsonData.error !== undefined) {
             // this.isErrorCards.b = true;
           } else {
