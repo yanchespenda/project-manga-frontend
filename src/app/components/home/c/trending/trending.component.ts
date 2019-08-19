@@ -52,6 +52,7 @@ export class TrendingComponent implements OnInit {
   isLoad = false;
   isError = false;
   tiles: any[];
+  isPreloadCards = true;
 
   /* currentIndex;
   speed = 5000;
@@ -125,7 +126,8 @@ export class TrendingComponent implements OnInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
+        this.isPreloadCards = false;
         this.isLoad = false;
       }
     );

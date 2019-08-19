@@ -44,7 +44,7 @@ a {
         color: rgba(0, 0, 0, 0.87);
 
         &:hover{
-            color: #2196f3!important;
+            color: $textColorLightBlue !important;
         }
     }
 }
@@ -241,16 +241,7 @@ body.oauth-logout-mode {
     background-size: cover;
 }
 
-.genre-list {
-    color: rgba(0,0,0,.87);
-    font-size: 16px;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 24px;
-    line-height: 2!important;
-    display: inline-block;
-    width: 50%;
-}
+
 
 .universal-pad-top-bot {
     padding-top: 8px;
@@ -337,6 +328,7 @@ body.oauth-logout-mode {
 @import './styles/app.footer.scss';
 
 // Per Module
+@import './styles/main.module.scss';
 @import './styles/author.module.scss';
 @import './styles/blog.module.scss';
 @import './styles/manga.module.scss';

@@ -1,0 +1,21 @@
+[debug] [2019-08-19T21:10:26.248Z] ----------------------------------------------------------------------
+[debug] [2019-08-19T21:10:26.252Z] Command:       C:\App_Compiler\NodeJs\node.exe C:\Users\Mea\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-08-19T21:10:26.253Z] CLI Version:   7.2.2
+[debug] [2019-08-19T21:10:26.253Z] Platform:      win32
+[debug] [2019-08-19T21:10:26.253Z] Node Version:  v11.5.0
+[debug] [2019-08-19T21:10:26.263Z] Time:          Tue Aug 20 2019 04:10:26 GMT+0700 (Indochina Time)
+[debug] [2019-08-19T21:10:26.263Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-08-19T21:10:26.296Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-08-19T21:10:26.296Z] > authorizing via signed-in user
+[debug] [2019-08-19T21:10:26.296Z] [iam] checking project projectf-mobile for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-08-19T21:10:26.297Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-08-19T21:10:26.298Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-08-19T21:10:26.649Z] <<< HTTP RESPONSE 200
+[debug] [2019-08-19T21:10:26.658Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/projectf-mobile:testIamPermissions  
+
+[debug] [2019-08-19T21:10:28.096Z] <<< HTTP RESPONSE 200
+[debug] [2019-08-19T21:10:28.098Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/projectf-mobile  
+ 
+[debug] [2019-08-19T21:10:28.664Z] <<< HTTP RESPONSE 200

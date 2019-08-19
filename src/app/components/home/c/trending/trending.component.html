@@ -2,7 +2,7 @@
   <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
   <mat-card-content>
       <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
-      <div fxLayout="row">
+      <div fxLayout="row" fxLayout.xs="column">
         <div class="f-title-2 mat-title"><span>Top Chapters</span></div>
         <mat-form-field>
           <mat-select [(value)]="sortSelected" (selectionChange)="topRefresh($event)" placeholder="Top in">
@@ -12,6 +12,7 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div *ngIf="isPreloadCards"></div>
       <!-- <ngx-hm-carousel
         [(ngModel)]="currentIndex"
         [show-num]="4"
@@ -23,6 +24,7 @@
         [align]="'left'"
         class="carousel c-accent"> -->
       <ngx-hm-carousel
+        *ngIf="!isPreloadCards"
         [show-num]="4"
         [drag-many]="true"
         [aniTime]="200"

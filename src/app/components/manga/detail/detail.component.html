@@ -29,18 +29,19 @@
 			<div fxFlex="100" fxFlex.gt-sm="70">
 				<div class="layout-padding">
 					<mat-card class="universal-loading-container">
-						<mat-card-content class="manga-detail-cover" fxLayout="row">
-
-							<div class="manga-cover-container">
-								<div class="manga-cover manga-cover-set">
-									<div class="manga-overlay is-load" *ngIf="isLoad"></div>
-									<div class="manga-overlay" *ngIf="!isLoad"></div>
-									<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="manga-image manga-image-overlay" *ngIf="!isLoad">
+						<mat-card-content class="manga-detail-cover" fxLayout="row" fxLayout.xs="column">
+							<div class="manga-cover-pre-container">
+								<div class="manga-cover-container manga-cover-top">
+									<div class="manga-cover manga-cover-set">
+										<div class="manga-overlay is-load" *ngIf="isLoad"></div>
+										<div class="manga-overlay" *ngIf="!isLoad"></div>
+										<img [lazyLoad]="dataMangaA.img_cvr.full" [defaultImage]="dataMangaA.img_cvr.thumb" alt="{{dataMangaA.title}}" class="manga-image manga-image-overlay" *ngIf="!isLoad">
+									</div>
 								</div>
 							</div>
 
 							<div fxLayout="column" fxFlex="100">
-								<div fxLayout="row" class="manga-title-container">
+								<div class="manga-title-container" fxLayout="row" fxHide.xs>
 									<div class="title-loader" *ngIf="isLoad" fxFlex></div>
 									<h1 class="mat-display-1 manga-title" *ngIf="!isLoad">{{dataMangaA.title}}</h1>
 									<span fxFlex *ngIf="!isLoad"></span>
@@ -75,14 +76,53 @@
 										</button>
 									</mat-menu>
 								</div>
-								<div class="manga-author-container">
+								<div class="manga-title-container" fxLayout="column" fxHide fxShow.xs fxLayoutAlign="center center">
+									<div class="title-loader" *ngIf="isLoad" fxFlex></div>
+									<div class="title-center">
+										<h1 class="mat-display-1 manga-title" *ngIf="!isLoad">{{dataMangaA.title}}</h1>
+									</div>
+									<div fxLayout="row">
+										<span fxFlex *ngIf="!isLoad"></span>
+										<button mat-icon-button *ngIf="!isLogin">
+											<mat-icon svgIcon="share"></mat-icon>
+										</button>
+										<button mat-icon-button *ngIf="!isLogin">
+											<mat-icon svgIcon="flag"></mat-icon>
+										</button>
+										<button mat-icon-button *ngIf="isLogin" (click)="toggleFavorite()">
+											<mat-icon svgIcon="favorite_border" *ngIf="!dataUser.favorite"></mat-icon>
+											<mat-icon svgIcon="favorite" *ngIf="dataUser.favorite"></mat-icon>
+										</button>
+										<button mat-icon-button [matMenuTriggerFor]="BTNMangaDetailsA" *ngIf="isLogin">
+											<mat-icon svgIcon="more_vert"></mat-icon>
+										</button>
+										<mat-menu #BTNMangaDetailsA="matMenu">
+											<button mat-menu-item>
+												<mat-icon svgIcon="share"></mat-icon>
+												<span>Share</span>
+											</button>
+											<button mat-menu-item (click)="toggleSubscribe()">
+												<mat-icon *ngIf="!dataUser.subscribe" svgIcon="notifications"></mat-icon>
+												<mat-icon *ngIf="dataUser.subscribe" svgIcon="notifications_off"></mat-icon>
+												<span *ngIf="!dataUser.subscribe">Subscribe Updates</span>
+												<span *ngIf="dataUser.subscribe">Unsubscribe Updates</span>
+											</button>
+											<mat-divider></mat-divider>
+											<button mat-menu-item (click)="openDialog()">
+												<mat-icon svgIcon="flag"></mat-icon>
+												<span>Report Issue</span>
+											</button>
+										</mat-menu>
+									</div>
+								</div>
+								<div class="manga-author-container" fxLayoutAlign.xs="center">
 									<div class="author-loader" *ngIf="isLoad"></div>
 									<div *ngIf="!isLoad">
 										<span *ngFor="let item of dataMangaA.author; let isLast=last"><a *ngIf="item.name!='Unknown'" routerLink="{{ item.link }}" title="{{ item.name }}" class="mat-subheading-2"><span itemprop="name">{{ item.name }}</span></a><span itemprop="name" *ngIf="item.name=='Unknown'" class="mat-subheading-2">{{ item.name }}</span><span class="mat-subheading-2" *ngIf="!isLast">, </span></span>
 									</div>
 									
 								</div>
-								<div class="manga-status-container">
+								<div class="manga-status-container" fxLayoutAlign.xs="center">
 									<div class="status-loader" *ngIf="isLoad"></div>
 									<span *ngIf="!isLoad" class="mat-subheading-2">{{ dataMangaA.status }} | {{ dataMangaA.chapter }} chapter{{ (dataMangaA.chapter==1)?'':'s' }}</span>
 								</div>

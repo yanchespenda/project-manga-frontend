@@ -1,0 +1,274 @@
+$transition_time:.2s;
+
+.carousel {
+    color:white;
+    .content {
+        display: flex;
+    
+        .item {
+        width: 100%;
+        padding: .5em;
+        display: block;
+        // opacity: 0.5;
+    
+        // transition: opacity 0.295s linear $transition_time;
+    
+        &.visible {
+            // opacity: 1;
+        }
+    
+        .img {
+            width: 100%;
+            height: 400px;
+            display: block;
+            background-size: cover;
+            background-position: center;
+        }
+        }
+    
+    
+    }
+    
+    .ball {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: black;
+        border: 2px solid;
+        opacity: 0.5;
+    
+        &.visible {
+        opacity: 1;
+        }
+    }
+    
+    .click-area {
+        width: 50px;
+        text-align: center;
+    
+        button {
+            color: black;
+        }
+    }
+}
+
+.cl-container{
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    .cl-container-i1{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+
+        .cl-container-i2{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+
+            .cl-data-title{
+                padding-left: 20px;
+            }
+
+            .cl-container-i3{
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                -ms-flex-line-pack: center;
+                align-content: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                justify-content: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+
+                .cl-data-cover{
+                    padding-left: 20px;
+
+                    .cl-data-area-a, .cl-data-area-b{
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        // align-content: center;
+                        // -webkit-box-align: center;
+                        // align-items: center;
+                    }
+
+                    .cl-data-area-a{
+                        // -webkit-box-pack: center;
+                        // -ms-flex-pack: center;
+                        // justify-content: center;
+                        // -ms-flex-line-pack: center;
+                        // -ms-flex-align: center;
+                        // -webkit-box-pack: start;
+                        // -ms-flex-pack: start;
+                        justify-content: flex-start;
+
+                        .cl-data-image-thumb{
+                            display: block;
+                            background-color: #eee;
+                            border: 1px solid rgba(0,0,0,.12);
+                            position: relative;
+                        }
+
+                        .cl-data-image{
+                            width: 150px;
+                            height: 210px;
+                            margin-right: 12px;
+
+                            img {
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                width: 100%;
+                                height: 100%;
+                                -o-object-fit: cover;
+                                object-fit: cover;
+                                -webkit-transform: translate(-50%,-50%);
+                                -ms-transform: translate(-50%,-50%);
+                                transform: translate(-50%,-50%);
+                            }
+                        }
+
+                        .cl-data-area-a-content-container {
+                            .cl-data-manga-title {
+                                color: $textColorLightBlue;
+                                font-size: 16px;
+                                font-size: 1rem;
+                                font-weight: 500;
+                                line-height: 19px;
+                            }
+
+                            .content-chapter-container {
+                                .hp-chapter{
+                                    display: -webkit-box;
+                                    display: -ms-flexbox;
+                                    display: flex;
+                                    -webkit-box-pack: center;
+                                    -ms-flex-pack: center;
+                                    justify-content: center;
+                                    -ms-flex-line-pack: center;
+                                    align-content: center;
+                                    -webkit-box-align: center;
+                                    -ms-flex-align: center;
+                                    align-items: center;
+                                    -webkit-box-pack: start;
+                                    -ms-flex-pack: start;
+                                    justify-content: flex-start;
+
+                                    .simbol {
+                                        display: inline-block;
+                                        width: 8px;
+                                        height: 8px;
+                                        background-color: $textColorLightBlue;
+                                        border-radius: 50%;
+                                        margin-right: 5px;
+                                    }
+
+                                    .txt {
+                                        color: rgba(0,0,0,.87);
+                                        font-size: 12px;
+                                        font-size: 1rem;
+                                        font-weight: 400;
+                                        line-height: 24px;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        -o-text-overflow: ellipsis;
+                                        text-overflow: ellipsis;
+                                        display: inline-block;
+                                        width: 100%;
+
+                                        &:hover {
+                                            color: $textColorLightBlue;
+                                        }
+                                    }
+                                }
+
+                                .count-chapter {
+                                    color: rgba(0,0,0,.54);
+                                    font-size: 14px;
+                                    font-size: .875rem;
+                                    font-weight: 400;
+                                    line-height: 16px;
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        &.is-load {
+            .cl-data-title {
+                &.shimmer {
+                    height: 28px;
+                    width: 200px;
+                    @extend .shimmer-animated-background;
+                }
+            }
+            .cl-data-image {
+                &.shimmer {
+                    @extend .shimmer-animated-background;
+                }
+            }
+            .cl-data-manga-title {
+                .shimmer {
+                    height: 19px;
+                    width: 200px;
+                    @extend .shimmer-animated-background;
+                } 
+            }
+            .content-chapter-container {
+                .txt {
+                    .shimmer {
+                        height: 24px;
+                        width: 150px;
+                        @extend .shimmer-animated-background;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.genre-list {
+    color: rgba(0,0,0,.87);
+    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    line-height: 2!important;
+    display: inline-block;
+    width: 50%;
+
+    &.shimmer {
+        width: 100%;
+        height: 18px;
+        margin-bottom: 6px;
+        @extend .shimmer-animated-background;
+    }
+}

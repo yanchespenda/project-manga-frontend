@@ -1,10 +1,14 @@
 <mat-card class="universal-loading-container">
   <mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
   <mat-card-content>
-    <!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
     <div class="f-title-2 mat-title"><span>GENRES</span></div>
+    <div *ngIf="isPreloadCards">
+      <div *ngFor="let item of shimmer" class="genre-list shimmer"></div>
+    </div>
     <div *ngIf="!isError">
-        <a *ngFor="let genre of genres" [routerLink]="genre.link" class="genre-list">{{ genre.name }}</a>
+      <div *ngIf="!isPreloadCards">
+          <a *ngFor="let genre of genres" [routerLink]="genre.link" class="genre-list">{{ genre.name }}</a>
+      </div>
     </div>
     <div *ngIf="isError" class="componen-error-container is-c-topchapter">
       <div class="componen-error" fxLayout="column" fxLayoutAlign="center center">

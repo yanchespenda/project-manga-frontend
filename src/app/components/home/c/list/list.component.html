@@ -1,32 +1,68 @@
 <mat-card class="universal-loading-container">
 	<mat-progress-bar [@loadingAnimation]="'in'" *ngIf="isLoad" class="universal-loading is-top" mode="indeterminate"></mat-progress-bar>
 	<mat-card-content>
-		<!-- <div class="f-title-1 mat-subheading-1"><span>In the last few hours</span></div> -->
 		<div class="f-title-2 mat-title"><span>Latest updates</span></div>
-
 		<div class="cl-container">
-			<div class="cl-container-i1" fxLayout="column">
+			<div class="cl-container-i1 is-load" fxLayout="column" *ngIf="isPreloadCards">
+				<div class="cl-container-i2" *ngFor="let item of shimmer">
+					<div class="cl-data-title">
+						<div class="cl-data-title shimmer"></div>
+					</div>
+					<div fxLayout="row wrap">
+						<div class="cl-container-i3" fxFlex="50" *ngFor="let it of item.list" fxFlex="50" fxFlex.xs="100">
+							<div class="cl-data-cover">
+								<div class="cl-data-area-a">
+									<div class="cl-data-image-thumb cl-data-image shimmer"></div>
+									<div class="cl-data-area-a-content-container">
+										<div class="cl-data-manga-title">
+											<div class="shimmer"></div>
+										</div>
+										<div class="content-chapter-container">
+											<div class="txt">
+												<div class="shimmer"></div>
+											</div>
+											<div class="txt">
+												<div class="shimmer"></div>
+											</div>
+											<div class="txt">
+												<div class="shimmer"></div>
+											</div>
+											<div class="txt">
+												<div class="shimmer"></div>
+											</div>
+											<div class="txt">
+												<div class="shimmer"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="cl-container-i1" fxLayout="column" *ngIf="!isPreloadCards">
 				<div class="cl-container-i2" *ngFor="let item of theList">
 					<div class="cl-data-title">
 						<span class="mat-subheading-2">{{item.day}}</span>
 					</div>
-					<div fxLayout="row wrap" >
-						<div class="cl-container-i3" *ngFor="let it of item.list" fxFlex="50%">
+					<div fxLayout="row wrap">
+						<div class="cl-container-i3" *ngFor="let it of item.list" fxFlex="50" fxFlex.xs="100">
 							<div class="cl-data-cover">
 								<div class="cl-data-area-a">
 									<a [routerLink]="it.manga_link">
-									<div class="cl-data-image-thumb cl-data-image">
-										<img [lazyLoad]="it.img_cover.full" [defaultImage]="it.img_cover.thumb" alt="" class="hGq41 _1s6Xu">
-									</div>
+										<div class="cl-data-image-thumb cl-data-image">
+											<img [lazyLoad]="it.img_cover.full" [defaultImage]="it.img_cover.thumb">
+										</div>
 									</a>
-									<div class="_2wzxV">
-										<a [routerLink]="it.manga_link" data-test="latest-update-name" class="_2dU-m _21knv">{{it.manga_name}}</a>
-										<div>
+									<div class="cl-data-area-a-content-container">
+										<a [routerLink]="it.manga_link" class="cl-data-manga-title">{{it.manga_name}}</a>
+										<div class="content-chapter-container">
 											<a class="hp-chapter" *ngFor="let itc of it.chapters" [routerLink]="itc.chapter_link">
-											<div class="simbol"></div><span class="txt">{{ itc.chapter_text }}</span>
+												<div class="simbol"></div><span class="txt">{{ itc.chapter_text }}</span>
 											</a>
 										</div>
-										<!-- <div class="_8MJIu">6 new chapters</div> -->
+										<!-- <div class="count-chapter">6 new chapters</div> -->
 									</div>
 								</div>
 							</div>

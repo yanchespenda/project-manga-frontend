@@ -33,6 +33,25 @@ export class ListComponent implements OnInit {
   isLoad = true;
   isError = false;
   theList: any[];
+  isPreloadCards = true;
+  shimmer = [
+    {
+      list: [
+        {1: false},
+        {1: false}
+      ]
+    }, {
+      list: [
+        {1: false},
+        {1: false}
+      ]
+    }, {
+      list: [
+        {1: false},
+        {1: false}
+      ]
+    }
+  ];
 
   constructor(
     private listService: ListService,
@@ -74,7 +93,8 @@ export class ListComponent implements OnInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
+        this.isPreloadCards = false;
         this.isLoad = false;
       }
     );

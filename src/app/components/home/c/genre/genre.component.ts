@@ -31,19 +31,42 @@ import { catchError } from 'rxjs/operators';
 export class GenreComponent implements OnInit {
   isLoad = false;
   isError = false;
-
+  isPreloadCards = true;
   genres: any;
+  shimmer = [
+    {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }, {
+      1: false
+    }
+  ];
 
   constructor(
     private sanitizer: DomSanitizer,
     private genreService: GenreService
   ) {
-    console.log('genre cons');
+    // console.log('genre cons');
   }
 
   ngOnInit() {
     this.genreLoad();
-    console.log('genre init');
+    // console.log('genre init');
   }
 
   topRefresh(event: any) {
@@ -73,7 +96,8 @@ export class GenreComponent implements OnInit {
         console.error(err);
       },
       () => {
-        console.log('observable complete');
+        // console.log('observable complete');
+        this.isPreloadCards = false;
         this.isLoad = false;
       }
     );
