@@ -16,7 +16,7 @@ export const environment = {
   // base_api_version: 'marp',
   // base_api_key: 'yTlZXy6QDHHz1cCQdEYCXfuhmIGvQGV7W3p2sIVv',
 
-  base_oauth: 'oauth',
+  base_oauth: 'api/oauth',
   REQUEST_CREDENTIALS: true,
   COOKIES_SECURED: true,
 
