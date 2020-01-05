@@ -69,6 +69,12 @@ export class AuthService {
       username,
       token
     };
+    console.group( 'Cookie Report:' );
+    console.log('id', id);
+    console.log('username', username);
+    console.log('token', token);
+    console.log('xp', xp);
+    console.groupEnd();
     this.logout(undefined);
     this.cookieService.put( 'currentUser', JSON.stringify(setUser), {path: '/', expires: new Date(xp),
       secure: environment.COOKIES_SECURED });
