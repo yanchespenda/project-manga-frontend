@@ -7,7 +7,7 @@ export const environment = {
   // base_api_key: '',
 
   // HEROKU
-  base_api_url: '//api-manga-arp.herokuapp.com/',
+  base_api_url: '//api-manga-arp.herokuapp.com/', // https://api-manga-arp.herokuapp.com/
   base_api_version: 'api/v1',
   base_api_key: '',
 
